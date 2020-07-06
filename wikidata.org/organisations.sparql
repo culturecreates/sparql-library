@@ -1,0 +1,11 @@
+SELECT DISTINCT ?item ?itemLabel  ?provinceLabel
+WHERE {
+   ?item wdt:P31 wd:Q43229 . # find organisations
+   ?item wdt:P17 wd:Q16.  # in Canada
+   ?item wdt:P101/wdt:P279* wd:Q184485 . # with field of work performing arts or subclass
+  
+   OPTIONAL { ?item wdt:P276*/wdt:P131* ?province  .  }  # location or administrative entity, or location followed by administrative entity
+   FILTER (?province = wd:Q176)
+
+   SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" }
+}
