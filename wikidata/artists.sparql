@@ -2,7 +2,7 @@ SELECT ?person ?personLabel WHERE
 {
 values ?job {wd:Q33999 wd:Q3387717} #actors and stage directors
 ?person wdt:P106 ?job ;  # has a job from the listed values
-        wdt:P31 wd:Q5 ;  # human
+        # wdt:P31 wd:Q5 ;  # checking for human is redundant since P106 is a subclass of schema:Person
         wdt:P27 wd:Q16 .  #country of citizenship Canada
 
 SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" } 
