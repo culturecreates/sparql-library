@@ -1,0 +1,22 @@
+# The DBpedia Schema (T-BOX) has many mappings to Wikidata using equivalentProperty (58) and equivalentClass (3)
+# However, they are not used when first imported because DBpedia minted a new URI (new sub-domain)
+# Use this SPARQL to replace the domain so that the properties mapped in DBpedia get used. 
+# wikidata.dbpedia.org/resource/P569 -->  www.wikidata.org/entity/P569 
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+delete  { graph <http://dbpedia.org/ontology/Schema#2014> {
+        ?s ?p ?o . }
+}
+insert  { graph <http://kg.artsdata.ca/Dbpedia_Wikidata_Mapping> {
+        ?s  ?p ?newURI . }
+    }
+ 
+
+where {  graph <http://dbpedia.org/ontology/Schema#2014> {
+?s ?p ?o . }
+    filter(regex(str(?o),"wikidata.dbpedia.org/resource"))
+    filter (isURI(?o))
+    bind( URI(replace(str(?o),"wikidata.dbpedia.org/resource","www.wikidata.org/entity")) as ?newURI)
+} 
+

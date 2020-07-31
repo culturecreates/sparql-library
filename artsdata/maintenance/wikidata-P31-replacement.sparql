@@ -1,0 +1,13 @@
+# Use this SPARQL after importing data from Wikidata.  
+# This is more efficient than setting wdt:P31 owl:equivalentProperty rdf:type because of overal system performance.
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+delete  {   graph <http://wikidata.org/person> 
+   {?s wdt:P31 ?o .}
+}
+insert  {  graph <http://wikidata.org/person> 
+  {?s a ?o .}
+}
+where {  graph <http://wikidata.org/person> 
+	{?s wdt:P31 ?o .}
+} 
