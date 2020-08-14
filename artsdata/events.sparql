@@ -1,4 +1,7 @@
+# Events after a specific date
+
 PREFIX schema: <http://schema.org/>
+
 SELECT REDUCED  ?start  ?label  ?url
 WHERE {
   ?e a schema:Event ; 

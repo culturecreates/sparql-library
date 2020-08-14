@@ -1,0 +1,32 @@
+# List the DBpedia ontology <http://dbpedia.org/ontology/Schema#2014> equivalent properties 
+# This is impacted by the graph <http://kg.artsdata.ca/Dbpedia_Wikidata_Mapping> 
+
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX wikidata: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+
+select ?s ?sLabel  ?p ?o ?oLabel   ?graph  
+
+where 
+{ 
+  values ?p { owl:equivalentProperty }
+
+  ?s ?p ?o .
+
+  filter (regex(str(?s),"dbpedia.org"))
+  filter (?s != ?o)
+  
+  OPTIONAL {
+    ?o rdfs:label ?oLabel .
+    filter (lang(?oLabel) = "en"  || lang(?oLabel) = ""  )
+  }  
+
+  OPTIONAL {
+    ?s rdfs:label ?sLabel .
+    filter (lang(?sLabel) = "en" || lang(?sLabel) = "")
+  }  
+} 

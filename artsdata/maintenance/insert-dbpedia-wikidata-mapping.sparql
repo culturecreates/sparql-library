@@ -1,0 +1,35 @@
+############################################
+# OBSOLETE: This is no longer needed if you use dbpedia_2016-10.owl instead.
+############################################
+# The DBpedia Schema (T-BOX) 2014 has many mappings to Wikidata using equivalentProperty (58) and equivalentClass (3)
+# However, they are not used when first importing <http://dbpedia.org/ontology/Schema#2014> because DBpedia wikidata.dbpedia.org
+# Use this SPARQL to replace the domain wikidata.dbpedia.org with www.wikidata.org so that the properties/classes mapped in DBpedia get used. 
+# wikidata.dbpedia.org/resource/P569 -->  www.wikidata.org/entity/P569 
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX schema: <http://schema.org/>
+
+
+insert  
+{ graph <http://kg.artsdata.ca/Dbpedia_Wikidata_Mapping> 
+    {
+        ?s  ?p ?newURI . 
+        <http://kg.artsdata.ca/Dbpedia_Wikidata_Mapping> a prov:Entity;
+            rdfs:label "Mappings derived from DBPedia's Ontology" ;
+            schema:description "The graph is derived from DBpedia's Ontology by replacing the domain wikidata.dbpedia.org with www.wikidata.org so that the properties/classes already mapped in DBpedia's Ontology get used." .
+
+    }
+}
+
+where 
+{ graph <http://dbpedia.org/ontology/Schema#2014> 
+    {
+        ?s ?p ?o . 
+    }
+    filter(regex(str(?o),"wikidata.dbpedia.org/resource"))
+    filter (isURI(?o))
+    bind( URI(replace(str(?o),"wikidata.dbpedia.org/resource","www.wikidata.org/entity")) as ?newURI)
+} 
+
