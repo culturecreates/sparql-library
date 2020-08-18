@@ -3,14 +3,16 @@ PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX schema: <http://schema.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 insert data {
-	graph <http://dbpedia.org/ontology/Schema#2014> {
-       <http://dbpedia.org/ontology/Schema#2014>  a prov:Entity ; 
-        schema:name "DBpedia Schema 2014 (T-BOX)"  ; 
-        schema:url "https://wiki.dbpedia.org/services-resources/ontology" ;
-		prov:generatedAtTime "2020-07-30T010:22:42-04:00"^^xsd:dateTime ; 
+	graph <http://kg.artsdata.ca/ontology/dbpedia_2016-10> {
+       <http://kg.artsdata.ca/ontology/dbpedia_2016-10>  a prov:Entity ; 
+        schema:name "DBpedia Schema 2016-10 (T-BOX)"  ; 
+        schema:url "https://wiki.dbpedia.org/develop/datasets/downloads-2016-10#ontology" ;
+		prov:generatedAtTime "2020-08-10T010:22:42-04:00"^^xsd:dateTime ; 
 		prov:wasAttributedTo adr:K1-5 ;
-       prov:wasAttributedTo adr:K1-8 ;
-  		prov:wasDerivedFrom <https://raw.githubusercontent.com/culturecreates/artsdata-data-model/master/_triples/dbpedia_2014.owl> .
-        
+    prov:wasAttributedTo adr:K1-8 ;
+  	prov:wasDerivedFrom <https://raw.githubusercontent.com/culturecreates/artsdata-data-model/master/_triples/dbpedia_2016-10.owl> ;
+    prov:wasDerivedFrom <http://downloads.dbpedia.org/2016-10/dbpedia_2016-10.owl> .
+     
+      
     }
 }
