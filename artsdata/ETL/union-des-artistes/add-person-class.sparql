@@ -7,5 +7,6 @@ insert {
 where {
   graph <http://uda.ca> {
     ?s schema:lastName ?o
+    filter (regex(str(?s), "uda.ca/utilisateurs/"))
   } 
 }
