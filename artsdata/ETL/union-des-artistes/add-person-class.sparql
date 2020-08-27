@@ -1,0 +1,11 @@
+PREFIX schema: <http://schema.org/> 
+insert {
+  graph <http://uda.ca> {
+    ?s a schema:Person
+  } 
+} 
+where {
+  graph <http://uda.ca> {
+    ?s ?p ?o
+  } 
+}
