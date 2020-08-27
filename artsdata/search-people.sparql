@@ -1,0 +1,30 @@
+# Used by Footlight to extract people names from an event description passed in ?web_str
+
+PREFIX schema: <http://schema.org/>
+PREFIX onto: <http://www.ontotext.com/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+select  ?originalUri  ?name  ?uri
+
+FROM onto:disable-sameAs  # disable for speed
+where {
+
+  values ?web_str {'Mariana Mazza - Le deuxième spectacle de Mariana Mazza s’appelle Impolie et pour respecter le titre, elle ne vous le décrira pas. Elle n’en a pas envie. Bonne chance et bon spectacle.'}
+
+  { ?originalUri a schema:Person; schema:alternateName ?search_str ; rdfs:label ?name . }
+  UNION
+  { ?originalUri a schema:Person; rdfs:label ?search_str, ?name .  }
+  UNION
+  { ?originalUri a schema:Person; schema:url ?search_str ; rdfs:label ?name .  }
+
+  # Prefer Artsdata ID over external IDs from wikidata or other websites.
+  OPTIONAL { graph <http://kg.artsdata.ca/Artsdata_Minted>
+  { ?originalUri ^schema:sameAs ?reverseSameAs . filter (isURI(?reverseSameAs)) }
+  }
+  bind(coalesce(?reverseSameAs, ?originalUri) as ?uri)
+  
+  # Keep matches
+  filter (contains(lcase(str(?search_str)),lcase(?web_str)) || contains(lcase(?web_str), lcase(str(?search_str)))  )
+  filter  (isURI(?originalUri))
+  filter (str(?search_str) != '')
+ }
