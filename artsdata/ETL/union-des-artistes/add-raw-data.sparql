@@ -1,11 +1,11 @@
 insert data { 
   graph <http://uda.ca> {
-    <{{url}}> schema:firstName "{{firstName  | escape }}"@fr ; 
-      schema:lastName "{{lastName  | escape }}"@fr ; 
-      schema:jobTitle  "{{expertise  | escape }}"@fr  ; 
-      rdfs:comment  "{{description | escape }}"@fr   ; 
+    <{{url}}> schema:firstName "{{firstName}}"@fr ; 
+      schema:lastName "{{lastName}}"@fr ; 
+      schema:jobTitle  "{{expertise}}"@fr  ; 
+      rdfs:comment  "{{description}}"@fr   ; 
       schema:image  "{{image}}" ; 
-      schema:photoCredit  "{{photoCredit | escape }}" ; 
-      schema:status  "{{memberStatus | escape }}"@fr . 
+      schema:photoCredit  "{{photoCredit}}" ; 
+      schema:status  "{{memberStatus}}"@fr . 
   }
 }
