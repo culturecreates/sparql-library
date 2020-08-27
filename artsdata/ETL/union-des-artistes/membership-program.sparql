@@ -2,6 +2,10 @@ PREFIX schema: <http://schema.org/>
 PREFIX wd: <http://www.wikidata.org/entity/> 
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
 
+delete {
+  graph <http://uda.ca> {
+    ?s schema:status ?program 
+}
 insert {  
   graph <http://uda.ca> { 
     ?s schema:memberOf  ?programClass .  
@@ -9,7 +13,7 @@ insert {
       schema:host wd:Q3550100 ; 
       rdfs:label ?program . 
   }
-} 
+}
 where {  
   graph <http://uda.ca> {
     ?s schema:status ?program . 
