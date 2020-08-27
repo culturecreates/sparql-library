@@ -4,9 +4,10 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 delete {
   graph <http://uda.ca> {
-    ?s schema:status ?program 
+    ?s schema:status ?program
+  }
 }
-insert {  
+insert {
   graph <http://uda.ca> { 
     ?s schema:memberOf  ?programClass .  
     ?programClass a schema:ProgramMembership ; 
