@@ -1,0 +1,16 @@
+PREFIX adr: <http://kg.artsdata.ca/resource/> 
+PREFIX prov: <http://www.w3.org/ns/prov#> 
+PREFIX schema: <http://schema.org/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+insert data { 
+  graph <http://uda.ca> { 
+    <http://uda.ca>  a prov:Entity ; 
+      schema:name "Union des Artistes"  ; 
+      schema:url "https://uda.ca" ; 
+      prov:generatedAtTime "2020-09-18T09:30:49-04:00"^^xsd:dateTime ;  
+      prov:wasAttributedTo adr:K1-5 ;     
+      prov:wasAttributedTo adr:K1-9 ; 
+      prov:wasDerivedFrom <https://huginn-staging.herokuapp.com/scenarios/4/diagram> . 
+  } 
+}
