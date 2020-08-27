@@ -6,6 +6,6 @@ insert {
 } 
 where {
   graph <http://uda.ca> {
-    ?s ?p ?o
+    ?s schema:lastName ?o
   } 
 }
