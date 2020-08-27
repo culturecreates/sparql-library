@@ -2,15 +2,15 @@ PREFIX schema: <http://schema.org/>
 SELECT REDUCED  ?start  ?label  ?url
 WHERE {
   ?e a schema:Event ; 
-  	 schema:startDate ?start .
+      schema:startDate ?start .
   
   filter(?start > '2020-07-06T19:27:38.341Z'^^xsd:dateTime)
-	
+
   OPTIONAL {   ?e schema:name ?label_en   filter (lang(?label_en) = "en")} .
   OPTIONAL {   ?e schema:name   ?label_fr  filter (lang(?label_fr) = "fr")} .
   OPTIONAL {   ?e schema:name  ?label_plain  filter (lang(?label_plain) = "") } .
   BIND (coalesce (?label_plain, ?label_en, ?label_fr) as ?label)
-  
+
   ?e schema:url ?url .
 
 } ORDER BY ?start ?label
