@@ -12,12 +12,13 @@ insert {
     ?s schema:memberOf  ?programClass .  
     ?programClass a schema:ProgramMembership ; 
       schema:host wd:Q3550100 ; 
-      rdfs:label ?program . 
+      rdfs:label ?program_no_language . 
   }
 }
 where {  
   graph <http://uda.ca> {
     ?s schema:status ?program . 
     bind (URI(CONCAT("http://uda.ca/", str(?program))) as ?programClass)
+    bind (str(?program) as ?program_no_language)
   }
 }
