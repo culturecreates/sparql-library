@@ -1,6 +1,3 @@
-# Post-processor to add class schema:Person to all entities with a lastName and the right URI path.
-# Note: Do not assign all entites to the Person class because other entities exist (i.e. Provenance.)
-
 PREFIX schema: <http://schema.org/> 
 
 insert {
@@ -14,3 +11,6 @@ where {
     filter (regex(str(?s), "uda.ca/utilisateurs/"))
   } 
 }
+
+# Post-processor to add class schema:Person to all entities with a lastName and the right URI path.
+# Note: Do not assign all entites to the Person class because other entities exist (i.e. Provenance.)
