@@ -1,0 +1,24 @@
+PREFIX schema: <http://schema.org/>
+
+SELECT  ?title ?date  ?performer_url ?price ?video ?description ?photo_url ?location ?location_id ?url ?event_series_id ?review_date
+
+FROM  <http://laval.footlight.io> 
+WHERE {
+    ?node a schema:Event ;
+    schema:name ?title ;
+    schema:startDate ?date ;
+    schema:description ?description ;
+    schema:image ?photo_url ;
+    schema:location/schema:name ?location ;
+    schema:location ?location_id ;
+    schema:url ?url ;
+    schema:superEvent ?event_series_id .
+    OPTIONAL { ?node  schema:offers/schema:price ?price .}
+    OPTIONAL { ?node  schema:performer/schema:url ?performer_url .}
+    OPTIONAL { ?node schema:workPerformed/schema:video/schema:url ?video .}
+    ?webpage schema:mentions ?node ;
+    a schema:WebPage ;
+   	schema:lastReviewed ?review_date .
+
+    filter (?review_date > "2020-05-01"^^xsd:dateTime)
+}  

@@ -1,0 +1,31 @@
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+insert  {
+    graph <http://kg.artsdata.ca/ontology/wikidata/equivalent_properties_classes> {
+      ?s owl:equivalentProperty ?o .
+      ?s2 owl:equivalentClass ?o2 .
+      
+      # Provenance
+      <http://kg.artsdata.ca/ontology/wikidata/equivalent_properties_classes>  a prov:Entity ; 
+        schema:name "Wikidata Equivalent Properties and Classes"  ;
+        schema:url "https://w.wiki/d8j" ; 
+        prov:generatedAtTime "2020-09-22T10:00:00+04:00"^^xsd:dateTime ;  
+        prov:wasAttributedTo adr:K1-5 ;     
+        prov:wasAttributedTo adr:K1-8 ;
+        prov:wasAttributedTo <https://github.com/culturecreates/sparql-library/tree/master/artsdata/ETL/wikidata> . 
+    }
+}
+
+where {
+  SERVICE <https://query.wikidata.org/sparql> {
+    select * where {
+      { ?s wdt:P1628 ?o . }
+      UNION 
+      { ?s2 wdt:P1709 ?o2 }
+    }
+  }
+}

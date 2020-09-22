@@ -1,0 +1,21 @@
+# Use to view explicit Property mappings between ontologies by placing a list of values for ?prop
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+PREFIX schema: <https://schema.org/>
+
+select ?subject_of_equivalence ?prop ?object_of_equivalence ?g where {
+  values ?prop {
+    schema:name
+  } {
+    graph ?g {
+      ?prop owl:equivalentProperty ?object_of_equivalence.
+    }
+  }
+  UNION {
+    graph ?g {
+      ?subject_of_equivalence owl:equivalentProperty ?prop.
+    }
+  }
+}
