@@ -1,4 +1,5 @@
-# Use this SPARQL after importing data from Wikidata.  
+# Use this SPARQL after importing PEOPLE data from Wikidata. 
+# This SPARQL replaces wdt:P31 with rdf:type (a).
 # This is more efficient than setting wdt:P31 owl:equivalentProperty rdf:type because of overal system performance.
 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
