@@ -1,14 +1,20 @@
+# This SPARQL imports Wikidata's equivalent classes (wdt:P1709) and properties (wdt:P1628) 
+# And it adds provenance metadata.
+
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX schema: <http://schema.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX wikidata:  <http://www.wikidata.org/entity/>
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 insert  {
     graph <http://kg.artsdata.ca/ontology/wikidata/equivalent_properties_classes> {
       ?s owl:equivalentProperty ?o .
       ?s2 owl:equivalentClass ?o2 .
-      
+
       # Provenance
       <http://kg.artsdata.ca/ontology/wikidata/equivalent_properties_classes>  a prov:Entity ; 
         schema:name "Wikidata Equivalent Properties and Classes"  ;
@@ -16,16 +22,23 @@ insert  {
         prov:generatedAtTime "2020-09-22T10:00:00+04:00"^^xsd:dateTime ;  
         prov:wasAttributedTo adr:K1-5 ;     
         prov:wasAttributedTo adr:K1-8 ;
-        prov:wasAttributedTo <https://github.com/culturecreates/sparql-library/tree/master/artsdata/ETL/wikidata> . 
+        prov:wasAttributedTo <https://github.com/culturecreates/sparql-library/tree/master/artsdata/wikidata> . 
     }
 }
 
 where {
   SERVICE <https://query.wikidata.org/sparql> {
     select * where {
-      { ?s wdt:P1628 ?o . }
+      {  
+        ?s wdt:P1628 ?o .
+        # Remove P31 for performance reasons. 
+        # Instead replace P31 with rdf:type using
+        # post import SPARQL (see insert-wikidata-P31-replacement.sparql)
+        FILTER (?s !=  wikidata:P31)
+      }
       UNION 
-      { ?s2 wdt:P1709 ?o2 }
+      { ?s2 wdt:P1709 ?o2 }     
     }
   }
 }
+

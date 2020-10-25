@@ -1,0 +1,15 @@
+# Fix images entered manually using /commons.wikimedia.org/wiki/File:
+
+PREFIX schema: <http://schema.org/>
+delete {
+?s schema:image ?o 
+}
+insert {
+    ?s schema:image ?image_url
+}
+where { 
+	?s schema:image ?o .
+    filter(contains(str(?o),"/commons.wikimedia.org/wiki/File"))
+    bind(URI(replace(?o,"commons.wikimedia.org/wiki/File:", "commons.wikimedia.org/wiki/Special:FilePath/")) as ?image_url)
+    
+} 

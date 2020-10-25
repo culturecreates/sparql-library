@@ -1,0 +1,16 @@
+# Fix images entered manually using upload.wikimedia.org
+# Example: https://upload.wikimedia.org/wikipedia/commons/2/2f/JulienLacroix2018.jpg	
+
+PREFIX schema: <http://schema.org/>
+delete {
+?s schema:image ?o 
+}
+insert {
+    ?s schema:image ?image_url
+}
+where { 
+	?s schema:image ?o .
+    filter(contains(str(?o),"upload.wikimedia.org"))
+    bind(URI(concat("https://commons.wikimedia.org/wiki/Special:FilePath/", substr(str(?o),53) )) as ?image_url)
+} 
+
