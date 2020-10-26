@@ -1,0 +1,17 @@
+# Fix manually entered Wikidata images containing #/media/File:
+# Example: https://www.wikidata.org/wiki/Q2912178#/media/File:Boucar_Diouf_(Salon_du_livre_Montréal_2015).jpg
+
+PREFIX schema: <http://schema.org/>
+
+delete { ?s schema:image ?o . }
+insert {
+    graph ?g { ?s schema:image ?file_name . }
+}
+where { 
+    graph ?g {
+	    ?s schema:image ?o .
+        filter (contains(str(?o), "media/File"))
+        bind(uri(concat("https://commons.wikimedia.org/wiki/Special:FilePath/",strafter(?o,"#/media/File:"))) as ?file_name)
+    }
+} 
+

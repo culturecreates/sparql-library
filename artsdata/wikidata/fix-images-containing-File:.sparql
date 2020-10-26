@@ -1,15 +1,16 @@
 # Fix images entered manually using /commons.wikimedia.org/wiki/File:
+# Example: https://commons.wikimedia.org/wiki/File:Heather_Rankin_Headshot_2013.jpg
 
 PREFIX schema: <http://schema.org/>
-delete {
-?s schema:image ?o 
-}
+
+delete { ?s schema:image ?o }
 insert {
-    ?s schema:image ?image_url
+    graph ?g { ?s schema:image ?image_url }
 }
 where { 
-	?s schema:image ?o .
-    filter(contains(str(?o),"/commons.wikimedia.org/wiki/File"))
-    bind(URI(replace(?o,"commons.wikimedia.org/wiki/File:", "commons.wikimedia.org/wiki/Special:FilePath/")) as ?image_url)
-    
+	graph ?g {
+        ?s schema:image ?o .
+        filter(contains(str(?o),"/commons.wikimedia.org/wiki/File"))
+        bind(URI(replace(?o,"commons.wikimedia.org/wiki/File:", "commons.wikimedia.org/wiki/Special:FilePath/")) as ?image_url)
+    }
 } 
