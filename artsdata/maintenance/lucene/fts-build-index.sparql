@@ -1,0 +1,4 @@
+PREFIX luc: <http://www.ontotext.com/owlim/lucene#>
+INSERT DATA {
+  luc:Name luc:createIndex "true" .
+}
