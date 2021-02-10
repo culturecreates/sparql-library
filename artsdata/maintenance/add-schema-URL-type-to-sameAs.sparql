@@ -1,0 +1,15 @@
+# Google rejects sameAs URIs unless they are type schema:URL"
+
+PREFIX schema: <http://schema.org/>                
+delete { 
+  ?uri schema:sameAs ?sameAs
+}
+insert {
+  ?uri schema:sameAs ?sameAsUri .  ?sameAsUri a schema:URL   
+}
+where { 
+  ?uri a schema:Place ; 
+    schema:sameAs ?sameAs . 
+  bind (URI(?sameAs) as  ?sameAsUri) 
+  filter(!isURI(?sameAs))   
+}
