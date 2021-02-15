@@ -8,7 +8,7 @@ insert data {
     {{graphUri}}  a prov:Entity ; 
       schema:name "{{name}}"  ; 
       schema:url "{{url}}" ; 
-      prov:generatedAtTime "{{dateTime}}"^^xsd:dateTime ;  
+      prov:generatedAtTime "{{generatedAtTime}}"^^xsd:dateTime ;  
       prov:wasAttributedTo {{wasAttributedToToolUri}} ;     
       prov:wasAttributedTo {{wasAttributedToOrgUri}} ; 
       prov:wasDerivedFrom {{wasDerivedFromUri}} . 
