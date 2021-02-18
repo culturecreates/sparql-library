@@ -15,3 +15,5 @@ insert data {
       <http://creativecommons.org/ns#license> <https://creativecommons.org/publicdomain/mark/1.0> .
   } 
 }
+
+# Template used with Huginn servers https://huginn-staging.herokuapp.com/ and https://culture-huginn.herokuapp.com
