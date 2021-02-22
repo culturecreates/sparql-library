@@ -1,5 +1,9 @@
 # Google rejects sameAs URIs unless they are type schema:URL"
 
+######  DEPRECATED - DO NOT USE!
+# Issue in NoteBook 11 - page 3 - schema:sameAs should always be a literal.  
+# It is semantically wrong to assign a type URL to a Person, or other type of entity.
+
 PREFIX schema: <http://schema.org/>                
 delete { 
   ?uri schema:sameAs ?sameAs

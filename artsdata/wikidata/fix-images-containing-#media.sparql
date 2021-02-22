@@ -3,7 +3,9 @@
 
 PREFIX schema: <http://schema.org/>
 
-delete { ?s schema:image ?o . }
+delete { 
+    graph ?g { ?s schema:image ?o . } 
+}
 insert {
     graph ?g { ?s schema:image ?file_name . }
 }

@@ -14,6 +14,6 @@ where {
         ?s schema:sameAs ?o .
     filter (contains(str(?o),"wikidata.org"))
     filter (!contains(str(?o),"http://www.wikidata.org/entity/"))
-    bind(URI(CONCAT("http://www.wikidata.org/entity",replace(str(?o), "^.*\\/Q", "/Q"))) as ?o_fixed)
+    bind(CONCAT("http://www.wikidata.org/entity",replace(str(?o), "^.*\\/Q", "/Q")) as ?o_fixed)
   
 }

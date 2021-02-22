@@ -1,6 +1,6 @@
 insert data { 
   graph <http://uda.ca> {
-    <{{url}}> schema:firstName "{{firstName}}"@fr ; 
+    <url_placeholder> schema:firstName "{{firstName}}"@fr ; 
       schema:lastName "{{lastName}}"@fr ; 
       schema:jobTitle  "{{expertise}}"@fr  ; 
       rdfs:comment  "{{description}}"@fr   ; 
