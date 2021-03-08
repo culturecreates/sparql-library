@@ -3,7 +3,7 @@
 PREFIX schema: <http://schema.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
-select  (count(?name) as ?name_count) (count(distinct ?person_id) as ?person_id_count) ?name_str  where { 
+select  (count(?name) as ?name_count) (count(distinct ?person_id) as ?person_id_count) (GROUP_CONCAT( distinct(?person_id);SEPARATOR=", ") AS ?ids) ?name_str  where { 
     ?person_id a schema:Person .
     ?person_id rdfs:label ?name  .
     filter(lang(?name) = "" || lang(?name) = "en" || lang(?name) = "fr" )
