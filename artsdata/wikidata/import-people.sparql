@@ -1,0 +1,30 @@
+## Imports People so we can cache them in Artsdata
+
+
+PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+INSERT  {
+    graph <http://wikidata.org/person> {
+      ?person wdt:P106      ?job ;
+              wdt:P27       wd:Q16 ;
+              rdfs:label    ?name ;
+              rdfs:label    ?name_fr ;
+        		  a             wd:Q215627 . # Person
+    }     
+}
+WHERE { 
+   SERVICE <https://query.wikidata.org/sparql>
+    { 
+      values ?job {wd:Q33999 wd:Q3387717 } #actors and stage directors
+      ?person   wdt:P106    ?job ;  # has a job from the listed values (Domain Person)
+          wdt:P27     wd:Q16 ;  #country of citizenship Canada
+          rdfs:label  ?name .
+        
+      filter(lang(?name) = "en")
+      OPTIONAL { ?person  rdfs:label ?name_fr .  filter (lang(?name_fr) = "fr") }
+
+    } 
+}
