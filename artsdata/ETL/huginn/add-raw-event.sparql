@@ -10,6 +10,6 @@ insert data {
       schema:image  "image_placeholder"   ; 
       schema:location  "location_placeholder" ; 
       schema:url  "url_placeholder"  ;
-      schema:eventStatus  schema:eventSatus_placeholder .
+      schema:eventStatus  schema:eventStatus_placeholder .
   }
 }
