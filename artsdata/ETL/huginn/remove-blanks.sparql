@@ -1,10 +1,10 @@
 delete {      
-  graph <http://uda.ca> { 
+  graph <graph_name_placeholder> { 
     ?s ?p ?o 
   } 
 } 
 where {      
-  graph <http://uda.ca> {
+  graph <graph_name_placeholder> {
     ?s ?p ?o          
     filter (str(?o) = "")
   }
