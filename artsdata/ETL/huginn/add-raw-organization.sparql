@@ -1,0 +1,16 @@
+PREFIX schema: <http://schema.org/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+insert data { 
+  graph <graph_name_placeholder> {
+    <uri_placeholder> a schema:Organization ;
+      schema:name "name_placeholder"; 
+      schema:description  "description_placeholder"  ; 
+      schema:image  "image_placeholder"   ; 
+      schema:location  "location_placeholder" ; 
+      schema:url  "url_placeholder"  ;
+      schema:memberOf  "member_of_placeholder" .
+     "crawled_webpage_placeholder" a schema:WebPage ;
+        schema:mentions  <uri_placeholder>  .
+  }
+}
