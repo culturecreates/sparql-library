@@ -1,17 +1,17 @@
 PREFIX schema: <http://schema.org/>
 
 delete {
- 	graph <https://tapa.ca/membership/member-directory> {
+ 	graph <graph_name_placeholder> {
         ?org schema:memberOf ?adid .
     }
 }
 insert {
-	graph <https://tapa.ca/membership/member-directory> {
+	graph <graph_name_placeholder> {
         ?org schema:memberOf ?adid_uri .
     }
 }
 where {
-    graph <https://tapa.ca/membership/member-directory> {
+    graph <graph_name_placeholder> {
         ?org schema:memberOf ?adid .
         bind(URI(?adid) as ?adid_uri)
     }
