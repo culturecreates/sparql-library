@@ -7,8 +7,8 @@ delete {
 }
 insert {
     graph <graph_name_placeholder> {
-        ?s schema:location  ?place .
-        <<?s schema:location  ?place>>  rdfs:label ?place_meta_label .
+        ?event schema:location  ?place .
+        <<?event schema:location  ?place>>  rdfs:label ?place_meta_label .
     }
 } 
 where {
