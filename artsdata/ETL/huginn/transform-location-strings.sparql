@@ -1,0 +1,32 @@
+PREFIX schema: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+delete {
+    graph <graph_name_placeholder> {
+        ?event schema:location ?place_name
+    }
+}
+insert {
+    graph <graph_name_placeholder> {
+        ?s schema:location  ?place .
+        <<?s schema:location  ?place>>  rdfs:label ?place_meta_label .
+    }
+} 
+where {
+    graph <graph_name_placeholder> {
+        ?event schema:location ?place_name .
+        filter(isLiteral(?place_name))
+    }
+    {
+        select ?ad_place ?ad_place_name  where {
+            service <https://db.artsdata.ca/repositories/artsdata> {
+                ?place a schema:Place;
+                       schema:name ?ad_place_name .
+                filter (contains(str(?place),"kg.artsdata.ca"))
+            } 
+        } 
+    }
+    filter(?place_name = ?ad_place_name)
+    bind(CONCAT("Transformed using location name: ",str(?place_name)) as ?place_meta_label)     
+}
+
+# Replaces schema:location objects that are strings by looking up name of Places in Artsdata
