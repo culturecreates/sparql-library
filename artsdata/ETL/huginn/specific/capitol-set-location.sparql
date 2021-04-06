@@ -1,0 +1,14 @@
+PREFIX schema: <http://schema.org/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+insert {
+    graph <graph_name_placeholder> {
+        ?e schema:location adr:K11-225 .
+    }
+}
+where {
+    graph <graph_name_placeholder> {
+        ?e a schema:Event 
+    }
+}
+
+# Hard code location of Capitol Theatre events - Specific to Capitol in BC.
