@@ -1,0 +1,22 @@
+PREFIX schema: <http://schema.org/>
+
+delete {
+  graph <graph_name_placeholder> {
+?e ?p ?o
+}
+}
+insert {
+  graph <graph_name_placeholder> {
+?event_uri ?p ?o
+}
+}
+where {
+    graph <graph_name_placeholder> {
+      ?e a schema:Event ; schema:url ?url ; ?p ?o .
+      filter(isBLANK(?e))
+      bind(URI(CONCAT(str(?url),"#Event")) as ?event_uri)
+    }
+   
+}
+
+# Replace bnode using Event url + '#Event'
