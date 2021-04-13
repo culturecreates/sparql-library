@@ -1,4 +1,5 @@
 # Update: 29 January 2020  street address (DEPRECATED) (P969) -> located at street address (P6375)
+# Update: 12 April 2021 Schema.org SameAs range are URL Literals. So the object needs conversion to URI for Wikidata.
 
 PREFIX schema: <http://schema.org/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
@@ -6,9 +7,10 @@ SELECT  *
 #FROM   <http://laval.footlight.io> 
 WHERE { 
     <http://laval.footlight.io/resource/theatre-marcellin-champagnat> schema:sameAs ?wikidata
+    bind(URI(?wikidata) as ?wikidata_uri)
 
-   SERVICE <https://query.wikidata.org/sparql>
-    { ?wikidata wdt:P6375 ?address ;
+    SERVICE <https://query.wikidata.org/sparql>
+        { ?wikidata_uri wdt:P6375 ?address ;
            wdt:P856 ?website_url ;
 	       wdt:P281 ?postal_code . }
 } limit 100  
