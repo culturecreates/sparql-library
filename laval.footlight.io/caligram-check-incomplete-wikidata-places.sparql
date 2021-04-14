@@ -1,0 +1,50 @@
+# This SPARQL should return nothing if all event locations have required fields in Wikdiata.
+# Adjust the date filter for recent events only.
+
+
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT distinct ?sameAs ?label  ?wikidata_uri   ?address ?website_url ?postal_code  ?location 
+WHERE {
+    graph <http://laval.footlight.io> {
+        ?node a schema:Event ;
+              schema:superEvent ?event_series_id ;
+              schema:url ?url
+        filter (contains(str(?url),"co-motion"))
+    }
+    ?event_series_id schema:location ?location ;
+                     schema:startDate ?startDate .
+    filter (?startDate > "2021-03-01T00:00:00Z"^^xsd:dateTime )
+    OPTIONAL {
+        ?event_series_id schema:location/schema:name ?name .
+    }
+    OPTIONAL {
+        ?event_series_id schema:location/schema:sameAs ?sameAs .
+    }
+    filter (contains(str(?sameAs),"wikidata.org"))
+    bind(URI(?sameAs) as ?wikidata_uri)
+    SERVICE <https://query.wikidata.org/sparql>
+    {
+        OPTIONAL {
+            ?wikidata_uri wdt:P6375 ?address  
+        }
+        OPTIONAL {
+            ?wikidata_uri  wdt:P856 ?website_url 
+        }
+        OPTIONAL {
+            ?wikidata_uri  wdt:P281 ?postal_code  
+        }
+        OPTIONAL {
+            ?wikidata_uri rdfs:label ?label_fr .
+            filter(lang(?label_fr) = "fr")
+        }
+        OPTIONAL {
+            ?wikidata_uri rdfs:label ?label_en .
+            filter(lang(?label_en) = "en")
+        }
+        bind(COALESCE(?label_fr,?label_en) as ?label)
+    }
+    filter(!BOUND(?sameAs ) ||!BOUND(?address )||!BOUND(?website_url )||!BOUND(?postal_code )  )
+}

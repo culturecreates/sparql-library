@@ -1,0 +1,20 @@
+# Check for Places missing wikidata addresses
+
+
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+SELECT reduced ?event_series_id ?title ?date  ?sameAs  ?location_id ?url ?event_series_id ?review_date
+WHERE {
+    ?node a schema:Event ;
+    schema:name ?title ;
+    schema:startDate ?date ;
+
+    schema:location ?location_id ;
+    schema:url ?url ;
+    schema:superEvent ?event_series_id .
+    OPTIONAL { ?event_series_id schema:location/schema:sameAs ?sameAs .}
+    filter (contains(str(?url),"co-motion.ca"))
+    filter(!BOUND(?sameAs ))
+}  
+
