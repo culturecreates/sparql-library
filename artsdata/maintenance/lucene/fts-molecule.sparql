@@ -3,5 +3,5 @@ INSERT DATA {
   luc:index luc:setParam "uris" .
   luc:include luc:setParam "literals" .
   luc:moleculeSize luc:setParam "1" .
-  luc:includePredicates luc:setParam "http://www.w3.org/2000/01/rdf-schema#label" .
+  luc:includePredicates luc:setParam "http://www.w3.org/2000/01/rdf-schema#label http://schema.org/url"  .
 }
