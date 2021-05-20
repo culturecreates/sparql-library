@@ -1,0 +1,19 @@
+# This SPARQL removes endDates that are blank ""
+# Artsdata Event SHACL will fail unless these are removed
+
+PREFIX schema: <http://schema.org/>
+
+delete {
+    graph ?g {
+         ?s schema:endDate ?date
+    }
+}
+#select *
+where {
+     graph ?g {
+    ?s schema:endDate ?date
+        filter(str(?date)= "")
+
+    }
+
+}

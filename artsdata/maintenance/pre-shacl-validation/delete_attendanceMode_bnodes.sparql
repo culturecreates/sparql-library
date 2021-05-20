@@ -1,0 +1,20 @@
+# This SPARQL removes eventAttendanceMode set to a blanknode
+# Artsdata Event SHACL will fail unless these are removed
+
+PREFIX schema: <http://schema.org/>
+
+delete {
+    graph ?g {
+         ?s schema:eventAttendanceMode ?m
+    }
+}
+
+where {
+     graph ?g {
+    ?s schema:eventAttendanceMode ?m
+    #filter (?m != schema:OfflineEventAttendanceMode && ?m != schema:OnlineEventAttendanceMode && ?m != schema:MixedEventAttendanceMode)
+    filter(isBlank(?m))
+
+    }
+
+}
