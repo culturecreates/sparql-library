@@ -1,0 +1,16 @@
+PREFIX schema: <http://schema.org/> 
+
+insert data { 
+  graph <graph_name_placeholder> {
+    <uri_placeholder> a schema:Person ;
+      schema:name "name_placeholder"; 
+      schema:description  "description_placeholder"  ; 
+      schema:image  "image_placeholder"   ; 
+      schema:address  "address_placeholder" ; 
+      schema:url  "url_placeholder"  ;
+      schema:hasOccupation  "has_occupation_placeholder" ; 
+      schema:mainEntityOfPage <crawled_webpage_placeholder#WebPage> .
+    <crawled_webpage_placeholder#WebPage> a schema:WebPage  ;
+      schema:url  "url_placeholder" .
+  }
+}
