@@ -1,0 +1,22 @@
+PREFIX schema: <http://schema.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+select distinct ?artist ?name
+from <http://kg.artsdata.ca/wikidata/indigenous-artists>
+from <http://kg.artsdata.ca/wikidata/places>
+
+where {
+    ?artist a schema:Person ;
+           rdfs:label ?name .
+    OPTIONAL {
+        ?artist wdt:P27 ?c 
+    }.
+    OPTIONAL {
+        ?artist  wdt:P19/wdt:P131* ?b 
+    }.
+    OPTIONAL {
+        ?artist wdt:P937/wdt:P131* ?w 
+    }.
+  filter (uri(?c) = wd:Q16 || uri(?b) = wd:Q16 || uri(?w) = wd:Q16)
+}

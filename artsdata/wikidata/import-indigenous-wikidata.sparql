@@ -28,7 +28,7 @@ where {
                 wd:Q483501
             }
             ?person wdt:P31 wd:Q5;
-                    (wdt:P172/(wdt:P279*)) wd:Q103817;
+                     (wdt:P172/wdt:P361*/(wdt:P279*)) wd:Q103817;
                                        (wdt:P106/(wdt:P279*)) ?artist;
                                                           wdt:P172 ?ethnic_group.
             OPTIONAL {

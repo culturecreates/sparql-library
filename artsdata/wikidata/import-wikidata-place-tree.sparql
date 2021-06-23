@@ -1,0 +1,25 @@
+# Add the tree of places from smallest up to Country
+
+PREFIX schema: <http://schema.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+
+#select distinct ?work ?place
+insert { graph <http://kg.artsdata.ca/wikidata/places> 
+  {
+    ?place_uri wdt:P131 ?place
+  }
+}
+
+where { 
+	?artist a schema:Person ;
+    wdt:P19 ?place .  # birth place 
+    #     wdt:P937 ?place # work location 
+  filter(isURI(?place))
+	bind(URI(?place) as ?place_uri)
+    
+  SERVICE <https://query.wikidata.org/sparql> {
+    ?place_uri wdt:P131* ?place
+  }
+} 
+
