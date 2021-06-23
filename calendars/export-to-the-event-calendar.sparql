@@ -1,0 +1,15 @@
+PREFIX schema: <http://schema.org/>
+select * 
+from <http://kg.artsdata.ca/culture-creates/footlight/signelaval-com>
+where {
+    ?e a schema:Event ;
+       schema:startDate ?startdatetime ;
+       schema:endDate ?enddatetime ;
+       schema:name ?event_name ;
+       schema:description ?event_description ;
+       schema:image ?image .
+    
+    bind(substr(str(?startdatetime),0,11) as ?event_start_Date )
+    bind(substr(str(?startdatetime),12,8) as ?event_start_Time )
+    bind(substr(str(?enddatetime),0,11) as ?event_end_Date )
+}
