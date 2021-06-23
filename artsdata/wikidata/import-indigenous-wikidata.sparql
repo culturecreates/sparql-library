@@ -8,16 +8,14 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 
 insert {
    graph <http://kg.artsdata.ca/wikidata/indigenous-artists> {
-         ?person a schema:Person ;
-			 wdt:P19  ?birth_place ;
-			wdt:P106 ?occupation ;
+      ?person a schema:Person ;
+			  wdt:P19  ?birth_place ;
+			  wdt:P106 ?occupation ;
 		    wdt:P172 ?ethnic_group ;
-			wdt:P937 ?work_location ;
-			wdt:P27 ?citizenship ;
-   <http://www.w3.org/2004/02/skos/core#altLabel> ?alt_label ;
-       rdfs:label ?label .
- 			
-             
+			  wdt:P937 ?work_location ;
+			  wdt:P27 ?citizenship ;
+        <http://www.w3.org/2004/02/skos/core#altLabel> ?alt_label ;
+        rdfs:label ?label .     
    }
 }
 where {
