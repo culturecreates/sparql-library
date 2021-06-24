@@ -1,29 +1,32 @@
+# Import indigenous artists from Wikidata with some metadata needed to determine if they are Canadian.
+
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX bd: <http://www.bigdata.com/rdf#>
 PREFIX schema: <http://schema.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
 # select  ?person ?ethnic_group ?ethnic_groupLabel ?birth_place ?birth_placeLabel ?work_location ?work_locationLabel ?occupation ?occupationLabel ?citizenship ?citizenshipLabel 
 
 insert {
    graph <http://kg.artsdata.ca/wikidata/indigenous-artists> {
-      ?person a schema:Person ;
-			  wdt:P19  ?birth_place ;
-			  wdt:P106 ?occupation ;
+        ?person a schema:Person ;  # Or replace wdt:P31 with rdf:type to make wd:Q5 work as the person type.
+			wdt:P19  ?birth_place ;
+			wdt:P106 ?occupation ;
 		    wdt:P172 ?ethnic_group ;
-			  wdt:P937 ?work_location ;
-			  wdt:P27 ?citizenship ;
-        <http://www.w3.org/2004/02/skos/core#altLabel> ?alt_label ;
-        rdfs:label ?label .     
+			wdt:P937 ?work_location ;
+			wdt:P27 ?citizenship ;
+            <http://www.w3.org/2004/02/skos/core#altLabel> ?alt_label ;
+            rdfs:label ?label .     
    }
 }
 where {
     SERVICE <https://query.wikidata.org/sparql> {
         SELECT  ?person  ?ethnic_group ?ethnic_groupLabel ?birth_place ?birth_placeLabel ?work_location ?work_locationLabel ?occupation ?occupationLabel ?citizenship ?citizenshipLabel ?alt_label ?label WHERE {
             VALUES ?artist {
-                wd:Q2500638
-                wd:Q483501
+                wd:Q2500638 # creator
+                wd:Q483501 # artist
             }
             ?person wdt:P31 wd:Q5;
                      (wdt:P172/wdt:P361*/(wdt:P279*)) wd:Q103817;

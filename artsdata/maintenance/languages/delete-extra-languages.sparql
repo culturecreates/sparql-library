@@ -1,0 +1,16 @@
+
+# Delete all literals in languages other than english or french or without specified lang.
+
+# select distinct ?lang 
+
+delete {
+ ?s ?p ?o .
+}
+
+where { 
+	?s ?p ?o .
+    filter (isLiteral(?o))
+    filter (!langMatches(lang(?o),"en") && !langMatches(lang(?o),"fr") && lang(?o) != ""  )
+    bind(lang(?o) as ?lang)
+} 
+

@@ -1,0 +1,17 @@
+#Indigenous artists in Canada
+SELECT DISTINCT ?person #?personLabel ?ethnic_group ?ethnic_groupLabel ?birth_place ?birth_placeLabel ?citizenship ?citizenshipLabel ?work_location ?work_locationLabel ?occupation ?occupationLabel 
+WHERE {
+  VALUES ?artist {
+    wd:Q2500638
+    wd:Q483501
+  }
+  ?person wdt:P31 wd:Q5;
+    (wdt:P172/(wdt:P361*)/(wdt:P279*)) wd:Q103817;
+    (wdt:P106/(wdt:P279*)) ?artist;
+    wdt:P172 ?ethnic_group.
+  OPTIONAL { ?person (wdt:P19/wdt:P131) ?birth_place. }
+  OPTIONAL { ?person wdt:P27 ?citizenship. }
+  OPTIONAL { ?person wdt:P937 ?work_location. }
+  OPTIONAL { ?person wdt:P106 ?occupation. }
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en". }
+}
