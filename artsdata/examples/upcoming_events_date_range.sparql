@@ -1,0 +1,22 @@
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX schema: <http://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+SELECT   (sample(?name) as ?sample) (min(?start) as ?min) (max(?end) as ?max)  WHERE {
+  ?sub a schema:Event .
+  
+  graph ?graph {
+      ?sub  schema:name ?name ;
+       schema:startDate ?start .
+    OPTIONAL { ?sub schema:endDate ?real_end } 
+    OPTIONAL { ?sub ^schema:subEvent ?super_event }
+  }
+  bind(coalesce(?real_end, ?start) as ?end)
+  bind(coalesce(?super_event, ?sub) as ?super)
+  filter (?start < "2021-12-01"^^xsd:dateTime) #sep
+  filter (?end > "2021-08-30"^^xsd:dateTime)
+ #filter (contains(?name, "Mazza"))
+  filter (lang(?name) = "en")
+  #filter(  exists{ ?sub ^schema:subEvent ?super_event } )
+} group by ?super 
+
