@@ -27,4 +27,4 @@ WHERE {
         }
     }
     filter(!Bound(?adid ))
-} group by ?name ?ad_uri ?wd_uri ?ad_id
+} group by ?ad_uri ?wd_uri ?ad_id
