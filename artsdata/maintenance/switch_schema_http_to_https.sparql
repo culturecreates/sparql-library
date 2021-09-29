@@ -1,0 +1,32 @@
+# Switch peredicates and object URIs using schema.org https to http
+# This is very slow on large graphs
+
+delete {
+   ?s1 ?p1 ?o1 .
+   ?s2 ?p2 ?o2 .
+}
+insert {
+   ?s1 ?p1_http ?o1 .
+   ?s2 ?p2 ?o2_http .
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/synapsec/graphe>
+    }
+    {
+        graph ?g {
+            ?s1 ?p1 ?o1 .
+            filter (contains(str(?p1),"https://schema.org"))
+            bind(URI(concat("http",STRAFTER(str(?p1),"https"))) as ?p1_http)
+        }
+    }
+    UNION
+    {
+        graph ?g {
+            ?s2 ?p2 ?o2 .
+            filter(isURI(?o2))
+            filter (contains(str(?o2),"https://schema.org"))
+            bind(URI(concat("http",STRAFTER(str(?o2),"https"))) as ?o2_http)
+        }
+    }
+}

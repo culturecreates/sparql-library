@@ -1,0 +1,14 @@
+# This SPARQL removes blank "" sameAs 
+# which can create havoc using the API that joins matching sameAs
+PREFIX schema: <http://schema.org/>
+delete {
+    graph ?g {
+        ?s schema:sameAs ""
+    }
+}
+# select *
+where {
+    graph ?g {
+        ?s schema:sameAs ""
+    }
+}
