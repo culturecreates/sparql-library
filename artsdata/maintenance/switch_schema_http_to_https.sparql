@@ -1,13 +1,16 @@
 # Switch peredicates and object URIs using schema.org https to http
 # This is very slow on large graphs
-
 delete {
-   ?s1 ?p1 ?o1 .
-   ?s2 ?p2 ?o2 .
+    graph ?g {
+        ?s1 ?p1 ?o1 .
+        ?s2 ?p2 ?o2 .
+    }
 }
 insert {
-   ?s1 ?p1_http ?o1 .
-   ?s2 ?p2 ?o2_http .
+    graph ?g {
+        ?s1 ?p1_http ?o1 .
+        ?s2 ?p2 ?o2_http .
+    }
 }
 where {
     values ?g {

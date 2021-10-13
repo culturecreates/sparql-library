@@ -1,0 +1,81 @@
+# SPARQL behind the Artsdata Ranked API api.artsdata.ca/ranked/K10-194
+# input: an entity 
+# output: graph of ranked results with nested blank nodes 
+
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX schema: <http://schema.org/>
+
+# Graph with nested blank nodes
+construct {
+     ?s ?b ?c .
+    ?bn ?bnp ?bno .
+    ?b schema:partOf  ?gtop .
+    ?gtop schema:ratingValue  ?ratingTop .
+}
+
+#select  ?s ?b ?c ?gtop 
+where {
+     graph ?gtop {
+        ?id ?b ?c .
+        OPTIONAL {  ?id ?b ?bn . ?bn ?bnp ?bno .   filter (isBlank(?bn))}
+      
+        bind (adr:K10-194  as ?s)
+    }
+    ?gtop schema:contentRating/schema:ratingValue ?ratingTop
+    filter( ?b = ?p && ?ratingTop = ?pick )
+
+    # Sub query to get all sameAs
+        {
+        select ?id where {
+            {
+                values ?id {
+                    adr:K10-194 
+                }
+            }
+          UNION {
+                     bind (str(adr:K10-194) as ?id_str) 
+                    ?id schema:sameAs ?id_str  .
+                }
+                UNION {
+                    adr:K10-194  schema:sameAs ?id_str .
+                    bind(URI(?id_str) as ?id)
+                }
+            filter (isURI(?id))
+        } 
+    }
+    
+# Build a table of properties and graph with best (lowest) rank
+  {
+  select  ?p  (min(?rating) as ?pick) 
+  where {
+      graph ?g {
+          ?id ?p ?o .
+          bind (adr:K10-194  as ?s)
+      }
+      ?g schema:contentRating/schema:ratingValue ?rating
+        
+      # Sub query to get all sameAs
+        {
+            select ?id where {
+                {
+                    values ?id {
+                        adr:K10-194  
+                    }
+                }
+                UNION {
+                     bind (str(adr:K10-194) as ?id_str) 
+                    ?id schema:sameAs ?id_str  .
+                }
+                UNION {
+                    adr:K10-194  schema:sameAs ?id_str .
+                    bind(URI(?id_str) as ?id)
+                }
+                filter (isURI(?id))
+            } 
+        }
+  } group by ?p 
+  }
+}
+
+
+
