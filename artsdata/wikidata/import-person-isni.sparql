@@ -1,0 +1,23 @@
+PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+insert {
+    graph <http://kg.artsdata.ca/wikidata/person>
+    {
+        ?wd   wdt:P213 ?wd_isni .
+    }  
+}
+where {
+    ?s a schema:Person ;
+       schema:sameAs ?wduri ;
+       rdfs:label ?name .
+    filter(contains(?wduri, "wikidata.org"))
+    bind(URI(?wduri ) as ?wd)
+   
+    SERVICE <https://query.wikidata.org/sparql>
+    {
+        OPTIONAL {
+            ?wd  wdt:P213 ?wd_isni .
+        }
+    }
+}
