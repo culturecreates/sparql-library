@@ -13,9 +13,9 @@ insert data {
       schema:legalName "legal_name_placeholder"@la ;
       wdt:P8860 'business_number_placeholder' ;
       wdt:P1454 'legal_form_placeholder' ;
-      ado:charitable_status 'charitable_status_placeholder' ;
+      ado:charitable_status 'charitable_status_placeholder' ;  # fix post import
       schema:url 'website_official_placeholder' ;
-      ado:discipline_genre 'discipline_genre_placeholder' ;
+      ado:discipline_genre 'discipline_genre_placeholder' ; # fix post import
       schema:address [
         schema:addressCountry 'country_placeholder' ;
         schema:addressRegion 'province_placeholder' ;
