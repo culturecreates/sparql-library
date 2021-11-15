@@ -23,7 +23,7 @@ insert data {
         schema:postalCode "postal_code_placeholder" ;
         schema:streetAddress "street_address_placeholder"
       ] ;
-      schema:sameAs wd:wikidata_placeholder ;
-      schema:sameAs adr:artsdata_placeholer .
+      schema:sameAs "wikidata_placeholder" ;
+      schema:sameAs "artsdata_placeholer" .
   }
 }
