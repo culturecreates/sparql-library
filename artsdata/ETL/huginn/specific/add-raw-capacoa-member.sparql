@@ -1,9 +1,29 @@
 PREFIX schema: <http://schema.org/> 
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX ado: <http://kg.artsdata.ca/ontology/>
 
 insert data { 
   graph <graph_name_placeholder> {
     <uri_placeholder> a schema:Organization ;
-      schema:name "operating_name1_placeholder"@operating_name1_language_placeholder .
+      schema:name "operating_name1_placeholder"@oa ;
+      schema:alternateName "operating_name2_placeholder"@ob ;
+      schema:legalName "legal_name_placeholder"@la ;
+      wdt:P8860 'business_number_placeholder' ;
+      wdt:P1454 'legal_form_placeholder' ;
+      ado:charitable_status 'charitable_status_placeholder' ;
+      schema:url 'website_official_placeholder' ;
+      ado:discipline_genre 'discipline_genre_placeholder' ;
+      schema:address [
+        schema:addressCountry 'country_placeholder' ;
+        schema:addressRegion 'province_placeholder' ;
+        schema:addressLocality 'municipality_placeholder' ;
+        schema:postalCode 'postal_code_placeholder' ;
+        schema:streetAddress 'street_address_placeholder'
+      ] ;
+      schema:sameAs wd:wikidata_placeholder ;
+      schema:sameAs adr:artsdata_placeholer .
   }
 }
