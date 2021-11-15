@@ -4,6 +4,6 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 insert data { 
   graph <graph_name_placeholder> {
     <uri_placeholder> a schema:Organization ;
-      schema:name "name_placeholder" .
+      schema:name "operating_name1_placeholder"@operating_name1_language_placeholder .
   }
 }
