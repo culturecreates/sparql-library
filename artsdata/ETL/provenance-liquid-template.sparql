@@ -12,6 +12,12 @@ insert data {
       prov:wasAttributedTo <wasAttributedToToolUri> ;     
       prov:wasAttributedTo <wasAttributedToOrgUri> ; 
       prov:wasDerivedFrom <wasDerivedFromUri> ;
+      schema:contentRating [  
+        a schema:EndorsementRating ;  
+        schema:ratingValue 100 ;
+        schema:ratingExplanation "Automatic endorsement rating for having provenance metadata"@en ;
+        schema:author adr:K1-5 
+        ] ;
       <http://creativecommons.org/ns#license> <https://creativecommons.org/publicdomain/mark/1.0> .
   } 
 }
