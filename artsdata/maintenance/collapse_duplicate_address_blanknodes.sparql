@@ -1,0 +1,34 @@
+# This SPARQL collapses repeating blanknode addresses
+# Each place per graph will have only a single address blanknode
+# In the rare case a property is different it will accumulate (2 values for the same property)
+
+PREFIX schema: <http://schema.org/>
+delete {
+   graph ?g {
+       ?place schema:address ?bnode .
+   }
+}
+insert {
+   graph ?g {
+       ?place schema:address ?prime_node .
+   }
+}
+
+#select * 
+where {
+    graph ?g {
+        ?place   schema:address ?bnode .
+        filter (isBLANK(?bnode)) 
+    }
+   
+    { # select a random blank node to use as prime
+        select ?place ?g (sample(?node) as ?prime_node) where {
+            graph ?g {
+                # values ?g {<GRAPH_PLACEHOLDER>}
+                ?place a schema:Place ; # move out of graph to use inference.
+                       schema:address ?node .
+                filter (isBLANK(?node)) 
+            }
+        } group by ?place ?g
+    }
+}

@@ -9,6 +9,7 @@ delete {
 # select *
 where {
     graph ?g {
+         # values ?g {<GRAPH_PLACEHOLDER>}
         ?s schema:sameAs ""
     }
 }
