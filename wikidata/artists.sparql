@@ -1,9 +1,18 @@
-SELECT ?person ?personLabel WHERE
-{
-values ?job {wd:Q33999 wd:Q3387717} #actors and stage directors
-?person wdt:P106 ?job ;  # has a job from the listed values
-        # wdt:P31 wd:Q5 ;  # checking for human is redundant since P106 is a subclass of schema:Person
-        wdt:P27 wd:Q16 .  #country of citizenship Canada
-
-SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en" } 
-} order by ?personLabel
+SELECT * WHERE {
+  VALUES ?job {
+    wd:Q33999  # actors
+    wd:Q3387717 # theatrical director
+    wd:Q639669 # musician
+  }
+  ?person wdt:P106 ?job;
+    wdt:P27 wd:Q16;
+    wdt:P569 ?birth;
+    rdfs:label ?name.
+  BIND((NOW()) - ?birth AS ?days)
+  FILTER(?days < (365  * 80 )) # born less than 80 years ago
+  FILTER((LANG(?name)) = "en")
+  OPTIONAL {
+    ?person rdfs:label ?name_fr.
+    FILTER((LANG(?name_fr)) = "fr")
+  }
+}
