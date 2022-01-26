@@ -1,0 +1,18 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+insert {
+    graph  <http://kg.artsdata.ca/kim-davis/LDS_RQD/quebecdanse.org_rqd-people> {
+        ?p schema:sameAs ?adp 
+    }
+}
+where {
+    graph <http://kg.artsdata.ca/kim-davis/LDS_RQD/quebecdanse.org_rqd-people> {
+        ?p a schema:Person ;
+           schema:name ?name
+    }    
+    ?adp a schema:Person;
+         schema:name ?ad_name .
+    filter (str(?name) =  str(?ad_name) )
+    filter (?p !=  ?adp )
+    filter(!isBlank(?adp))
+}
