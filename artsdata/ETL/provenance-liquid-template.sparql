@@ -18,6 +18,7 @@ insert data {
         schema:ratingExplanation "Automatic endorsement rating for having provenance metadata"@en ;
         schema:author adr:K1-5 
         ] ;
+      schema:hasPart  <graphUri> ;
       <http://creativecommons.org/ns#license> <https://creativecommons.org/publicdomain/mark/1.0> .
   } 
 }
