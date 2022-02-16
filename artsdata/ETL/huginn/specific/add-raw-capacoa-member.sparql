@@ -3,7 +3,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
-PREFIX ado: <http://kg.artsdata.ca/ontology/>
+PREFIX capacoa: <https://capacoa.ca/ontology/questionnaire#>
 
 insert data { 
   graph <graph_name_placeholder> {
@@ -16,11 +16,12 @@ insert data {
       schema:additionalType <legal_form_uri> ;
       schema:additionalType <charitable_status_uri> ; 
       schema:additionalType <primary_activity_uri> ;
-      schema:additionalType <discipline_genre_uri> ;
+      schema:additionalType <discipline_genre_placeholder> ;
       schema:additionalType <presenting_format_uri> ;
       schema:url "website_official_placeholder" ;
-
-      schema:additionalType <events_page_uri> ;
+      schema:url [ a schema:Role ; 
+                  schema:roleName "Events Webpage" ;
+                  schema:url "events_page_placeholder" ] ;
       schema:additionalType <terms_conditions_v1_0_uri> ;
       schema:address [
         schema:addressCountry "country_placeholder" ;
@@ -40,34 +41,41 @@ insert data {
                                           schema:name "venue_other_name" ;
                                           schema:sameAs "wikidata_id_venue_other" ] ] .
     
-    <legal_form_uri> a skos:Concept ; 
-      skos:inScheme ado:CapacoaVocabulary; 
+    capacoa:legal_form_uri a skos:Concept ; 
+      skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "legal_form_placeholder" .
+
+    capacoa:LegalForm a skos:Collection ;
+      skos:member <legal_form_uri> .
     
     <charitable_status_uri> a skos:Concept ; 
-      skos:inScheme ado:CapacoaVocabulary; 
+      skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel  "charitable_status_placeholder" .
 
-    <primary_activity_uri> a skos:Concept ; 
-      skos:inScheme ado:CapacoaVocabulary; 
-      skos:prefLabel "primary_activity_placeholder" .
+    capacoa:charitableStatus a skos:Collection  ;
+       skos:member <charitable_status_uri> .
 
-    <discipline_genre_uri> a skos:Concept ; 
-      skos:inScheme ado:CapacoaVocabulary; 
-      skos:prefLabel  "discipline_genre_placeholder" .
+    <primary_activity_uri> a skos:Concept ; 
+      skos:inScheme capacoa:QuestionnaireChoices; 
+      skos:prefLabel "primary_activity_placeholder" .
+    
+    capacoa:PrimaryActivity a skos:Collection  ;
+       skos:member <primary_activity_uri> .
 
     <presenting_format_uri> a skos:Concept ; 
-      skos:inScheme ado:CapacoaVocabulary; 
+      skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "presenting_format_placeholder" .
-
-    <events_page_uri> a skos:Concept ; 
-      skos:inScheme ado:CapacoaVocabulary; 
-      skos:prefLabel "events_page_placeholder" .
+    
+    capacoa:PresentingFormat a skos:Collection  ;
+       skos:member <presenting_format_uri> .
 
     <terms_conditions_v1_0_uri> a skos:Concept ; 
-      skos:inScheme ado:CapacoaVocabulary; 
+      skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "terms_conditions_v1_0_placeholder" .
 
-    ado:CapacoaVocabulary a skos:ConceptScheme .
+    capacoa:TermsConditionsV1_0 a skos:Collection  ;
+      skos:member <terms_conditions_v1_0_uri> .
+
+    capacoa:QuestionnaireChoices a skos:ConceptScheme .
   }
 }
