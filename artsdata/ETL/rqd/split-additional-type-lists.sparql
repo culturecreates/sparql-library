@@ -1,0 +1,27 @@
+PREFIX schema: <http://schema.org/>
+
+delete {
+    graph ?g {
+       ?s schema:additionalType ?type .
+    }
+}
+insert {
+    graph ?g {
+         ?s schema:additionalType ?first_type .
+		?s schema:additionalType ?more_types .
+    }
+}
+where { 
+     values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+	?s a schema:Person ;
+    schema:additionalType ?type .
+        filter(contains(?type,", "))
+        bind(strafter(?type,", ") as ?more_types )
+        bind(strbefore(?type,", ") as ?first_type )
+    }
+} 
+
+# Run this 6 times. Each run splits one comma from the list

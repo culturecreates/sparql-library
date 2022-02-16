@@ -1,0 +1,19 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+insert {
+    graph ?g {
+        ?occupation_id a schema:Occupation ;
+                       schema:name ?occupation_name .
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        values ?occupation_name {
+            "Interprète" "Chorégraphe" "Enseignant" "Travailleur culturel" "Concepteur" "Membre de cœur" "Répétiteur / Dir. des répétitions" "Chercheur" "Compagnie" "Étudiant" "Musicien accompagnateur" 
+        }
+        bind(URI(concat("https://www.quebecdanse.org/ontologie/occupation#",ENCODE_FOR_URI(?occupation_name))) as ?occupation_id)
+    }
+}

@@ -1,0 +1,23 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+delete {
+    graph ?g {
+        ?s schema:name ?o .
+    }
+}
+insert {
+    graph ?g {
+        ?s schema:name ?o_fix .
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?s a schema:Person;
+           schema:name ?o .
+        filter(strends(?o," "))
+        bind(replace(?o,"\\s$","") as ?o_fix)
+    }
+}

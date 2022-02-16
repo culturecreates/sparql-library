@@ -1,0 +1,23 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+delete {
+    graph ?g {
+        ?item ?p ?o .
+        ?o ?o1 ?o2 .
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?s a schema:DataFeed ;
+           schema:dataFeedElement ?dfitem .
+        ?dfitem schema:item ?item .
+        ?item a schema:BreadcrumbList ;
+              ?p ?o .
+        OPTIONAL {
+            ?o ?o1 ?o2 
+        }
+    }
+}

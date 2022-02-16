@@ -1,0 +1,30 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+delete {
+    graph ?g {
+        ?gallery schema:video ?video .
+        ?video schema:embedUrl ?url
+    }
+}
+insert {
+    graph ?g {
+        ?gallery schema:video ?video_uri .
+        ?video_uri schema:embedUrl ?url ;
+                   a schema:VideoObject ;
+                   schema:name "Vidéo"
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        select  ?gallery ?video ?url ?video_uri where {
+            ?gallery   schema:video ?video .
+            ?video a schema:VideoObject ;
+                   schema:embedUrl ?url   .
+            bind(UUID() as ?video_uri)
+            filter(isBlank(?video))
+        }
+    }
+}

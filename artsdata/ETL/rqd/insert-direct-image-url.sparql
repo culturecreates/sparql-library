@@ -1,0 +1,25 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+
+insert {
+    graph ?g {
+        ?e schema:image ?image_url
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    values ?event_type {
+        schema:EventSeries schema:Event
+    }
+    ?e a ?event_type
+    graph ?g {
+        ?e a ?type .
+        OPTIONAL {
+            ?e schema:image ?image.
+            ?image schema:description 'Search page thumb' ;
+                schema:url ?image_url
+        }
+    }
+}

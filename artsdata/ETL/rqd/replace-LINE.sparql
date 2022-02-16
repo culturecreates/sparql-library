@@ -1,0 +1,21 @@
+#select * 
+delete {
+ graph ?g {
+        ?s ?p ?o .
+    }
+}
+insert {
+ graph ?g {
+        ?s ?p ?o_br .
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?s ?p ?o .
+        filter(contains(str(?o),'---LINE---'))
+        bind(replace(?o,'---LINE---','\n\n') as ?o_br)
+    }
+}

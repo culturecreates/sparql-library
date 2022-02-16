@@ -1,0 +1,31 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+delete {
+    graph ?g {
+        ?s   schema:subjectOf ?gallery .
+        ?gallery ?gallery_p ?gallery_o .
+        
+    }
+}
+insert {
+    graph ?g {
+        ?s   schema:subjectOf ?gallery_uri .
+        ?gallery_uri ?gallery_p ?gallery_o ; schema:name "Galerie des médias"
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?gallery ?gallery_p ?gallery_o .
+        {
+            select ?s ?gallery ?gallery_uri where {
+                ?s   schema:subjectOf ?gallery .
+                ?gallery a schema:VideoGallery .
+                bind(UUID() as ?gallery_uri)
+                filter(isBlank(?gallery))
+            }
+        }
+    }
+}

@@ -1,0 +1,29 @@
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+#select * 
+delete {
+    graph ?g {
+        ?e schema:startDate ?startDate ;
+      schema:endDate ?endDate .
+    }
+}
+insert {
+    graph ?g {
+        ?e schema:startDate ?startDate_typed ;
+            schema:endDate ?endDate_typed .
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g{
+        ?e schema:startDate ?startDate ;
+           schema:endDate ?endDate .
+        
+        filter(datatype(?startDate) != xsd:date)
+         filter(datatype(?endDate) != xsd:date)
+        bind(strdt(?startDate, xsd:date) as ?startDate_typed)
+          bind(strdt(?endDate, xsd:date) as ?endDate_typed)
+    }
+}

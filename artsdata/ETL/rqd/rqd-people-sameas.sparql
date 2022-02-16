@@ -1,18 +1,22 @@
 PREFIX schema: <http://schema.org/>
-#select * 
+# select * 
 insert {
-    graph  <http://kg.artsdata.ca/kim-davis/LDS_RQD/quebecdanse.org_rqd-people> {
+    graph  ?g {
         ?p schema:sameAs ?adp 
     }
 }
 where {
-    graph <http://kg.artsdata.ca/kim-davis/LDS_RQD/quebecdanse.org_rqd-people> {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
         ?p a schema:Person ;
-           schema:name ?name
-    }    
-    ?adp a schema:Person;
-         schema:name ?ad_name .
-    filter (str(?name) =  str(?ad_name) )
-    filter (?p !=  ?adp )
-    filter(!isBlank(?adp))
+            schema:name ?name .
+        ?adp a schema:Person;
+            schema:name ?ad_name .
+        filter (str(?name) =  str(?ad_name) )
+        filter (?p !=  ?adp )
+        filter(!isBlank(?adp))
+        filter(!isBlank(?p))
+    }  
 }

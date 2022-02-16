@@ -1,0 +1,27 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+delete {
+    graph ?g {
+        <http://www.quebecdanse.org/repertoire/plamondon-anne-2#rqd_repertoire_person> ?p ?o .
+        ?o ?op ?oo .
+    }
+}
+insert {
+    graph <http://kg.artsdata.ca/culture-creates/huginn/rqd-alternate-layer> {
+        <http://www.quebecdanse.org/repertoire/plamondon-anne-2#rqd_repertoire_person> ?p ?o .
+        ?o ?op ?oo .
+        <http://www.quebecdanse.org/repertoire/plamondon-anne-2#rqd_repertoire_person> schema:sameAs <http://www.quebecdanse.org/repertoire/plamondon-anne#rqd_repertoire_person> .
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        #<http://www.quebecdanse.org/repertoire/plamondon-anne#rqd_repertoire_person> ?p ?o .
+        <http://www.quebecdanse.org/repertoire/plamondon-anne-2#rqd_repertoire_person> ?p ?o .
+        OPTIONAL {
+            ?o ?op ?oo .
+        }
+    }
+}

@@ -1,0 +1,20 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+delete {
+    graph ?g {
+        ?s schema:contactPoint ?o .
+    }
+}
+insert {
+    graph ?g {
+        ?s schema:employee ?o .
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?s schema:contactPoint ?o .
+    }
+}

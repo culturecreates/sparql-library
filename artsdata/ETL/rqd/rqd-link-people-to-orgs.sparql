@@ -1,23 +1,23 @@
 PREFIX schema: <http://schema.org/>
-#select * 
+# select * 
 delete {
-    graph <http://kg.artsdata.ca/kim-davis/LDS_RQD/quebecdanse.org_rqd-orgs> {
+    graph ?g {
         ?p_blank  ?p_p ?p_o  .
         ?x_s ?x_p ?p_blank .
     }
 }
 insert {
-    graph <http://kg.artsdata.ca/kim-davis/LDS_RQD/quebecdanse.org_rqd-orgs> {
+    graph ?g {
         ?p ?p_p ?p_o  .
         ?x_s ?x_p ?p .
     }
 }
 where {
-    graph <http://kg.artsdata.ca/kim-davis/LDS_RQD/quebecdanse.org_rqd-people> {
+    values ?g {<http://kg.artsdata.ca/culture-creates/huginn/rqd>}
+    graph ?g {
         ?p a schema:Person ;
-           schema:name ?name
-    }    
-    graph <http://kg.artsdata.ca/kim-davis/LDS_RQD/quebecdanse.org_rqd-orgs> {
+           schema:name ?name .
+   
         ?p_blank a schema:Person;
                  ?p_p ?p_o ;
                  schema:name ?contact_point_name .
@@ -25,6 +25,7 @@ where {
     }
     filter (?name =  ?contact_point_name )
     filter(isBlank(?p_blank))
+    filter(!isBlank(?p))
 }
 
 # Used to link People to their roles in Orgs for RDQ website by replacing blank nodes with person URIs

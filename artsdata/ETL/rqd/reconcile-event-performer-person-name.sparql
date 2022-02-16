@@ -1,0 +1,25 @@
+PREFIX schema: <http://schema.org/>
+# select * 
+delete {
+    graph ?g {
+        ?s  schema:performer ?performer
+    }
+}
+insert {
+    graph ?g {
+        ?s  schema:performer  ?person
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?s a schema:Event ;
+           schema:performer ?performer .
+        bind(concat(strafter(?performer, ", ")," ",strbefore(?performer, ",")) as ?performer_name )
+        ?person a schema:Person ;
+                schema:name ?name .
+        filter (?performer_name = ?name)
+    }
+}

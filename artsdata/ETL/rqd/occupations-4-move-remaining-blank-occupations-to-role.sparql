@@ -1,0 +1,27 @@
+PREFIX schema: <http://schema.org/>
+delete {
+     ?p schema:hasOccupation ?blank_occupation .
+        ?blank_occupation schema:name ?blank_occ_name.
+}
+insert {
+    graph ?g {
+        ?o schema:employee ?role_uri .
+        ?role_uri a schema:OrganizationRole ;
+                  schema:name ?blank_occ_name  ;
+                  schema:employee ?p .
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?p a schema:Person .
+        ?o a schema:Organization .
+        ?o schema:employee ?p .
+        ?p schema:hasOccupation ?blank_occupation .
+        filter(isBlank(?blank_occupation))
+        ?blank_occupation schema:name ?blank_occ_name.
+        bind(UUID() as ?role_uri)
+    }
+}

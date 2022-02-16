@@ -1,0 +1,20 @@
+PREFIX schema: <http://schema.org/>
+#select * 
+delete {
+    graph ?g {
+        ?e a schema:eventSeries
+    }
+}
+insert {
+    graph ?g {
+        ?e a schema:EventSeries
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?e a schema:eventSeries
+    }
+}

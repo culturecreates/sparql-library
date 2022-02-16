@@ -1,0 +1,26 @@
+PREFIX schema: <http://schema.org/>
+#select *
+delete {
+    graph ?g {
+         ?s  schema:additionalType ?type .
+    }
+}
+insert {
+    graph ?g {
+        ?s schema:hasOccupation ?occup
+    }
+}
+where { 
+     values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        ?s a schema:Person ;
+           schema:additionalType ?type .
+        #filter(isBlank(?s))
+       
+        ?occup a schema:Occupation ;
+       schema:name ?type .
+        filter(!isBlank(?occup))
+    }
+}

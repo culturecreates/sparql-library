@@ -1,0 +1,31 @@
+PREFIX schema: <http://schema.org/>
+#select *
+insert {
+    graph ?g {
+        ?s  schema:mainEntityOfPage ?webpage_uri
+    }
+}
+where {
+    values ?g {
+        <http://kg.artsdata.ca/culture-creates/huginn/rqd>
+    }
+    graph ?g {
+        {
+            ?s a schema:Person .
+        }
+        union
+        {
+            ?s a schema:Organization .
+        }
+        union
+        {
+            ?s a schema:Event .
+        }
+        union
+        {
+            ?s a schema:EventSeries .
+        }
+        bind(uri(concat(strbefore(str(?s),"#"),"/#webpage")) as ?webpage_uri)
+        filter(!isBlank(?s))
+    }
+}
