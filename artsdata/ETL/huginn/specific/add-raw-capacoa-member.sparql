@@ -11,7 +11,7 @@ insert data {
       schema:name "operating_name1_placeholder"@oa ;
       schema:name "operating_name2_placeholder"@ob ;
       schema:legalName "legal_name_placeholder"@la ;
-      schema:alternateName "also_know_as_placeholder" ;
+      schema:alternateName "also_known_as_placeholder" ;
       wdt:P8860 "business_number_placeholder" ;
       schema:additionalType capacoa:legal_form_uri ;
       schema:additionalType capacoa:charitable_status_uri ; 
@@ -24,12 +24,11 @@ insert data {
                   schema:url "events_page_placeholder" ] ;
       schema:additionalType capacoa:terms_conditions_v1_0_uri ;
       schema:address [
-        schema:addressCountry "country_placeholder" ;
-        schema:addressLocality "municipality_placeholder" ;
-        schema:addressRegion "province_placeholder" 
+        schema:addressCountry "pmpro_bcountry_placeholder" ;
+        schema:addressLocality "pmpro_bcity_placeholder" ;
+        schema:addressRegion "pmpro_bstate_placeholder" 
       ] ;
-      schema:sameAs "wikidata_placeholder" ;
-      schema:sameAs "artsdata_placeholer" ;
+      schema:sameAs "wikidata_id_placeholder" ;
       schema:location [ a schema:Role ; 
                         schema:roleName "venue_relationship" ;
                         schema:location [ a schema:Place ; 
