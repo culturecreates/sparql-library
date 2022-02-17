@@ -40,35 +40,35 @@ insert data {
                                           schema:name "venue_other_name" ;
                                           schema:sameAs "wikidata_id_venue_other" ] ] .
     
-    capacoa:legal_form_uri a skos:Concept ; 
+    capacoa:LegalForm_legal_form_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "legal_form_placeholder" .
 
     capacoa:LegalForm a skos:Collection ;
       skos:member capacoa:legal_form_uri .
     
-    capacoa:charitable_status_uri a skos:Concept ; 
+    capacoa:CharitableStatus_charitable_status_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel  "charitable_status_placeholder" .
 
     capacoa:CharitableStatus a skos:Collection  ;
        skos:member capacoa:charitable_status_uri .
 
-    capacoa:primary_activity_uri a skos:Concept ; 
+    capacoa:PrimaryActivity_primary_activity_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "primary_activity_placeholder" .
     
     capacoa:PrimaryActivity a skos:Collection  ;
        skos:member capacoa:primary_activity_uri .
 
-    capacoa:presenting_format_uri a skos:Concept ; 
+    capacoa:PresentingFormat_presenting_format_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "presenting_format_placeholder" .
     
     capacoa:PresentingFormat a skos:Collection  ;
        skos:member capacoa:presenting_format_uri .
 
-    capacoa:terms_conditions_v1_0_uri a skos:Concept ; 
+    capacoa:TermsConditions_terms_conditions_v1_0_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "terms_conditions_v1_0_placeholder" .
 
