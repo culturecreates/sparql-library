@@ -13,16 +13,16 @@ insert data {
       schema:legalName "legal_name_placeholder"@la ;
       schema:alternateName "also_known_as_placeholder" ;
       wdt:P8860 "business_number_placeholder" ;
-      schema:additionalType capacoa:legal_form_uri ;
-      schema:additionalType capacoa:charitable_status_uri ; 
-      schema:additionalType capacoa:primary_activity_uri ;
+      schema:additionalType capacoa:LegalForm_legal_form_uri ;
+      schema:additionalType capacoa:CharitableStatus_charitable_status_uri ; 
+      schema:additionalType capacoa:PrimaryActivity_primary_activity_uri ;
       schema:additionalType "discipline_genre_placeholder" ;
-      schema:additionalType capacoa:presenting_format_uri ;
+      schema:additionalType capacoa:PresentingFormat_presenting_format_uri ;
       schema:url "website_official_placeholder" ;
       schema:url [ a schema:Role ; 
                   schema:roleName "Events Webpage" ;
                   schema:url "events_page_placeholder" ] ;
-      schema:additionalType capacoa:terms_conditions_v1_0_uri ;
+      schema:additionalType capacoa:TermsConditions_terms_conditions_v1_0_uri ;
       schema:address [
         schema:addressCountry "pmpro_bcountry_placeholder" ;
         schema:addressLocality "pmpro_bcity_placeholder" ;
@@ -45,35 +45,35 @@ insert data {
       skos:prefLabel "legal_form_placeholder" .
 
     capacoa:LegalForm a skos:Collection ;
-      skos:member capacoa:legal_form_uri .
+      skos:member capacoa:LegalForm_legal_form_uri .
     
     capacoa:CharitableStatus_charitable_status_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel  "charitable_status_placeholder" .
 
     capacoa:CharitableStatus a skos:Collection  ;
-       skos:member capacoa:charitable_status_uri .
+       skos:member capacoa:CharitableStatus_charitable_status_uri .
 
     capacoa:PrimaryActivity_primary_activity_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "primary_activity_placeholder" .
     
     capacoa:PrimaryActivity a skos:Collection  ;
-       skos:member capacoa:primary_activity_uri .
+       skos:member capacoa:PrimaryActivity_primary_activity_uri .
 
     capacoa:PresentingFormat_presenting_format_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "presenting_format_placeholder" .
     
     capacoa:PresentingFormat a skos:Collection  ;
-       skos:member capacoa:presenting_format_uri .
+       skos:member capacoa:PresentingFormat_presenting_format_uri .
 
     capacoa:TermsConditions_terms_conditions_v1_0_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "terms_conditions_v1_0_placeholder" .
 
     capacoa:TermsConditionsV1_0 a skos:Collection  ;
-      skos:member capacoa:terms_conditions_v1_0_uri .
+      skos:member capacoa:TermsConditions_terms_conditions_v1_0_uri .
 
     capacoa:QuestionnaireChoices a skos:ConceptScheme .
   }
