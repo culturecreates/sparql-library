@@ -1,0 +1,10 @@
+# List all K-xx in all graphs
+
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+select distinct ?rootID where { 
+	?s a rdfs:Resource .
+    filter  (regex(str(?s),"K\\d+-\\d+"))
+    filter (isURI(?s))
+    bind(strbefore(str(?s),"-") as ?rootID)
+} limit 100 
