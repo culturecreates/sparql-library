@@ -3,7 +3,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
-PREFIX capacoa: <https://capacoa.ca/ontology/questionnaire#>
+PREFIX capacoa: <https://capacoa.ca/vocabulary/questionnaire#>
 
 insert data { 
   graph <graph_name_placeholder> {
@@ -75,6 +75,6 @@ insert data {
     capacoa:TermsConditionsV1_0 a skos:Collection  ;
       skos:member capacoa:TermsConditions_terms_conditions_v1_0_uri .
 
-    capacoa:QuestionnaireChoices a skos:ConceptScheme .
+    capacoa:MembershipQuestionnaire a skos:ConceptScheme .
   }
 }
