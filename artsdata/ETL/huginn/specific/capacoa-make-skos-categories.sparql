@@ -1,0 +1,30 @@
+# Run SPARQL capacoa-split-categories.sparql
+
+PREFIX schema: <http://schema.org/>
+PREFIX capacoa: <https://capacoa.ca/ontology/questionnaire#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+delete {
+    graph ?g {
+        ?s schema:temp ?type
+    }
+}
+insert {
+    graph ?g {
+        ?s schema:additionalType ?type_uri .
+        ?type_uri a skos:Concept ;
+                  skos:inScheme capacoa:QuestionnaireChoices;
+                  skos:prefLabel  ?type .
+        capacoa:DisciplineGenre a skos:Collection  ;
+                                skos:member  ?type_uri .
+    }
+}
+where {
+    values ?g {
+        <graph_name_placeholder>
+    }
+    graph ?g {
+        ?s schema:temp ?type
+        bind(URI(CONCAT("https://capacoa.ca/ontology/questionnaireDisciplineGenre",ENCODE_FOR_URI(?type))) as ?type_uri)
+        filter(?type != "") 
+    }
+}

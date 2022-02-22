@@ -1,0 +1,27 @@
+# Run this SPARQL multiple times to split long lists
+# [Dance,Theatre,Film]
+
+PREFIX schema: <http://schema.org/>
+
+delete {
+     graph ?g {
+        ?s schema:additionalType ?type }
+}
+insert {
+    graph ?g {
+        ?s schema:temp ?category .
+        ?s schema:additionalType ?category_remaining  .
+    }
+}
+where {
+    values ?g {
+       <graph_name_placeholder>
+    }
+    graph ?g {
+        ?s schema:additionalType ?type .
+        filter (isLiteral(?type)) 
+        bind(replace(?type,"[\\[\\]]","","i") as ?list )
+        bind(STRBEFORE(?list,",") as ?category )
+        bind(STRAFTER(?list,",") as ?category_remaining )
+    }
+}
