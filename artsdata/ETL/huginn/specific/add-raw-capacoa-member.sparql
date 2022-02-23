@@ -43,37 +43,42 @@ insert data {
     capacoa:LegalForm_legal_form_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "legal_form_placeholder" .
-
     capacoa:LegalForm a skos:Collection ;
-      skos:member capacoa:LegalForm_legal_form_uri .
+      skos:member capacoa:LegalForm_legal_form_uri ;
+      skos:prefLabel "Legal Form"@en .
     
     capacoa:CharitableStatus_charitable_status_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel  "charitable_status_placeholder" .
-
     capacoa:CharitableStatus a skos:Collection  ;
-       skos:member capacoa:CharitableStatus_charitable_status_uri .
+       skos:member capacoa:CharitableStatus_charitable_status_uri ;
+       skos:prefLabel "Charitable Status"@en .
 
     capacoa:PrimaryActivity_primary_activity_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "primary_activity_placeholder" .
-    
     capacoa:PrimaryActivity a skos:Collection  ;
-       skos:member capacoa:PrimaryActivity_primary_activity_uri .
+      skos:member capacoa:PrimaryActivity_primary_activity_uri ;
+      skos:prefLabel  "Primary Activity of Organization"@en .
 
     capacoa:PresentingFormat_presenting_format_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "presenting_format_placeholder" .
-    
     capacoa:PresentingFormat a skos:Collection  ;
-       skos:member capacoa:PresentingFormat_presenting_format_uri .
+       skos:member capacoa:PresentingFormat_presenting_format_uri ;
+        skos:prefLabel "If a presenting organization, how are your arts presenting activities organized?"@en .
 
     capacoa:TermsConditions_terms_conditions_v1_0_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
       skos:prefLabel "terms_conditions_v1_0_placeholder" .
-
     capacoa:TermsConditionsV1_0 a skos:Collection  ;
-      skos:member capacoa:TermsConditions_terms_conditions_v1_0_uri .
+      skos:member capacoa:TermsConditions_terms_conditions_v1_0_uri ;
+      skos:prefLabel "Open Data Strategy Consent Options"@en ;
+      skos:definition capacoa:TermsConditionsV1_0_document .
+
+    capacoa:TermsConditionsV1_0_document a schema:CreativeWork ;
+      schema:name "CAPACOA Membership Open Data Strategy (version 1.0)"@en ;
+      schema:url "https://capacoa.ca/en/membership/open-data-strategy-version-1-0/" . 
 
     capacoa:MembershipQuestionnaire a skos:ConceptScheme .
   }
