@@ -1,5 +1,3 @@
-# Run SPARQL capacoa-split-categories.sparql
-
 PREFIX schema: <http://schema.org/>
 PREFIX capacoa: <https://capacoa.ca/ontology/questionnaire#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
@@ -28,3 +26,4 @@ where {
         filter(?type != "") 
     }
 }
+# Run SPARQL capacoa-split-categories.sparql several times before running this.

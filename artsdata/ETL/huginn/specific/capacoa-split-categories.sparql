@@ -1,6 +1,3 @@
-# Run this SPARQL multiple times to split long lists
-# [Dance,Theatre,Film]
-
 PREFIX schema: <http://schema.org/>
 
 delete {
@@ -25,3 +22,6 @@ where {
         bind(STRAFTER(?list,",") as ?category_remaining )
     }
 }
+
+# Run this SPARQL multiple times to split long lists
+# [Dance,Theatre,Film]
