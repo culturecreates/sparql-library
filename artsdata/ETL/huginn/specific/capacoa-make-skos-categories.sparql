@@ -14,7 +14,9 @@ insert {
                   skos:prefLabel  ?type .
         capacoa:DisciplineGenre a skos:Collection  ;
                 skos:member  ?type_uri ;
-                skos:prefLabel "Main discipline(s) or genre(s) produced/presented/represented by the organization"
+                skos:prefLabel "Main discipline(s) or genre(s) produced/presented/represented by the organization" .
+        capacoa:MembershipQuestionnaireCollection a skos:Collection ;
+                skos:member capacoa:DisciplineGenre .
     }
 }
 where {

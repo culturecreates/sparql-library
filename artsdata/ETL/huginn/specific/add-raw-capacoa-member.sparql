@@ -81,5 +81,13 @@ insert data {
       schema:url "https://capacoa.ca/en/membership/open-data-strategy-version-1-0/" . 
 
     capacoa:MembershipQuestionnaire a skos:ConceptScheme .
+
+    capacoa:MembershipQuestionnaireCollection a skos:Collection ;
+      skos:member capacoa:TermsConditionsV1_0 ;
+      skos:member capacoa:PresentingFormat ;
+      skos:member capacoa:PrimaryActivity ;
+      skos:member capacoa:CharitableStatus ;
+      skos:member capacoa:LegalForm ;
+      skos:prefLabel "CAPACOA Membership Questionnaire"@en .
   }
 }
