@@ -28,17 +28,17 @@ insert data {
         schema:addressLocality "pmpro_bcity_placeholder" ;
         schema:addressRegion "pmpro_bstate_placeholder" 
       ] ;
-      schema:sameAs "wikidata_id_placeholder" ;
+      schema:identifier "wikidata_id_placeholder" ;
       schema:location [ a schema:Role ; 
                         schema:roleName "venue_relationship_placeholder" ;
                         schema:location [ a schema:Place ; 
                                           schema:name "venue_name_placeholder"  ;
-                                          schema:sameAs "wikidata_id_venue_placeholder" ] ] ;
+                                          schema:identifier "wikidata_id_venue_placeholder" ] ] ;
       schema:location [ a schema:Role ; 
                         schema:roleName "venue_other_relationship_placeholder" ;
                         schema:location [ a schema:Place ; 
                                           schema:name "venue_other_name_placeholder" ;
-                                          schema:sameAs "wikidata_id_venue_other_placeholder" ] ] .
+                                          schema:identifier "wikidata_id_venue_other_placeholder" ] ] .
     
     capacoa:LegalForm_legal_form_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
