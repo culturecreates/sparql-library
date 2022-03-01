@@ -25,7 +25,7 @@ where {
     }
     graph ?g {
         ?s schema:temp ?type
-        bind(URI(CONCAT("https://capacoa.ca/ontology/questionnaireDisciplineGenre",ENCODE_FOR_URI(?type))) as ?type_uri)
+        bind(URI(CONCAT("capacoa:DisciplineGenre",ENCODE_FOR_URI(?type))) as ?type_uri)
         filter(?type != "") 
     }
 }
