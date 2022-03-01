@@ -1,0 +1,35 @@
+# Run this SPARQL whenever organizations are added so ranking will work with individual properties. 
+# TODO: remove limit to org? 
+
+
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX schema: <http://schema.org/>
+insert
+{
+    graph ?g  {
+        ?s wdt:P2013 ?facebook .
+        ?s wdt:P2002 ?twitter .
+        ?s wdt:P2003 ?instagram .
+    }
+}
+where {
+    ?s a schema:Organization .
+    graph ?g  {
+        OPTIONAL {
+            ?s schema:sameAs ?sameAsFacebook .
+            filter(contains(str(?sameAsFacebook),"www.facebook.com/"))
+            bind (strafter(?sameAsFacebook,"www.facebook.com/")   as ?facebook)
+        }
+        OPTIONAL {
+            ?s schema:sameAs ?sameAsTwitter .
+            filter(contains(str(?sameAsTwitter),"twitter.com/"))
+            bind (strafter(?sameAsTwitter,"twitter.com/")   as ?twitter)
+        }
+        OPTIONAL {
+            ?s schema:sameAs ?sameAsInstagram .
+            filter(contains(str(?sameAsInstagram),"instagram.com/"))
+            bind (strafter(?sameAsInstagram,"instagram.com/")   as ?instagram)
+        }
+    }
+}
