@@ -1,0 +1,35 @@
+# Trigger this SPARQL from the WP admin shortcode plugin to reload select data from Wikidata for CAPACOA members 
+# Graph is hard coded to <http://wikidata.org/capacoa-members>
+# This graph overlaps with the generic Wikidata graph <http://wikidata.org/organizations> 
+
+PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+insert {
+    graph <http://wikidata.org/capacoa-members> {
+        ?wdid wdt:P2002 ?twitterUsername ;
+              wdt:P2013 ?facebookId ;
+              wdt:P2003 ?instagramUsername .
+    }
+}
+where {
+    graph <http://kg.artsdata.ca/culture-creates/huginn/capacoa-members> {
+        ?org a schema:Organization ;
+             schema:name ?name ;
+             schema:identifier ?id .
+        bind(URI(concat("http://www.wikidata.org/entity/",?id)) as ?wdid)
+    }
+    SERVICE <https://query.wikidata.org/sparql>
+    {
+        OPTIONAL {
+            ?wdid wdt:P2002 ?twitterUsername .
+        }
+        OPTIONAL {
+            ?wdid wdt:P2013 ?facebookId .
+        }
+        OPTIONAL {
+            ?wdid wdt:P2003 ?instagramUsername .
+        }
+    }
+}
