@@ -1,7 +1,3 @@
-# Trigger this SPARQL from the WP admin shortcode plugin to reload select data from Wikidata for CAPACOA members 
-# Graph is hard coded to <http://wikidata.org/capacoa-members>
-# This graph overlaps with the generic Wikidata graph <http://wikidata.org/organizations> 
-
 PREFIX schema: <http://schema.org/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
@@ -33,3 +29,7 @@ where {
         }
     }
 }
+
+# Trigger this SPARQL from the WP admin shortcode plugin to reload select data from Wikidata for CAPACOA members 
+# Graph is hard coded to <http://wikidata.org/capacoa-members>
+# This graph overlaps with the generic Wikidata graph <http://wikidata.org/organizations> 
