@@ -29,7 +29,6 @@ insert data {
         schema:addressRegion "pmpro_bstate_placeholder" 
       ] ;
       schema:identifier "wikidata_id_placeholder" ;
-      schema:sameAs "http://www.wikidata.org/entity/wikidata_id_placeholder" ;
       schema:location [ a schema:Role ; 
                         schema:roleName "venue_relationship_placeholder" ;
                         schema:location [ a schema:Place ; 
