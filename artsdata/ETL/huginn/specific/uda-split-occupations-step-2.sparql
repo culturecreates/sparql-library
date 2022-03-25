@@ -1,0 +1,16 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    ?s schema:jobTitle ?o .
+}
+insert {
+    graph ?g {
+        ?s schema:temp ?o_low
+    }
+}
+where {
+    graph ?g {
+        ?s schema:jobTitle ?o .
+        bind(lcase(?o) as ?o_low)
+    }
+}
+# Change last schema:jobTitle to schema:temp

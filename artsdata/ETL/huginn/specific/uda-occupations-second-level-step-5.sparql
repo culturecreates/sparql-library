@@ -1,0 +1,40 @@
+PREFIX schema: <http://schema.org/>
+PREFIX udao: <http://kg.artsdata.ca/ontology/uda/occupation#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+delete {
+    graph ?g {
+        ?s schema:temp ?type
+    }
+}
+insert {
+    #construct {
+    graph ?g {
+        ?s schema:hasOccupation ?type_uri .
+        ?type_uri a skos:Concept ;
+                  skos:inScheme udao:OccupationScheme ;
+                  skos:prefLabel  ?type ;
+                  skos:hiddenLabel ?second .
+        ?collection_name a skos:Collection  ;
+                         skos:member  ?type_uri ;
+                         skos:prefLabel ?top_gendered .
+        udao:CollectionOccupation a skos:Collection ;
+                                  skos:member ?collection_name .
+    }
+}
+where {
+    values ?g {
+        <http://uda.ca>
+    }
+    graph ?g {
+        ?s schema:temp ?type
+        bind(strlang(strbefore(str(?type)," ("),"fr") as ?top_gendered )
+    }
+    ?top_gendered ^skos:altLabel ?concept_uri .
+    bind(strafter(str(?concept_uri), "#") as ?top)
+    bind(strafter(?type, "(") as ?second_temp)
+    bind(replace(replace(replace(strbefore(?second_temp,")")," ","-"),"é","e"),"è","e") as ?second)
+    bind(URI(CONCAT("http://kg.artsdata.ca/ontology/uda/occupation#",?top,"_",ENCODE_FOR_URI(?second))) as ?type_uri)
+    filter(?type != "") 
+    filter(?top_gendered != "") 
+    bind(URI(concat("http://kg.artsdata.ca/ontology/uda/occupation#Collection-",?top)) as ?collection_name)
+}

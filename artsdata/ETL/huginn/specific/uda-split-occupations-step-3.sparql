@@ -1,0 +1,26 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    graph ?g {
+        ?s schema:temp ?type 
+    }
+}
+insert {
+    graph ?g {
+        ?s schema:temp ?category .
+        ?s schema:temp ?category_remaining  .
+    }
+}
+#select *
+where {
+    values ?g {
+        <http://uda.ca>
+    }
+    graph ?g {
+        ?s schema:temp ?type .
+        filter (contains(?type,",")) 
+        bind(concat(STRBEFORE(?type,","),")") as ?category )
+        bind(concat(STRBEFORE(?type,"("),"(",STRAFTER(?type,", " )) as ?category_remaining )
+    }
+}
+# Run this SPARQL multiple times to split level 2 occupations - 10 times
+# example: animateur (radio, scene) -> animateur (radio), animateur (scene)

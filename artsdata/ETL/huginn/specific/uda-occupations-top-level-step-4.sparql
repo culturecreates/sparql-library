@@ -1,0 +1,32 @@
+PREFIX schema: <http://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+delete {
+    ?p schema:temp ?occ .
+}
+insert {
+    graph ?g {
+        ?p schema:hasOccupation ?cv .
+    }
+}
+where {
+    {
+        select distinct ?cv ?cv_label where {
+            {
+                ?cv a skos:Concept ;
+                    skos:altLabel ?cv_label .
+            }
+            UNION
+            {
+                ?cv a skos:Concept ;
+                    skos:prefLabel ?cv_label .
+            }
+        }
+    }
+    graph ?g {
+        ?p schema:temp ?occ .
+    }
+    bind(strbefore(?occ," (") as ?top)
+    filter(lcase(str(?top)) = lcase(str(?cv_label)))
+    filter(contains(?occ, "énéral)"))
+}
+# This SPARQL assigns all schema:temp occupations with (general) to a top level concept
