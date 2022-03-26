@@ -28,7 +28,7 @@ select ?uda_id ?first_name ?last_name  ?full_name  (GROUP_CONCAT(?occ_q;SEPARATO
        schema:firstName ?first_name ;
        schema:lastName ?last_name ;
        rdfs:label ?full_name ;
-       schema:memberOf <http://uda.ca/Membre> ;  # Only upload UDA members, not stagiares
+       schema:memberOf <http://uda.ca/Membre> ;  # Only upload people that are full members
        schema:hasOccupation/skos:broader* ?occ .  
     filter EXISTS {
         ?s schema:hasOccupation/skos:broader* ?include_occupations  .
