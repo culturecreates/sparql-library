@@ -1,8 +1,8 @@
 PREFIX schema: <http://schema.org/>
-
 delete {
-     graph ?g {
-        ?s schema:jobTitle ?type }
+    graph ?g {
+        ?s schema:jobTitle ?type 
+    }
 }
 insert {
     graph ?g {
@@ -13,7 +13,7 @@ insert {
 #select *
 where {
     values ?g {
-       <http://uda.ca>
+        <http://uda.ca>
     }
     graph ?g {
         ?s schema:jobTitle ?type .
@@ -22,5 +22,4 @@ where {
         bind(STRAFTER(?type,")  " ) as ?category_remaining )
     }
 }
-
-# Run this SPARQL multiple times to split long lists - 10 times
+# Run this SPARQL multiple times to split long lists

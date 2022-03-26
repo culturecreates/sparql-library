@@ -10,7 +10,7 @@ insert {
 where {
     graph ?g {
         ?s schema:jobTitle ?o .
-        bind(lcase(?o) as ?o_low)
+        bind(str(lcase(?o)) as ?o_low)
     }
 }
 # Change last schema:jobTitle to schema:temp

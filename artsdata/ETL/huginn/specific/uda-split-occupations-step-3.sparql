@@ -22,5 +22,5 @@ where {
         bind(concat(STRBEFORE(?type,"("),"(",STRAFTER(?type,", " )) as ?category_remaining )
     }
 }
-# Run this SPARQL multiple times to split level 2 occupations - 10 times
+# Run this SPARQL multiple times to split level 2 occupations 
 # example: animateur (radio, scene) -> animateur (radio), animateur (scene)
