@@ -1,51 +1,31 @@
 PREFIX schema: <http://schema.org/>
-PREFIX udao: <http://kg.artsdata.ca/ontology/uda/occupation/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-select ?uda_id ?first_name ?last_name  ?full_name  (GROUP_CONCAT(?occ_q;SEPARATOR=",") AS ?occ_qs)  ?voice_q ?fow_q where {
-    # Only upload UDA members with these occupations
-    values ?include_occupations { 
-        udao:Act-com
-        udao:Artiste-de-cirque
-        udao:Chant
-        udao:Chant-comp
-        udao:Chant-lyr
-        udao:Chant-pop
-        udao:Chef-de-choeur
-        udao:Choregraphe
-        udao:Choriste-pop
-        udao:Clown
-        udao:Danseu
-        udao:Humoriste
-        udao:Imitat
-        udao:Magicien
-        udao:Marionnettiste
-        udao:Mett-en-scene
-        udao:Mime
-        udao:Rapp
-    }
+select   ?uda_id ?first_name ?last_name  ?full_name  
+		(GROUP_CONCAT(?occ_q;  SEPARATOR=",") AS ?occ_qs)  
+		(GROUP_CONCAT(?voice_q;SEPARATOR=",") AS ?voice_qs) 
+		(GROUP_CONCAT( ?fow_q; SEPARATOR=",") AS ?fow_qs)  
+where {
     ?s a schema:Person ;
        schema:firstName ?first_name ;
        schema:lastName ?last_name ;
        rdfs:label ?full_name ;
-       schema:memberOf <http://uda.ca/Membre> ;  # Only upload people that are full members
-       schema:hasOccupation/skos:broader* ?occ .  
-    filter EXISTS {
-        ?s schema:hasOccupation/skos:broader* ?include_occupations  .
+       schema:memberOf <http://uda.ca/Membre> ;
+       # Only upload people that are full members
+       schema:hasOccupation/skos:broader* ?occ .
+    ?occ skos:broader*/skos:closeMatch ?occ_mappings .
+    filter(contains(str(?occ_mappings),"Profession"))
+    OPTIONAL {
+        ?occ skos:closeMatch ?voice_mappings .
+        filter(contains(str(?voice_mappings),"VoiceType")) 
     }
-    ?occ schema:about/schema:itemListElement ?occ_mappings .  # Get Wikidata Mappings
-    filter(contains(str(?occ_mappings),"mapping/Occupation"))
-    bind(strafter(str(?occ_mappings),"mapping/Occupation-") as ?occ_q )
     OPTIONAL {
-        ?occ schema:about/schema:itemListElement ?voice_mappings .
-        filter(contains(str(?voice_mappings),"mapping/Voice"))
-        bind(strafter(str(?voice_mappings),"mapping/Voice-") as ?voice_q )
-    } 
-    OPTIONAL {
-        ?occ schema:about/schema:itemListElement ?fow_mappings .
-        filter(contains(str(?fow_mappings),"mapping/FieldOfWork"))
-        bind(strafter(str(?fow_mappings),"mapping/FieldOfWork-") as ?fow_q )
-    } 
+        ?occ skos:closeMatch ?fow_mappings .
+        filter(contains(str(?fow_mappings),"FieldOfWork")) 
+    }
+    bind(strafter(str(?occ_mappings),"WikidataConcept-Profession") as ?occ_q )
+    bind(strafter(str(?voice_mappings),"WikidataConcept-VoiceType") as ?voice_q )
+    bind(strafter(str(?fow_mappings),"WikidataConcept-FieldOfWork") as ?fow_q )
     bind(strafter(str(?s),"/utilisateurs/")   as ?uda_id)
 }
-group by ?s ?uda_id ?first_name ?last_name  ?full_name  ?voice_q ?fow_q
+group by ?s ?uda_id ?first_name ?last_name  ?full_name
