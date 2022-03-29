@@ -17,5 +17,5 @@ insert {
   }
 }
 where {
-  bind(concat("url_placeholder","#image") as ?image_object)
+  bind(concat("url_placeholder","#ImageObject") as ?image_object)
 }
