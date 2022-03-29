@@ -10,6 +10,8 @@ insert {
     #construct {
     graph ?g {
         ?s schema:hasOccupation ?type_uri .
+    }
+    graph <http://uda.ca/ontology> {
         ?type_uri a skos:Concept ;
                   skos:inScheme udao:OccupationScheme ;
                   skos:prefLabel  ?type ;

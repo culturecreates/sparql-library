@@ -1,17 +1,18 @@
 PREFIX schema: <http://schema.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+
 select   ?uda_id ?first_name ?last_name  ?full_name  
 		(GROUP_CONCAT(?occ_q;  SEPARATOR=",") AS ?occ_qs)  
 		(GROUP_CONCAT(?voice_q;SEPARATOR=",") AS ?voice_qs) 
 		(GROUP_CONCAT( ?fow_q; SEPARATOR=",") AS ?fow_qs)  
 where {
     ?s a schema:Person ;
-       schema:firstName ?first_name ;
-       schema:lastName ?last_name ;
+       foaf:firstName ?first_name ;
+       foaf:lastName ?last_name ;
        rdfs:label ?full_name ;
-       schema:memberOf <http://uda.ca/Membre> ;
-       # Only upload people that are full members
+       schema:memberOf <http://uda.ca/Membre> ; # Only upload people that are full members
        schema:hasOccupation/skos:broader* ?occ .
     ?occ skos:broader*/skos:closeMatch ?occ_mappings .
     filter(contains(str(?occ_mappings),"Profession"))

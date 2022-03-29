@@ -1,11 +1,21 @@
-insert data { 
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX schema: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+
+insert { 
   graph <http://uda.ca> {
-    <url_placeholder> schema:firstName "{{firstName}}"@fr ; 
-      schema:lastName "{{lastName}}"@fr ; 
+    <url_placeholder> foaf:firstName "{{firstName}}"@fr ; 
+      foaf:lastName "{{lastName}}"@fr ; 
       schema:jobTitle  "{{expertise}}"@fr  ; 
       rdfs:comment  "{{description}}"@fr   ; 
-      schema:image  "{{image}}" ; 
-      schema:photoCredit  "{{photoCredit}}" ; 
-      schema:status  "{{memberStatus}}"@fr . 
+      schema:status  "{{memberStatus}}"@fr ;
+      schema:image ?image_object .
+
+      ?image_object a schema:ImageObject ;
+       schema:contentUrl  "{{image}}" ;
+       schema:copyrightNotice  "{{photoCredit}}" .
   }
+}
+where {
+  bind(concat("url_placeholder","#image") as ?image_object)
 }

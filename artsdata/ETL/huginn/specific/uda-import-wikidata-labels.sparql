@@ -1,0 +1,45 @@
+PREFIX schema: <http://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+#select * 
+insert {
+    graph ?g {
+        ?occ a skos:Concept , schema:DefinedTerm .
+        ?occ schema:name ?name_en , ?name_fr ;
+             schema:description ?description ;
+             schema:inDefinedTermSet ?term_set ;
+             schema:termCode  ?termCode ;
+             schema:url ?wd_uri .
+    }
+}
+where {
+    values ?g {
+        <http://uda.ca/ontology/annotation>
+    }
+    ?concept a skos:Concept ;
+             skos:closeMatch ?occ .
+    bind(concat("Q",strafter(str(?occ),"Q")) as ?termCode )    
+    bind(URI(concat("http://www.wikidata.org/entity/",?termCode)) as ?wd_uri)
+    OPTIONAL {
+        filter(contains(str(?occ),"Profession"))
+        bind(URI("http://www.wikidata.org/entity/Q28640")   as ?term_set)
+    }
+    OPTIONAL {
+        filter(contains(str(?occ),"FieldOfWork"))
+        bind(URI("http://www.wikidata.org/entity/Q627436")   as ?term_set)
+    }
+    OPTIONAL {
+        filter(contains(str(?occ),"VoiceType"))
+        bind(URI("http://www.wikidata.org/entity/Q1063547")   as ?term_set)
+    }
+    service <https://query.wikidata.org/sparql> {
+        ?wd_uri rdfs:label ?name_en  ;
+                schema:description ?description .
+        filter(lang(?name_en) = "en")
+        filter(lang(?description) = "en")
+        OPTIONAL {
+            ?wd_uri rdfs:label ?name_fr  .
+            filter(lang(?name_fr) = "fr")
+        }
+    }   
+}
