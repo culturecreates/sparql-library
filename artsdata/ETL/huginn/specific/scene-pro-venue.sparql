@@ -8,5 +8,7 @@ insert data {
   graph <graph_name_placeholder> {
     <http://kg.artsdata.ca/resource/scenepro-ca_Venueuri_placeholder> a schema:Place ;
       schema:name "name_placeholder"@fr .
+
+    <org_uri_placeholder> schema:location <http://kg.artsdata.ca/resource/scenepro-ca_Venueuri_placeholder> .
   }
 }
