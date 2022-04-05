@@ -6,7 +6,7 @@ PREFIX adr: <http://kg.artsdata.ca/resource/>
 
 insert data { 
   graph <graph_name_placeholder> {
-    <uri_placeholder> a schema:Place ;
+    <http://kg.artsdata.ca/resource/scenepro-ca_Venueuri_placeholder> a schema:Place ;
       schema:name "name_placeholder"@fr .
   }
 }
