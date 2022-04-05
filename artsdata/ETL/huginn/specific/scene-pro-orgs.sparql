@@ -1,0 +1,12 @@
+PREFIX schema: <http://schema.org/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+
+insert data { 
+  graph <graph_name_placeholder> {
+    <uri_placeholder> a schema:Organization ;
+      schema:name "name"@fr .
+  }
+}
