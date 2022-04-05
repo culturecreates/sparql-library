@@ -8,6 +8,6 @@ insert data {
   graph <graph_name_placeholder> {
     <uri_placeholder> a schema:Organization ;
       schema:name "name_placeholder"@fr ;
-      schema:location "location-1-ID", "location-2-ID", "location-3-ID", "location-4-ID" .
+      schema:location "location-1-id", "location-2-id", "location-3-id", "location-4-id" .
   }
 }
