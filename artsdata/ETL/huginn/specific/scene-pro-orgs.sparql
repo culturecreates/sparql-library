@@ -7,6 +7,6 @@ PREFIX adr: <http://kg.artsdata.ca/resource/>
 insert data { 
   graph <graph_name_placeholder> {
     <uri_placeholder> a schema:Organization ;
-      schema:name "name"@fr .
+      schema:name "name_placeholder"@fr .
   }
 }
