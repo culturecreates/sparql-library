@@ -24,6 +24,7 @@ insert data {
                   schema:url "events_page_placeholder" ] ;
       schema:additionalType capacoa:TermsConditions_terms_conditions_v1_0_uri ;
       schema:address [
+        a schema:PostalAddress ;
         schema:addressCountry "pmpro_bcountry_placeholder" ;
         schema:addressLocality "pmpro_bcity_placeholder" ;
         schema:addressRegion "pmpro_bstate_placeholder" 
