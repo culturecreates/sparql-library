@@ -11,20 +11,20 @@ insert data {
       schema:description "description_placeholder"@fr ;
       schema:telephone "phone_placeholderphonePostNumber_placeholder" ;
       schema:email "email_placeholder" ;
-      foaf:homepage "website_placeholder" ;
+      schema:url "website_placeholder" ;
       schema:logo "logo_placeholder" ;
-      schema:foundingDate "dateFoundation_placeholder" ;
-      wdt:P10503 "new_placeholder" ;
+      schema:foundingDate "dateFoundation_placeholder"^^xsd:dateTime ;
+      wdt:P10503 "neq_placeholder" ;
       schema:address [ a schema:PostalAddress ;
         schema:streetAddress "address1_placeholder" ;
         schema:streetAddress "address2_placeholder" ;
-        schema:addressLocality "addressLocality" ;
-        schema:postalCode      "postalCode" ;
-        schema:addressRegion   "addressRegion" ;
-        schema:addressCountry  "addressCountry" 
+        schema:addressLocality "city_placeholder" ;
+        schema:postalCode      "zipCode_placeholder" ;
+        schema:addressRegion   "stateId_placeholder" ;
+        schema:addressRegion   "otherState_placeholder" ;
+        schema:addressCountry  "country_placeholder" 
          ] ;
       schema:sameAs [ "socialMediaAccounts_placeholder" ] ;
-      schema:image "photo_placeholder" ;
       schema:additionalType [ "organizationTypes_placeholder" ] .
   }
 }
