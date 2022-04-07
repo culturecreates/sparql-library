@@ -24,7 +24,7 @@ insert data {
         schema:addressRegion   "otherState_placeholder" ;
         schema:addressCountry  "country_placeholder" 
          ] ;
-      schema:sameAs [ "socialMediaAccounts_placeholder" ] ;
-      schema:additionalType [ "organizationTypes_placeholder" ] .
+      schema:sameAs  "socialMediaAccounts_placeholder"  ;
+      schema:additionalType  "organizationTypes_placeholder"  .
   }
 }
