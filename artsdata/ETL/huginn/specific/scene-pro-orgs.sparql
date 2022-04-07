@@ -7,6 +7,24 @@ PREFIX adr: <http://kg.artsdata.ca/resource/>
 insert data { 
   graph <graph_name_placeholder> {
     <uri_placeholder> a schema:Organization ;
-      schema:name "name_placeholder"@fr .
+      schema:name "name_placeholder"@fr ;
+      schema:description "description_placeholder"@fr ;
+      schema:telephone "phone_placeholderphonePostNumber_placeholder" ;
+      schema:email "email_placeholder" ;
+      foaf:homepage "website_placeholder" ;
+      schema:logo "logo_placeholder" ;
+      schema:foundingDate "dateFoundation_placeholder" ;
+      wdt:P10503 "new_placeholder" ;
+      schema:address [ a schema:PostalAddress ;
+        schema:streetAddress "address1_placeholder" ;
+        schema:streetAddress "address2_placeholder" ;
+        schema:addressLocality "addressLocality" ;
+        schema:postalCode      "postalCode" ;
+        schema:addressRegion   "addressRegion" ;
+        schema:addressCountry  "addressCountry" 
+         ] ;
+      schema:sameAs [ "socialMediaAccounts_placeholder" ] ;
+      schema:image "photo_placeholder" ;
+      schema:additionalType [ "organizationTypes_placeholder" ] .
   }
 }
