@@ -1,0 +1,7 @@
+PREFIX schema: <http://schema.org/> 
+
+insert data { 
+  graph <graph_name_placeholder> {
+    <org_uri_placeholder> schema:additionalType <organization_types_placeholder> .
+  }
+}
