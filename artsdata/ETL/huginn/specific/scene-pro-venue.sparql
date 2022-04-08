@@ -2,13 +2,12 @@ PREFIX schema: <http://schema.org/>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
-PREFIX adr: <http://kg.artsdata.ca/resource/>
 
 insert data { 
   graph <graph_name_placeholder> {
-    <http://kg.artsdata.ca/resource/scenepro-ca_Venueuri_placeholder> a schema:Place ;
+    <http://scenepro.ca#Venueuri_placeholder> a schema:Place ;
       schema:name "name_placeholder"@fr .
 
-    <org_uri_placeholder> schema:location <http://kg.artsdata.ca/resource/scenepro-ca_Venueuri_placeholder> .
+    <org_uri_placeholder> schema:location <http://scenepro.ca#Venueuri_placeholder> .
   }
 }
