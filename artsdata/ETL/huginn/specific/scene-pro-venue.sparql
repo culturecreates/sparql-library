@@ -6,8 +6,28 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 insert data { 
   graph <graph_name_placeholder> {
     <http://scenepro.ca#Venueuri_placeholder> a schema:Place ;
-      schema:name "name_placeholder"@fr .
+      schema:name "name_placeholder"@fr ;
+      schema:description "description_placeholder"@fr ;
+      schema:image "photo_placeholder" ;
+      schema:telephone "phone_placeholderphonePostNumber_placeholder" ;
+      schema:email "email_placeholder" ;
+      schema:url "website_placeholder" ;
+      schema:subjectOf [ a schema:TechArticle ; 
+        schema:url <urlTechSpecification>
+        ] ;
+      schema:address [ a schema:PostalAddress ;
+        schema:streetAddress "address1_placeholder" ;
+        schema:streetAddress "address2_placeholder" ;
+        schema:addressLocality "city_placeholder" ;
+        schema:postalCode      "zipCode_placeholder" ;
+        schema:addressRegion   "stateId_placeholder" ;
+        schema:addressRegion   "otherState_placeholder" ;
+        schema:addressCountry  "country_placeholder" 
+        ]   ;
+      schema:maximumAttendeeCapacity "maxCapacity_placeholder" .
 
-    <org_uri_placeholder> schema:location <http://scenepro.ca#Venueuri_placeholder> .
+    <org_uri_placeholder> schema:location [ a schema:Role ;
+     schema:roleName "gestionnaire"@fr ;
+     schema:location <http://scenepro.ca#Venueuri_placeholder> ] .
   }
 }
