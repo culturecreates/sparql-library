@@ -1,0 +1,13 @@
+PREFIX schema: <http://schema.org/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+
+insert data { 
+  graph <graph_name_placeholder> {
+    <http://scenepro.ca#Venueuri_placeholder>   schema:subjectOf 
+    [ a schema:TechArticle ; 
+      schema:url <urlTechSpecification>
+    ]  .
+  }
+}
