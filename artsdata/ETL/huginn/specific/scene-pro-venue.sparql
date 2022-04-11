@@ -24,7 +24,7 @@ insert data {
         schema:addressRegion   "otherState_placeholder" ;
         schema:addressCountry  "country_placeholder" 
         ]   ;
-      schema:maximumAttendeeCapacity "maxCapacity_placeholder" .
+      schema:maximumAttendeeCapacity "maxCap_placeholder" .
 
     <org_uri_placeholder> schema:location [ a schema:Role ;
      schema:roleName "gestionnaire"@fr ;
