@@ -7,7 +7,7 @@ insert data {
   graph <graph_name_placeholder> {
     <http://scenepro.ca#Venueuri_placeholder>   schema:subjectOf 
     [ a schema:TechArticle ; 
-      schema:url <urlTechSpecification>
+      schema:url "urlTechSpecification"
     ]  .
   }
 }
