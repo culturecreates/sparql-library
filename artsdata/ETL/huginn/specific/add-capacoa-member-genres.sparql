@@ -1,0 +1,26 @@
+PREFIX schema: <http://schema.org/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX capacoa: <https://capacoa.ca/vocabulary/questionnaire#>
+
+insert data { 
+  graph <graph_name_placeholder> {
+    <uri_placeholder>  schema:additionalType  capacoa:Genres_genres_uri  . 
+     
+    capacoa:Genres_genres_uri a skos:Concept ; 
+      skos:inScheme capacoa:QuestionnaireChoices; 
+      skos:prefLabel "discipline_genre_placeholder" .
+    capacoa:Genres a skos:Collection  ;
+       skos:member capacoa:Genres_genres_uri ;
+        skos:prefLabel "Main discipline(s) or genre(s) produced/presented/represented by the organization"@en .
+ 
+
+    capacoa:MembershipQuestionnaire a skos:ConceptScheme .
+
+    capacoa:MembershipQuestionnaireCollection a skos:Collection ;
+      skos:member capacoa:Genres ;
+      skos:prefLabel "CAPACOA Membership Questionnaire"@en .
+  }
+}
