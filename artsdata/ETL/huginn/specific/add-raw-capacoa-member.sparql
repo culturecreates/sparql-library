@@ -32,12 +32,12 @@ insert data {
       schema:location [ a schema:Role ; 
                         schema:roleName "venue_relationship_placeholder" ;
                         schema:location [ a schema:Place ; 
-                                          schema:name "venue_name_placeholder"  ;
+                                          schema:name "venue_name_placeholder"@en  ;
                                           schema:identifier "wikidata_id_venue_placeholder" ] ] ;
       schema:location [ a schema:Role ; 
                         schema:roleName "venue_other_relationship_placeholder" ;
                         schema:location [ a schema:Place ; 
-                                          schema:name "venue_other_name_placeholder" ;
+                                          schema:name "venue_other_name_placeholder"@en ;
                                           schema:identifier "wikidata_id_venue_other_placeholder" ] ] .
     
     capacoa:LegalForm_legal_form_uri a skos:Concept ; 
