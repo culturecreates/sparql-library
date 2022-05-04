@@ -16,7 +16,6 @@ insert data {
       schema:additionalType capacoa:LegalForm_legal_form_uri ;
       schema:additionalType capacoa:CharitableStatus_charitable_status_uri ; 
       schema:additionalType capacoa:PrimaryActivity_primary_activity_uri ;
-      schema:additionalType "discipline_genre_placeholder" ;
       schema:additionalType capacoa:PresentingFormat_presenting_format_uri ;
       schema:url "website_official_placeholder" ;
       schema:url [ a schema:Role ; 
