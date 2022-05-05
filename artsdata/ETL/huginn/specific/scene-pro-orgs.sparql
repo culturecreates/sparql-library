@@ -16,8 +16,7 @@ insert data {
       schema:foundingDate "dateFoundation_placeholder"^^xsd:dateTime ;
       wdt:P10503 "neq_placeholder" ;
       schema:address [ a schema:PostalAddress ;
-        schema:streetAddress "address1_placeholder" ;
-        schema:streetAddress "address2_placeholder" ;
+        schema:streetAddress "address_placeholder" ;
         schema:addressLocality "city_placeholder" ;
         schema:postalCode      "zipCode_placeholder" ;
         schema:addressRegion   "stateId_placeholder" ;
