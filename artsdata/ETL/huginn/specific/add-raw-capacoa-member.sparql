@@ -56,14 +56,14 @@ insert data {
 
     capacoa:PrimaryActivity_primary_activity_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
-      skos:prefLabel "primary_activity_placeholder" .
+      skos:hiddenLabel "primary_activity_placeholder" .
     capacoa:PrimaryActivity a skos:Collection  ;
       skos:member capacoa:PrimaryActivity_primary_activity_uri ;
       skos:prefLabel  "Primary Activity of Organization"@en .
 
     capacoa:PresentingFormat_presenting_format_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
-      skos:prefLabel "presenting_format_placeholder" .
+      skos:hiddenLabel "presenting_format_placeholder" .
     capacoa:PresentingFormat a skos:Collection  ;
        skos:member capacoa:PresentingFormat_presenting_format_uri ;
         skos:prefLabel "If a presenting organization, how are your arts presenting activities organized?"@en .
