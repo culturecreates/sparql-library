@@ -1,6 +1,6 @@
 PREFIX schema: <http://schema.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
-PREFIX capacoa:<https://capacoa.ca/vocabulary/questionnaire#>
+PREFIX capacoa:<https://capacoa.ca/vocabulary#>
 insert {
     graph <http://huginn.culturecreates.com/capacoa-members> {
          capacoa:PresenterType a skos:Collection ;
@@ -9,13 +9,11 @@ insert {
         					  skos:member capacoa:PresenterType_Multidisciplinary .
         ?org schema:additionalType capacoa:PresenterType_Specialized .
         capacoa:PresenterType_Specialized a skos:Concept ;
-                                          skos:inScheme capacoa:InferredTypes ;
-                                          skos:prefLabel "Specialized" .
+                                          skos:inScheme capacoa:InferredTypes .
         
         ?orgmulti  schema:additionalType capacoa:PresenterType_Multidisciplinary .
         capacoa:PresenterType_Multidisciplinary a skos:Concept ;
-                                                skos:inScheme capacoa:InferredTypes ;
-                                                skos:prefLabel "Multidisciplinary" .
+                                                skos:inScheme capacoa:InferredTypes .
        
     }
 }
@@ -23,13 +21,13 @@ where {
     {
         select ?org 
         where {
-            ?org  schema:additionalType capacoa:PrimaryActivity_Presenting%2Fpromoting%20live%20performances%20and%2For%20operating%20venues .
+            ?org  schema:additionalType capacoa:PrimaryActivity_pres .
             OPTIONAL {
                 ?org schema:additionalType ?discipline .
                 ?discipline ^skos:member capacoa:DisciplineGenre .
             }
             filter not exists {
-                ?org schema:additionalType capacoa:PresentingFormat_Occasional%20presentations%20%2F%20one-offs 
+                ?org schema:additionalType capacoa:PresentingFormat_occasional 
             }
         } 
         group by ?org
@@ -39,13 +37,13 @@ where {
     {
         select ?orgmulti 
         where {
-            ?orgmulti  schema:additionalType capacoa:PrimaryActivity_Presenting%2Fpromoting%20live%20performances%20and%2For%20operating%20venues .
+            ?orgmulti  schema:additionalType capacoa:PrimaryActivity_pres .
             OPTIONAL {
                 ?orgmulti schema:additionalType ?discipline .
                 ?discipline ^skos:member capacoa:DisciplineGenre .
             }
             filter not exists {
-                ?orgmulti schema:additionalType capacoa:PresentingFormat_Occasional%20presentations%20%2F%20one-offs 
+                ?orgmulti schema:additionalType capacoa:PresentingFormat_occasional 
             }
         } 
         group by ?orgmulti
