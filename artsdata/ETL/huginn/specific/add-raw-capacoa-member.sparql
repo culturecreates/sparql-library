@@ -42,14 +42,14 @@ insert data {
     
     capacoa:LegalForm_legal_form_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
-      skos:prefLabel "legal_form_placeholder" .
+      skos:hiddenLabel "legal_form_placeholder" .
     capacoa:LegalForm a skos:Collection ;
       skos:member capacoa:LegalForm_legal_form_uri ;
       skos:prefLabel "Legal Form"@en .
     
     capacoa:CharitableStatus_charitable_status_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
-      skos:prefLabel  "charitable_status_placeholder" .
+      skos:hiddenLabel  "charitable_status_placeholder" .
     capacoa:CharitableStatus a skos:Collection  ;
        skos:member capacoa:CharitableStatus_charitable_status_uri ;
        skos:prefLabel "Charitable Status"@en .
@@ -70,7 +70,7 @@ insert data {
 
     capacoa:TermsConditions_terms_conditions_v1_0_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
-      skos:prefLabel "terms_conditions_v1_0_placeholder" .
+      skos:hiddenLabel "terms_conditions_v1_0_placeholder" .
     capacoa:TermsConditionsV1_0 a skos:Collection  ;
       skos:member capacoa:TermsConditions_terms_conditions_v1_0_uri ;
       skos:prefLabel "Open Data Strategy Consent Options"@en ;
