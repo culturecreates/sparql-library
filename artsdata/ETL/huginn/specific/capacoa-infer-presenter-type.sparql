@@ -24,7 +24,7 @@ where {
             ?org  schema:additionalType capacoa:PrimaryActivity_pres .
             OPTIONAL {
                 ?org schema:additionalType ?discipline .
-                ?discipline ^skos:member capacoa:DisciplineGenre .
+                ?discipline ^skos:member capacoa:Genres .
             }
             filter not exists {
                 ?org schema:additionalType capacoa:PresentingFormat_occasional 
@@ -40,7 +40,7 @@ where {
             ?orgmulti  schema:additionalType capacoa:PrimaryActivity_pres .
             OPTIONAL {
                 ?orgmulti schema:additionalType ?discipline .
-                ?discipline ^skos:member capacoa:DisciplineGenre .
+                ?discipline ^skos:member capacoa:Genres .
             }
             filter not exists {
                 ?orgmulti schema:additionalType capacoa:PresentingFormat_occasional 
