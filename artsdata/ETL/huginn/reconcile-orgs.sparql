@@ -28,7 +28,8 @@ where {
         OPTIONAL {
             ?ad_org         schema:alternateName ?ad_alternate_name 
         }
+        filter(regex(str(?ad_org),"K\\d+-\\d+"))
     }
     filter (str(?name) = str(?ad_name) || str(?legal_name) = str(?ad_legal_name) || str(?alternate_name) = str(?ad_alternate_name))
-    filter(regex(str(?ad_org),"K\\d+-\\d+"))
+   
 }
