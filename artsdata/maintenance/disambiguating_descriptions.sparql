@@ -1,0 +1,29 @@
+# This SPARQL adds a disambiguation description for Artsdata minted Places 
+# into an Artsdata graph called <http://kg.artsdata.ca/disambiguatingDescriptions>
+# Each import from Artsdata bus should run this SPARQL
+PREFIX schema: <http://schema.org/>
+delete {
+    graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+        ?s schema:disambiguatingDescription ?previous
+    }
+}
+insert {
+     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+        ?s schema:disambiguatingDescription ?description
+    }
+}
+where {
+    select ?s (sample(?disambiguatingDescription) as ?description)
+    where {
+        ?s a schema:Place .
+        graph <http://kg.artsdata.ca/Place> { ?s schema:address ?address .}
+        OPTIONAL { ?s schema:disambiguatingDescription ?previous . }
+        ?address a schema:PostalAddress ;
+                 schema:addressLocality ?locality ;
+                 schema:addressRegion ?region ;
+                 schema:addressCountry ?country .
+        
+        bind (concat(?locality," (",?region,") ",?country) as ?disambiguatingDescription )
+        filter(contains(str(?s),"kg.artsdata.ca/resource/"))
+    } group by ?s 
+}

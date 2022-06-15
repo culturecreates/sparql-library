@@ -2,7 +2,7 @@ PREFIX schema: <http://schema.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 PREFIX capacoa:<https://capacoa.ca/vocabulary#>
 insert {
-    graph <http://huginn.culturecreates.com/capacoa-members> {
+    graph <graph_name_placeholder>  {
          capacoa:PresenterType a skos:Collection ;
                               skos:prefLabel "Presenter Type" ;
                               skos:member capacoa:PresenterType_Specialized ;
