@@ -1,0 +1,24 @@
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+
+insert {
+    graph <https://nac-cna.ca> {
+        ?e schema:organizer adr:K14-29
+    }
+}
+where {
+    values ?g {
+        <https://nac-cna.ca> 
+    }
+    graph ?g {
+        ?e a schema:Event ;
+           schema:startDate ?start ;
+           schema:location/schema:name ?place_name ;
+                          schema:name ?name .
+        OPTIONAL {
+            ?e schema:organizer ?org .
+        }
+        filter (?start > "2022-07-01"^^xsd:dateTime)
+    }
+}
