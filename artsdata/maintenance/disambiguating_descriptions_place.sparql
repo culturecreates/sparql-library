@@ -8,15 +8,15 @@ delete {
     }
 }
 insert {
-     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+    graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
         ?s schema:disambiguatingDescription ?description
     }
 }
 where {
     select ?s (sample(?disambiguatingDescription) as ?description)
     where {
-        ?s a schema:Place .
-        graph <http://kg.artsdata.ca/Place> { ?s schema:address ?address .}
+        ?s a schema:Place ;
+            schema:address ?address .
         OPTIONAL { ?s schema:disambiguatingDescription ?previous . }
         ?address a schema:PostalAddress ;
                  schema:addressLocality ?locality ;

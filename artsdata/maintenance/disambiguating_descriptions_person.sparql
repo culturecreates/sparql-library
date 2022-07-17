@@ -1,0 +1,33 @@
+# This SPARQL adds a disambiguation description for Artsdata minted Person 
+# into an Artsdata graph called <http://kg.artsdata.ca/disambiguatingDescriptions>
+# Each import from Artsdata bus should run this SPARQL
+PREFIX schema: <http://schema.org/>
+delete {
+    graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+        ?s schema:disambiguatingDescription ?previous
+    }
+}
+insert {
+    graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+        ?s schema:disambiguatingDescription ?description
+   }
+}
+where {
+    select ?s (sample(?disambiguatingDescription) as ?description)
+    where {
+        ?s a schema:Person .
+        optional {
+           ?s  schema:url ?url .
+        }
+            optional {
+            ?s  schema:hasOccupation ?occ . filter(isLiteral(?occ))
+        }
+          
+        OPTIONAL {
+            ?s schema:disambiguatingDescription ?previous .
+        }
+        bind (?occ as ?disambiguatingDescription )
+        #bind (concat(strafter(str(?url),"//")) as ?disambiguatingDescription )
+        filter(contains(str(?s),"kg.artsdata.ca/resource/"))
+    } group by ?s 
+}
