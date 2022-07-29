@@ -1,7 +1,12 @@
-# This SPARQL adds a disambiguation description for Artsdata minted Person 
-# into an Artsdata graph called <http://kg.artsdata.ca/disambiguatingDescriptions>
-# Each import from Artsdata bus should run this SPARQL
+# This SPARQL determines the disambiguating description for People using hasOccupation
+# When more than one occupation exists, it will count them and use the one with the highest count (to avoid false occupation claims)
+# If the count is equal it will use both by concatenating them into a string
+# If the occupation is a URI then it will lookup the label.
+# If there is a prefLable it will use it instead of the other labels (usefull for UDA with gendered occupations).
 PREFIX schema: <http://schema.org/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 delete {
     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
         ?s schema:disambiguatingDescription ?previous
@@ -9,25 +14,62 @@ delete {
 }
 insert {
     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
-        ?s schema:disambiguatingDescription ?description
-   }
+        ?s schema:disambiguatingDescription ?groupedfinal
+    }
 }
 where {
-    select ?s (sample(?disambiguatingDescription) as ?description)
+    select ?s  ?previous (GROUP_CONCAT( distinct ?final ;
+            SEPARATOR = ", ") as ?groupedfinal) 
     where {
-        ?s a schema:Person .
-        optional {
-           ?s  schema:url ?url .
+        # This section counts identical occupations by source
+        {
+            select ?s ?disambiguatingDescription (count(?disambiguatingDescription) as ?count) 
+            where {
+                ?s a schema:Person .
+                graph ?g {
+                    # Test values here
+                    # values ?s {
+                    # <https://uda.ca/utilisateurs/264105>
+                    # <http://kg.artsdata.ca/resource/K12-244>
+                    # }
+                    ?s schema:hasOccupation ?disambiguatingDescription .
+                }
+            }
+            group by ?s ?disambiguatingDescription
         }
-            optional {
-            ?s  schema:hasOccupation ?occ . filter(isLiteral(?occ))
+        .
+        # This section selects the most popular occupations for each person
+        {
+            select ?s (max(?count2) as ?maxcount)
+            {
+                select ?s ?disambiguatingDescription (count(?disambiguatingDescription) as ?count2) 
+                where {
+                    ?s a schema:Person .
+                    graph ?g {
+                        ?s schema:hasOccupation ?disambiguatingDescription .
+                    }
+                }
+                group by ?s ?disambiguatingDescription
+            }
+            group by ?s
         }
-          
+        # This filter keeps only the most popular occupation(s)
+        filter (?maxcount = ?count)
+        # This section looks up occupations that are URIs
         OPTIONAL {
-            ?s schema:disambiguatingDescription ?previous .
+            ?disambiguatingDescription rdfs:label ?label 
         }
-        bind (?occ as ?disambiguatingDescription )
-        #bind (concat(strafter(str(?url),"//")) as ?disambiguatingDescription )
-        filter(contains(str(?s),"kg.artsdata.ca/resource/"))
-    } group by ?s 
+        OPTIONAL {
+            ?disambiguatingDescription skos:prefLabel ?prefLabel 
+        }
+        bind (coalesce(?prefLabel, ?label, ?disambiguatingDescription )as ?final)
+        # This keeps only Artsdata IDs
+        filter(contains(str(?s),"resource/K"))
+        # Load previous so they can be deleted
+        OPTIONAL {
+            graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+                ?s schema:disambiguatingDescription ?previous .
+            }
+        }
+    } group by ?s  ?previous 
 }
