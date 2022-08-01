@@ -14,20 +14,22 @@ delete {
 }
 insert {
     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
-        ?s schema:disambiguatingDescription ?disambiguatingDescription
+        ?s schema:disambiguatingDescription ?description
     }
 }
 where {
-    select ?s  ?disambiguatingDescription ?previous
+    select ?s  ?description ?previous
     where {
         ?s a skos:Concept .
         filter(isURI(?s))
         filter(!isBlank(?s))
         OPTIONAL {
             ?s   rdfs:label ?label ;
-                 skos:definition ?disambiguatingDescription .
+                 skos:definition ?disambiguatingDescription ;
+                 skos:inScheme ?scheme .
             filter(lang(?label) = lang(?disambiguatingDescription ))
         }
+        BIND(STRLANG(CONCAT(?disambiguatingDescription, " (in scheme ", STRAFTER(str(?scheme), "http://kg.artsdata.ca/resource/"), ")"),lang(?disambiguatingDescription)) as ?description )
         OPTIONAL {
             ?s schema:disambiguatingDescription ?previous .
         }
