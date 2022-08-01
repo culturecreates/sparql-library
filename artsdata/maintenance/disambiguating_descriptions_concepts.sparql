@@ -1,0 +1,36 @@
+# This SPARQL adds a disambiguation description for Artsdata minted Concepts 
+# such as event types and organizations types 
+# into an Artsdata graph called <http://kg.artsdata.ca/disambiguatingDescriptions>
+# Each import from Artsdata bus should run this SPARQL
+PREFIX schema: <http://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX s: <http://www.wikidata.org/entity/statement/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+delete {
+    graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+        ?s schema:disambiguatingDescription ?previous
+    }
+}
+insert {
+    graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+        ?s schema:disambiguatingDescription ?disambiguatingDescription
+    }
+}
+where {
+    select ?s  ?disambiguatingDescription ?previous
+    where {
+        ?s a skos:Concept .
+        filter(isURI(?s))
+        filter(!isBlank(?s))
+        OPTIONAL {
+            ?s   rdfs:label ?label ;
+                 skos:definition ?disambiguatingDescription .
+            filter(lang(?label) = lang(?disambiguatingDescription ))
+        }
+        OPTIONAL {
+            ?s schema:disambiguatingDescription ?previous .
+        }
+        filter(contains(str(?s),"kg.artsdata.ca/resource/"))
+    } # group by ?s  ?label
+}
