@@ -6,7 +6,7 @@ insert {
 }
 where {
     values ?g {
-        <graph_name_placeholder>  
+        <http://kg.artsdata.ca/culture-creates/huginn/capacoa-members> 
     }
     graph ?g {
         ?org a schema:Organization ;
@@ -24,5 +24,7 @@ where {
         }
         filter(regex(str(?ad_org),"K\\d+-\\d+"))
     }
-    filter (str(?name) = str(?ad_name) || str(?name) = str(?ad_alternate_name) || str(?alternate_name ) = str(?ad_name) || str(?alternate_name) = str(?ad_alternate_name))
+    filter (lcase(str(?name)) = lcase(str(?ad_name)) || lcase(str(?name)) = lcase(str(?ad_alternate_name)) || lcase(str(?alternate_name)) = lcase(str(?ad_name)) || lcase(str(?alternate_name)) = lcase(str(?ad_alternate_name)))
 }
+# This SPARQL can be run from any graph repository (i.e. raw) to reconcile orgs with the artsdata repository.
+# Inserts the Artsdata ID into the original graph using schema:sameAs.
