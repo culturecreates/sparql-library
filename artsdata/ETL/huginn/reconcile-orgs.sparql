@@ -6,7 +6,7 @@ insert {
 }
 where {
     values ?g {
-        <http://kg.artsdata.ca/culture-creates/huginn/capacoa-members> 
+        <graph_name_placeholder>
     }
     graph ?g {
         ?org a schema:Organization ;
