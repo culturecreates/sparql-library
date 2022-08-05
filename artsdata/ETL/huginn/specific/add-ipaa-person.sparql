@@ -11,7 +11,7 @@ insert data {
       schema:url  "official_website_placeholder"  ;
       schema:hasOccupation  "has_occupation_placeholder" ; 
       schema:mainEntityOfPage <crawled_webpage_placeholder#WebPage> ;
-      schema:sameAs array_social_media_placeholder .
+      schema:sameAs "array_social_media_placeholder" .
     <crawled_webpage_placeholder#WebPage> a schema:WebPage  ;
       schema:url  "url_placeholder" .
   }
