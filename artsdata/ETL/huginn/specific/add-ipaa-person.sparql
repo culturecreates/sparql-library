@@ -13,6 +13,6 @@ insert data {
       schema:mainEntityOfPage <crawled_webpage_placeholder#WebPage> ;
       schema:sameAs <array_social_media_placeholder> .
     <crawled_webpage_placeholder#WebPage> a schema:WebPage  ;
-      schema:url  "url_placeholder" .
+      schema:url  "crawled_webpage_placeholder" .
   }
 }
