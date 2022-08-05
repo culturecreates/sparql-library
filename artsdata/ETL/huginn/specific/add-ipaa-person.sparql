@@ -10,8 +10,7 @@ insert data {
       schema:address  "address_placeholder" ; 
       schema:url  "official_website_placeholder"  ;
       schema:hasOccupation  "has_occupation_placeholder" ; 
-      schema:mainEntityOfPage <crawled_webpage_placeholder#WebPage> ;
-      schema:sameAs "array_social_media_placeholder" .
+      schema:mainEntityOfPage <crawled_webpage_placeholder#WebPage> .
     <crawled_webpage_placeholder#WebPage> a schema:WebPage  ;
       schema:url  "crawled_webpage_placeholder" .
   }

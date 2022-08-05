@@ -1,0 +1,7 @@
+PREFIX schema: <http://schema.org/> 
+
+insert data { 
+  graph <graph_name_placeholder> {
+    <uri_placeholder>  schema:sameAs <array_social_media> .
+  }
+}
