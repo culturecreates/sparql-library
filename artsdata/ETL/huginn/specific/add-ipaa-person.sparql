@@ -7,7 +7,7 @@ insert data {
       schema:name "name_placeholder"; 
       schema:description  "description_placeholder"  ; 
       schema:image  "image_placeholder"   ; 
-      schema:address  "address_placeholder" ; 
+      schema:workLocation  "address_placeholder" ; 
       schema:url  "official_website_placeholder"  ;
       schema:hasOccupation  "has_occupation_placeholder" ; 
       schema:mainEntityOfPage <crawled_webpage_placeholder#WebPage> .

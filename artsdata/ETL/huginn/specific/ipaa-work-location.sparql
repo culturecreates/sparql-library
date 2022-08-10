@@ -1,0 +1,36 @@
+PREFIX schema: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+insert {
+    graph  <http://kg.artsdata.ca/culture-creates/huginn/ipaa> {
+        ?p schema:workLocation ?wd_city . 
+        ?wd_city rdfs:label ?wd_cityLabel  .
+    }
+}
+# select *
+where {
+    graph <http://kg.artsdata.ca/culture-creates/huginn/ipaa> {
+        ?p a schema:Person ;
+           schema:workLocation ?address .
+        bind(strbefore(?address,",") as ?locality)
+        bind(strafter(?address,", ") as ?region)
+    }
+    service <https://query.wikidata.org/sparql> {
+        select  ?wd_city  ?wd_cityLabel where {
+            SERVICE wikibase:label {
+                bd:serviceParam wikibase:language "en,fr".
+            }
+            ?wd_city wdt:P31/wdt:P279* wd:Q7930989 ;
+                     wdt:P17 wd:Q16 .
+             
+        }
+        
+    }
+   filter (contains( str(?locality),str(?wd_cityLabel)))
+}
