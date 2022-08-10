@@ -17,36 +17,77 @@ insert {
         ?s schema:disambiguatingDescription ?groupedfinal
     }
 }
+
 where {
-    select ?s  ?previous (GROUP_CONCAT( distinct ?final ;
+    select ?s   ?previous (GROUP_CONCAT( distinct ?final ;
             SEPARATOR = ", ") as ?groupedfinal) 
     where {
         # This section counts identical occupations by source
         {
-            select ?s ?disambiguatingDescription (count(?disambiguatingDescription) as ?count) 
+            select ?s  ?disambiguatingDescription (count(?disambiguatingDescription) as ?count) 
             where {
-                ?s a schema:Person .
-                graph ?g {
-                    # Test values here
-                    # values ?s {
-                    # <https://uda.ca/utilisateurs/264105>
-                    # <http://kg.artsdata.ca/resource/K12-244>
-                    # }
-                    ?s schema:hasOccupation ?disambiguatingDescription .
+                # Group 1 uses ADIDs
+                {
+                    ?s a schema:Person .
+                    filter(contains(str(?s),"kg.artsdata.ca/resource/K"))
+                    graph ?g {
+                        ?s schema:hasOccupation ?disambiguatingDescription .
+                    }
+                }
+                UNION
+                # Group 2 uses external IDs as object of sameAs ADID
+                {
+                    ?external_s a schema:Person .
+                    ?s schema:sameAs ?external_s .
+                    filter(contains(str(?s),"kg.artsdata.ca/resource/K"))
+                    graph ?g {
+                        ?external_s schema:hasOccupation ?disambiguatingDescription .
+                    } 
+                }
+                UNION
+                # Group 3 uses external IDs as subject of sameAs ADID
+                {
+                    ?external_s a schema:Person ;
+                                schema:sameAs ?s .
+                    filter(contains(str(?s),"kg.artsdata.ca/resource/K"))
+                    graph ?g {
+                        ?external_s schema:hasOccupation ?disambiguatingDescription .
+                    } 
                 }
             }
-            group by ?s ?disambiguatingDescription
+            group by ?s   ?disambiguatingDescription
         }
         .
         # This section selects the most popular occupations for each person
         {
             select ?s (max(?count2) as ?maxcount)
             {
-                select ?s ?disambiguatingDescription (count(?disambiguatingDescription) as ?count2) 
+                select ?s  ?disambiguatingDescription (count(?disambiguatingDescription) as ?count2) 
                 where {
-                    ?s a schema:Person .
-                    graph ?g {
-                        ?s schema:hasOccupation ?disambiguatingDescription .
+                    {
+                        ?s a schema:Person .
+                        filter(contains(str(?s),"kg.artsdata.ca/resource/K"))
+                        graph ?g {
+                            ?s schema:hasOccupation ?disambiguatingDescription .
+                        }
+                    }
+                    UNION
+                    {
+                        ?external_s a schema:Person .
+                        ?s schema:sameAs ?external_s .
+                        filter(contains(str(?s),"kg.artsdata.ca/resource/K"))
+                        graph ?g {
+                            ?external_s schema:hasOccupation ?disambiguatingDescription .
+                        }  
+                    }
+                    UNION
+                    {
+                        ?external_s a schema:Person ;
+                                    schema:sameAs ?s .
+                        filter(contains(str(?s),"kg.artsdata.ca/resource/K"))
+                        graph ?g {
+                            ?external_s schema:hasOccupation ?disambiguatingDescription .
+                        } 
                     }
                 }
                 group by ?s ?disambiguatingDescription
@@ -63,13 +104,11 @@ where {
             ?disambiguatingDescription skos:prefLabel ?prefLabel 
         }
         bind (coalesce(?prefLabel, ?label, ?disambiguatingDescription )as ?final)
-        # This keeps only Artsdata IDs
-        filter(contains(str(?s),"resource/K"))
         # Load previous so they can be deleted
         OPTIONAL {
             graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
                 ?s schema:disambiguatingDescription ?previous .
             }
         }
-    } group by ?s  ?previous 
+    } group by ?s   ?previous 
 }
