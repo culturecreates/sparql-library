@@ -8,14 +8,14 @@ PREFIX ps: <http://www.wikidata.org/prop/statement/>
 PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
 PREFIX bd: <http://www.bigdata.com/rdf#>
 insert {
-    graph  <http://kg.artsdata.ca/culture-creates/huginn/ipaa> {
+    graph  ?graph {
         ?p schema:workLocation ?wd_city . 
         ?wd_city rdfs:label ?wd_cityLabel  .
     }
 }
-# select *
 where {
-    graph <http://kg.artsdata.ca/culture-creates/huginn/ipaa> {
+    values ?graph { <graph_name_placeholder> }
+    graph ?graph {
         ?p a schema:Person ;
            schema:workLocation ?address .
         bind(strbefore(?address,",") as ?locality)

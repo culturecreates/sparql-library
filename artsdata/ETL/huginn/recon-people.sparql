@@ -1,14 +1,14 @@
 PREFIX schema: <http://schema.org/>
-#insert {
-#    graph ?g {
-#        ?s  schema:sameAs  ?ad_s
-#    }
-#}
-select *
+insert {
+   graph ?g {
+       ?s  schema:sameAs  ?ad_s
+   }
+}
+
 where {
     values ?type { schema:Person }
     values ?g {
-       <http://kg.artsdata.ca/culture-creates/huginn/ipaa>
+        <graph_name_placeholder>
     }
     graph ?g {
         ?s a ?type ;
