@@ -1,9 +1,10 @@
 PREFIX schema: <http://schema.org/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 
 insert data { 
   graph <graph_name_placeholder> {
     <uri_placeholder> a schema:Person ;
-      schema:additionalType "additional_type_placeholder";
+      wdt:P172 "additional_type_placeholder";
       schema:name "name_placeholder"; 
       schema:description  "description_placeholder"  ; 
       schema:image  "image_placeholder"   ; 

@@ -29,7 +29,7 @@ where {
                  skos:inScheme ?scheme .
             filter(lang(?label) = lang(?disambiguatingDescription ))
         }
-        BIND(STRLANG(CONCAT(?disambiguatingDescription, " (in scheme ", STRAFTER(str(?scheme), "http://kg.artsdata.ca/resource/"), ")"),lang(?disambiguatingDescription)) as ?description )
+        BIND(STRLANG(CONCAT(?disambiguatingDescription, " (skos:inScheme adr:", STRAFTER(str(?scheme), "http://kg.artsdata.ca/resource/"), ")"),lang(?disambiguatingDescription)) as ?description )
         OPTIONAL {
             ?s schema:disambiguatingDescription ?previous .
         }
