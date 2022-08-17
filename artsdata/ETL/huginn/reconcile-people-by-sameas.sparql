@@ -22,6 +22,8 @@ where {
     }
     service <http://db.artsdata.ca/repositories/artsdata> 
     {
+        ?p a schema:Person .
+        ?linked_adid a schema:Person .
         ?p schema:sameAs*/^schema:sameAs* ?linked_adid
         filter(contains(str(?linked_adid),"http://kg.artsdata.ca/resource/K"))
         filter(?p != ?linked_adid)
