@@ -24,14 +24,15 @@ where {
     {
         ?p a schema:Person .
         ?linked_adid a schema:Person .
-        # ?p schema:sameAs*/^schema:sameAs* ?linked_adid
+        
         ?p ^schema:sameAs ?linked_adid
         filter(contains(str(?linked_adid),"http://kg.artsdata.ca/resource/K"))
         filter(?p != ?linked_adid)
     }
 }
 # This SPARQL can be run from any graph repository (i.e. raw)
-# This SPARQL reconciles orgs/people using schema:sameAs in either direction.
+# This SPARQL reconciles orgs/people using schema:sameAs 
+# TODO: ?p schema:sameAs*/^schema:sameAs* ?linked_adid would be nice in either direction but is too slow.
 # The existing entities that already have an ADID are extracted 
 # Change the values for ?type to schema:Person or schema:Organization
 # Inserts the Artsdata ID into the original graph using schema:sameAs.
