@@ -8,7 +8,7 @@ where {
     {
         select ?p ?g where {
             values ?g {
-                <http://kg.artsdata.ca/culture-creates/huginn/ipaa>
+                  <graph_name_placeholder>
             }
             graph ?g {
                 ?p a schema:Person .
