@@ -1,0 +1,34 @@
+PREFIX schema: <http://schema.org/>
+insert {
+    graph ?g {
+        ?p  schema:sameAs  ?linked_adid
+    }
+}
+where {
+    {
+        select ?p ?g where {
+            values ?g {
+                <http://kg.artsdata.ca/culture-creates/huginn/ipaa>
+            }
+            graph ?g {
+                ?p a schema:Person .
+                OPTIONAL {
+                    ?p schema:sameAs ?adid .
+                    filter(contains(str(?adid),"http://kg.artsdata.ca/resource/K"))
+                }
+                filter (!bound(?adid))
+            }
+        }
+    }
+    service <http://db.artsdata.ca/repositories/artsdata> 
+    {
+        ?p schema:sameAs*/^schema:sameAs* ?linked_adid
+        filter(contains(str(?linked_adid),"http://kg.artsdata.ca/resource/K"))
+        filter(?p != ?linked_adid)
+    }
+}
+# This SPARQL can be run from any graph repository (i.e. raw)
+# This SPARQL reconciles orgs/people using schema:sameAs in either direction.
+# The existing entities that already have an ADID are extracted 
+# Change the values for ?type to schema:Person or schema:Organization
+# Inserts the Artsdata ID into the original graph using schema:sameAs.

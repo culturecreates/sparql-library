@@ -1,0 +1,47 @@
+PREFIX schema: <http://schema.org/>
+insert {
+    graph ?g {
+        ?s  schema:sameAs  ?ad_s
+    }
+}
+where {
+    {
+        select distinct ?s ?type ?g where {
+            values ?type {
+                schema:Person 
+            }
+            values ?g {
+                 <graph_name_placeholder>
+            }
+            ?s a ?type .
+            graph ?g {
+                OPTIONAL {
+                    ?s schema:sameAs ?adid .
+                    filter(contains(str(?adid),"http://kg.artsdata.ca/resource/K"))
+                }
+            }
+            filter (!bound(?adid))
+        }
+    }
+    graph ?g {
+        ?s schema:name ?name .
+        OPTIONAL {
+            ?s  schema:alternateName ?alternate_name 
+        }
+    }
+    service <http://db.artsdata.ca/repositories/artsdata> 
+    {
+        ?ad_s a ?type ;
+              schema:name ?ad_name .
+        OPTIONAL {
+            ?ad_s  schema:alternateName ?ad_alternate_name 
+        }
+        filter(regex(str(?ad_s),"K\\d+-\\d+"))
+        filter (lcase(str(?name)) = lcase(str(?ad_name)) || lcase(str(?name)) = lcase(str(?ad_alternate_name)) || lcase(str(?alternate_name)) = lcase(str(?ad_name)) || lcase(str(?alternate_name)) = lcase(str(?ad_alternate_name)))
+    }
+}
+# This SPARQL can be run from any graph repository (i.e. raw)
+# This SPARQL reconciles orgs/people using exact name matching.
+# The existing entities that already have an ADID are extracted 
+# Change the values for ?type to schema:Person or schema:Organization
+# Inserts the Artsdata ID into the original graph using schema:sameAs.
