@@ -35,8 +35,10 @@ where {
     }
 }
 # This SPARQL can be run from any graph repository (i.e. raw)
-# This SPARQL reconciles orgs/people using schema:sameAs 
+# This SPARQL reconciles people using schema:sameAs in both directions
+# Inserts the Artsdata ID into the graph using schema:sameAs.
 # TODO: ?p schema:sameAs*/^schema:sameAs* ?linked_adid would be nice in either direction but is too slow.
-# The existing entities that already have an ADID are extracted 
-# Change the values for ?type to schema:Person or schema:Organization
-# Inserts the Artsdata ID into the original graph using schema:sameAs.
+# The existing entities that already have an ADID are excluded
+# Forwards: ?p schema:sameAs ?linked_adid captures the current links in the live graph (before it gets replaced)
+# Backwards: ?linked_adid schema:sameAs ?p captures the links in the minted graphs
+# Note: Adids from different minted sources can be simply added to the graph, but it would be good to also add the link to the other minted graphs.
