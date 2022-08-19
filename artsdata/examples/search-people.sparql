@@ -18,8 +18,8 @@ where {
   { ?originalUri a schema:Person; schema:url ?search_str ; rdfs:label ?name .  }
 
   # Prefer Artsdata ID over external IDs from wikidata or other websites.
-  OPTIONAL { graph <http://kg.artsdata.ca/Artsdata_Minted>
-  { ?originalUri ^schema:sameAs ?reverseSameAs . filter (isURI(?reverseSameAs)) }
+  OPTIONAL { 
+   ?originalUri ^schema:sameAs ?reverseSameAs . filter (isURI(?reverseSameAs)) 
   }
   bind(coalesce(?reverseSameAs, ?originalUri) as ?uri)
   
