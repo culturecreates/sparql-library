@@ -1,4 +1,5 @@
 PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 insert {
     graph ?g {
         ?org  schema:sameAs  ?ad_org
@@ -6,7 +7,7 @@ insert {
 }
 where {
     values ?g {
-        <graph_name_placeholder>
+         <graph_name_placeholder>
     }
     graph ?g {
         ?org a schema:Organization ;
@@ -14,6 +15,11 @@ where {
         OPTIONAL {
             ?org  schema:alternateName ?alternate_name 
         }
+        OPTIONAL {
+            ?org schema:sameAs ?adid .
+            filter(contains(str(?adid),"http://kg.artsdata.ca/resource/K"))
+        }
+        filter (!bound(?adid))
     }
     service <http://db.artsdata.ca/repositories/artsdata> 
     {

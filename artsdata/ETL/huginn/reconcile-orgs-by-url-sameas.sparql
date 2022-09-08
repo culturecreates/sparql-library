@@ -1,0 +1,45 @@
+PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+insert {
+  graph ?g {
+    ?org  schema:sameAs  ?ad_org
+  }
+}
+where {
+    values ?g {
+         <graph_name_placeholder>
+    }
+    graph ?g {
+        ?org a schema:Organization ;
+             schema:name ?name .
+        OPTIONAL {
+            ?org  schema:url ?url 
+        } 
+        OPTIONAL {
+            ?org  schema:sameAs ?sameAs 
+        }
+        OPTIONAL {
+            ?org schema:sameAs ?adid .
+            filter(contains(str(?adid),"http://kg.artsdata.ca/resource/K"))
+        }
+        filter (!bound(?adid))
+    }
+    service <http://db.artsdata.ca/repositories/artsdata> 
+    {
+        ?ad_org a schema:Organization ;
+                schema:name ?ad_name .
+        OPTIONAL {
+            ?ad_org  schema:url ?ad_url 
+        }
+         OPTIONAL {
+            ?ad_org   wdt:P10503 ?ad_neq 
+        } 
+        OPTIONAL {
+            ?ad_org  schema:sameAs ?ad_sameAs 
+        }
+        filter(regex(str(?ad_org),"K\\d+-\\d+"))
+    }
+    filter (str(?url) =  str(?ad_url)  || str(?sameAs) =  str(?ad_sameAs)  )
+}
+# This SPARQL can be run from any graph repository (i.e. raw) to reconcile orgs with the artsdata repository.
+# Inserts the Artsdata ID into the original graph using schema:sameAs.
