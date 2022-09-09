@@ -4,26 +4,32 @@
 PREFIX schema: <http://schema.org/>
 delete {
     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
-        ?s schema:disambiguatingDescription ?previous
+        ?candidate_adid schema:disambiguatingDescription ?previous
     }
 }
 insert {
     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
-        ?s schema:disambiguatingDescription ?description
+        ?candidate_adid schema:disambiguatingDescription ?description
     }
 }
 where {
-    select ?s (sample(?disambiguatingDescription) as ?description)
+    select ?s ?candidate_adid (sample(?disambiguatingDescription) as ?description)
     where {
         ?s a schema:Place ;
-            schema:address ?address .
-        OPTIONAL { ?s schema:disambiguatingDescription ?previous . }
+           schema:address ?address .
+        OPTIONAL {
+            ?s schema:disambiguatingDescription ?previous .
+        }
         ?address a schema:PostalAddress ;
                  schema:addressLocality ?locality ;
                  schema:addressRegion ?region ;
                  schema:addressCountry ?country .
-        
+        OPTIONAL {
+            ?s schema:sameAs ?adid .
+            filter(contains(str(?adid), "kg.artsdata.ca/resource/"))
+        }
         bind (concat(?locality," (",?region,") ",?country) as ?disambiguatingDescription )
-        filter(contains(str(?s),"kg.artsdata.ca/resource/"))
-    } group by ?s 
+        bind(coalesce(?adid,?s) as ?candidate_adid)
+        filter(contains(str(?candidate_adid),"kg.artsdata.ca/resource/"))
+    } group by ?s ?candidate_adid
 }

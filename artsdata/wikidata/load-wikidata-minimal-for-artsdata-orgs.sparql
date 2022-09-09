@@ -1,0 +1,28 @@
+PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+#select * 
+insert {
+    graph <http://wikidata.org/organization> {
+         ?wd schema:sameAs ?id ;
+            rdfs:label ?label ;
+             wdt:P31 ?type .
+     ?type rdfs:label ?type_label .
+   }
+}
+
+where {
+    graph <http://kg.artsdata.ca/culture-creates/huginn/scenepro-orgs> {
+        ?s a schema:Organization ; schema:sameAs ?id .
+        filter(contains(str(?id),"artsdata.ca"))
+        bind(strafter(str(?id),"kg.artsdata.ca/resource/") as ?ad_id)
+    }
+    SERVICE <https://query.wikidata.org/sparql> {
+        ?wd wdt:P7627 ?ad_id ;
+            rdfs:label ?label ; 
+            wdt:P31 ?type .
+        ?type rdfs:label ?type_label .
+         filter(lang(?label) = "en" || lang(?label) = "fr")
+        filter(lang(?type_label) = "en")
+    }
+}
