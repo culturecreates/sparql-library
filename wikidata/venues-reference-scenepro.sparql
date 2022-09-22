@@ -1,0 +1,11 @@
+# This SPARQL finds the venues in Wikidata that
+# have the type "performance hall" 
+# and reference ScenePro catalog on the place's country property 
+
+
+SELECT DISTINCT ?item ?itemLabel   ?reference  ?referenceLabel
+WHERE {
+  SERVICE wikibase:label { bd:serviceParam wikibase:language "[AUTO_LANGUAGE]". }
+        ?item wdt:P31  wd:Q112688641 .  # wd:Q18674739 event venue
+        ?item p:P17 [ prov:wasDerivedFrom [ pr:P248 wd:Q111597636 ] ] .
+}

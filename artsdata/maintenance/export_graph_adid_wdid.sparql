@@ -1,0 +1,21 @@
+PREFIX schema: <http://schema.org/>
+select ?internal_uri ?ad_uri ?wd_uri
+where {
+    {
+        select * where {
+            graph <http://kg.artsdata.ca/culture-creates/huginn/scenepro-orgs> {
+                values ?type {
+                    schema:Place schema:Organization
+                }
+                ?internal_uri a ?type .
+            }
+        }
+    }
+    ?internal_uri schema:sameAs ?ad_uri .
+    filter(contains(str(?ad_uri),"artsdata.ca/resource/K"))
+    optional {
+        ?ad_uri schema:sameAs ?wdid .
+        filter(contains(str(?wdid),"wikidata.org/entity/"))
+    }
+    bind(URI(?wdid) as ?wd_uri)
+}
