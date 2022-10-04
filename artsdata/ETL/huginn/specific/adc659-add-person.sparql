@@ -14,7 +14,7 @@ insert {
     adc:pronounPreference "pronounPreference_placeholder";
     schema:addressRegion "residenceProvince_placeholder";
     schema:addressLocality "residenceRegion_placeholder";
-    schema:knowsLanguage "knowsLanguage_placeholder";
+    schema:knowsLanguage "languages_placeholder";
     schema:image  "image_placeholder"   ; 
     schema:sameAs "facebook_placeholder" , "instagram_placeholder", "soundcloud_placeholder";
     schema:description  "fullBio_placeholder"  ; 
