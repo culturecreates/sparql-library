@@ -1,0 +1,34 @@
+PREFIX schema: <http://schema.org/> 
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX adc: <http://www.adc659/vocabulary/>
+
+insert { 
+  graph <graph_name_placeholder> {
+    <uri_placeholder> a schema:Person ;
+    schema:hasOccupation "designDiscipline_placeholder";
+    schema:email "email_placeholder"; 
+    schema:name "name_placeholder";
+    schema:telephone "phone_placeholder";
+    adc:memberType "memberType_placeholder";
+    schema:url  "userUrl_placeholder"  ;
+    adc:pronounPreference "pronounPreference_placeholder";
+    schema:addressRegion "residenceProvince_placeholder";
+    schema:addressLocality "residenceRegion_placeholder";
+    schema:knowsLanguage "knowsLanguage_placeholder";
+    schema:image  "image_placeholder"   ; 
+    schema:sameAs "facebook_placeholder" , "instagram_placeholder", "soundcloud_placeholder";
+    schema:description  "fullBio_placeholder"  ; 
+    adc:availableForWork "availableForWork_placeholder";
+    adc:availableForAssistantassociate "availableForAssistantassociate_placeholder";
+    schema:image "image_placeholder";
+    schema:mainEntityOfPage <memberUrl_placeholder#WebPage> .
+
+  <memberUrl_placeholder#WebPage> a schema:WebPage  ;
+    schema:url  "memberUrl_placeholder" ;
+    schema:inLanguage "en" ;
+    schema:lastReviewed ?date .
+  }
+}
+where {
+      BIND(NOW() as ?date)
+}
