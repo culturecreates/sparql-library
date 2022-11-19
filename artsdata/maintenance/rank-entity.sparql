@@ -1,6 +1,7 @@
 # SPARQL behind the Artsdata Ranked API api.artsdata.ca/ranked/K10-194
 # input: an entity 
 # output: graph of ranked results with nested blank nodes 
+# To include graphs, the graph must have a schema:contentRating/schema:ratingValue and a schema:maintainer.
 
 PREFIX adr: <http://kg.artsdata.ca/resource/>
 PREFIX schema: <http://schema.org/>
