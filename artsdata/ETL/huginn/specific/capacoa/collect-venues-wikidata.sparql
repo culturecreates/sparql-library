@@ -4,29 +4,49 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX bd: <http://www.bigdata.com/rdf#>
 PREFIX schema: <http://schema.org/>
-
-CONSTRUCT {
-    ?org schema:location ?role .
-    ?role schema:roleName "item operated P121" ;
+insert {
+    graph <http://wikidata.org/capacoa-member-venues> {
+        <http://wikidata.org/capacoa-member-venues> schema:contentRating  <http://wikidata.org/capacoa-member-venues#rating>  .
+        <http://wikidata.org/capacoa-member-venues#rating>  schema:ratingValue 1 .
+        <http://wikidata.org/capacoa-member-venues> schema:maintainer "wikidata.org" .
+        ?org schema:location ?role .
+        ?role schema:roleName "item operated P121" ;
               schema:location   ?itemOperated .
-     ?itemOperated schema:geoCoordinates ?geo ;
-                   schema:name ?itemOperatedLabel ;
-                   schema:containsPlace ?parts .
+        ?itemOperated schema:geoCoordinates ?geo ;
+                      schema:address ?street_address_sample ;
+                      schema:additionalType ?itemOperatedTypeLabelConcat ;
+                      schema:name ?itemOperatedLabel ;
+                      schema:image ?image ;
+                      schema:containsPlace ?parts .
+    }
 }
-#SELECT ?org ?orgLabel ?itemOperatedLabel ?geo  ?itemOperated ?parts ?itemOperatedTypeLabelConcat ?partsLabel  ?partTypeLabelConcat
 where {
     SERVICE <https://query.wikidata.org/sparql> {
-        SELECT ?org ?orgLabel ?itemOperatedLabel ?geo  ?itemOperated ?parts (GROUP_CONCAT(DISTINCT ?itemOperatedTypeLab;
-                SEPARATOR = ", ") AS ?itemOperatedTypeLabelConcat) ?partsLabel (GROUP_CONCAT(DISTINCT ?partTypeLab;
+        SELECT ?org ?orgLabel ?itemOperatedLabel ?geo  
+        (sample(?street_address) as ?street_address_sample) 
+        (sample(?image) as ?image_sample) 
+        ?itemOperated ?parts   
+        (GROUP_CONCAT(DISTINCT ?itemOperatedTypeLab;
+                SEPARATOR = ", ") AS ?itemOperatedTypeLabelConcat) 
+        ?partsLabel 
+        (GROUP_CONCAT(DISTINCT ?partTypeLab;
                 SEPARATOR = ", ") AS ?partTypeLabelConcat) 
         WHERE {
-            values ?org {<http://www.wikidata.org/entity/Q111743977>}
+            # values ?org { <http://www.wikidata.org/entity/Q2945952> }
             ?org wdt:P463 wd:Q85541788.
-            ?org wdt:P121 ?itemOperated.
+            ?org wdt:P121/wdt:P527* ?itemOperated .
             ?itemOperated wdt:P31 ?itemOperatedType.
             ?itemOperatedType rdfs:label ?itemOperatedTypeLab .
-            ?itemOperated wdt:P625 ?geo .
+            OPTIONAL {
+                ?itemOperated wdt:P625 ?geo .
+            }
             FILTER(LANG(?itemOperatedTypeLab) = "en" )
+            OPTIONAL {
+                ?itemOperated wdt:P18 ?image.
+            }
+            OPTIONAL {
+                ?itemOperated wdt:P6375 ?street_address .
+            }
             OPTIONAL {
                 ?org wdt:P121 ?itemOperated.
                 ?itemOperated wdt:P527 ?parts.
@@ -38,7 +58,12 @@ where {
                 bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en,fr".
             }
         }
-        GROUP BY ?org ?orgLabel ?itemOperatedLabel ?geo ?itemOperated ?parts ?partsLabel
+        GROUP BY ?org ?orgLabel ?itemOperatedLabel ?geo ?itemOperated ?parts ?partsLabel 
     }
-BIND (URI(CONCAT(str(?org),"-ROLE-",str(?itemOperated))) as ?role)
+    BIND (URI(CONCAT(str(?org),"-ITEM_OPERATED_P121-",str(?itemOperated))) as ?role)
 }
+# SELECT ?org ?orgLabel ?itemOperatedLabel ?geo ?street_address_sample  ?image_sample ?itemOperated ?parts ?itemOperatedTypeLabelConcat ?partsLabel  ?partTypeLabelConcat
+
+# This SPARQL finds all capacoa members in Wikidata and loads the venues that are operated by the organizations, including halls that are part of a building.
+# You MUST drop the graph <http://wikidata.org/capacoa-member-venues> before running this SPARQL otherwise concatenated nodes may accumulate if the concatenation order changes by chance.
+# TODO: also get venues that organization "uses P2283", include fr labels.
