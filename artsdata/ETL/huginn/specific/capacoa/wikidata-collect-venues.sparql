@@ -13,7 +13,7 @@ insert {
                       schema:address ?street_address_sample ;
                       schema:additionalType ?itemOperatedTypeLabelConcat ;
                       schema:name ?itemOperatedLabel ;
-                      schema:image ?image ;
+                      schema:image ?image_sample ;
                       schema:containsPlace ?parts .
     }
 }
