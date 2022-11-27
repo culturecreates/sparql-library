@@ -1,0 +1,7 @@
+insert data {
+    graph <http://wikidata.org/capacoa-members> {
+        <http://wikidata.org/capacoa-members> schema:contentRating  <http://wikidata.org/capacoa-members#rating>  .
+        <http://wikidata.org/capacoa-members#rating>  schema:ratingValue 1 .
+        <http://wikidata.org/capacoa-members> schema:maintainer "wikidata.org" .
+    }
+}
