@@ -1,0 +1,17 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    <http://www.wikidata.org/entity/Q105547738> schema:image <http://image_uri> .
+}
+insert {
+    <http://www.wikidata.org/entity/Q105547738> schema:image <http://thumbnail_uri>
+}
+where {
+    values ?graph {
+        <http://wikidata.org/capacoa-members> 
+    }
+    graph ?graph {
+        <http://www.wikidata.org/entity/Q105547738> schema:image <http://image_uri> .
+    }
+}
+# Used to replace large images with URLs http://commons.wikimedia.org/wiki/Special:FilePath/NAC-CNA-2019.jpg
+# by doing an external look up https://commons.wikimedia.org/w/api.php?action=query&prop=imageinfo&iiprop=url&redirects&format=json&iiurlwidth=300&titles=File:NAC-CNA-2019.jpg
