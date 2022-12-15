@@ -1,6 +1,6 @@
 PREFIX schema: <http://schema.org/>
 delete {
-    <http://www.wikidata.org/entity/Q105547738> schema:image <http://image_uri> .
+    <http://www.wikidata.org/entity/Q105547738> schema:image ?image  .
 }
 insert {
     <http://www.wikidata.org/entity/Q105547738> schema:image <http://thumbnail_uri>
@@ -10,7 +10,7 @@ where {
         <http://wikidata.org/capacoa-members> 
     }
     graph ?graph {
-        <http://www.wikidata.org/entity/Q105547738> schema:image <http://image_uri> .
+        <http://www.wikidata.org/entity/Q105547738> schema:image ?image .
     }
 }
 # Used to replace large images with URLs http://commons.wikimedia.org/wiki/Special:FilePath/NAC-CNA-2019.jpg
