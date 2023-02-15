@@ -1,3 +1,6 @@
+# This SPARQL can be used to dump a table of Artsdata ID for a given graph when asked by a 3rd party
+# Graph includes Wikidata IDs and the graphs internal IDs
+
 PREFIX schema: <http://schema.org/>
 select ?internal_uri ?ad_uri ?wd_uri
 where {
