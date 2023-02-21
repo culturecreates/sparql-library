@@ -1,0 +1,53 @@
+
+# This SPARQL returns a list of property statistics for a list of orgs or people. You can also use a graph to select the entities.
+
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX schema: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+select distinct ?property (sample(?label) as ?label_sample) (count(distinct ?original_id) as ?org_count)  where {
+    graph ?g {
+        ?id ?property ?o .
+    }
+    # optional {
+    ?property rdfs:label ?label .
+    #  }
+    {
+        select distinct ?id ?original_id where {
+            #                values ?original_id {
+            #                 adr:K16-94 adr:K16-95 adr:K16-96 
+            #                }
+            {
+                select ?original_id where {
+                    {
+                        graph <http://kg.artsdata.ca/culture-creates/huginn/capacoa-members> {
+                            ?original_id  a schema:Organization .
+                        }
+                    }
+                    UNION
+                    {
+                        graph <http://kg.artsdata.ca/culture-creates/huginn/scenepro-orgs> {
+                            ?original_id  a schema:Organization .
+                        }
+                    }
+                } 
+            }
+            {
+                bind(?original_id as ?id) 
+            }
+            UNION
+            {
+                ?id schema:sameAs ?original_id .
+            }
+            UNION {
+                bind (str(?original_id) as ?id_str) 
+                ?id schema:sameAs ?id_str  .
+            }
+            UNION {
+                ?original_id  schema:sameAs ?id_str .
+                bind(URI(?id_str) as ?id)
+            }
+            filter (isURI(?id))
+        } 
+    }
+} group by ?property
