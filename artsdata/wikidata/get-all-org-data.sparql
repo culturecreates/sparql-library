@@ -1,0 +1,40 @@
+# This SPARQL add organization data from Wikidata for Orgs that are not already in the graph <http://wikidata.org/organization>
+# It can be repeated until no more triples are added
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX schema: <http://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+insert {
+    graph <http://wikidata.org/organization> {
+        ?wikidata_uri ?p ?o_uri .
+        ?wikidata_uri ?p2 ?o_str .
+    }
+}
+# select *
+where {
+    {
+        select distinct ?wikidata_uri where {
+            ?org a schema:Organization .
+           #      schema:sameAs ?wikidata .
+            filter(contains(str(?org),"wikidata.org"))
+            bind(URI(?org) as ?wikidata_uri)
+            minus {
+                graph <http://wikidata.org/organization> {
+                    ?wikidata_uri skos:altLabel ?b 
+                }
+            }
+        } limit 100 
+    }
+    SERVICE <https://query.wikidata.org/sparql> {
+        ?wikidata_uri ?p ?o_uri .
+        filter(contains(str(?p),"www.wikidata.org/prop/direct/")) 
+        filter(isURI(?o_uri))
+        OPTIONAL {
+            ?wikidata_uri ?p2 ?o_str .
+            #filter(contains(str(?p2),"www.wikidata.org/prop/direct/"))
+            filter(isLiteral(?o_str))
+            filter(lang(?o_str) = "en") 
+        } 
+    }
+}
