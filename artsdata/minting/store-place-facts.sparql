@@ -1,0 +1,33 @@
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX schema: <http://schema.org/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+insert {
+    graph <http://kg.artsdata.ca/minted/K5> {
+        << ?id ?keep_prop ?sameAs_o >> prov:wasDerivedFrom ?dataset 
+    }
+}
+where {
+    values ?id {
+        adr:K5-2
+    }
+    graph <http://kg.artsdata.ca/minted/K5> {
+        ?id schema:sameAs ?sameAs .
+        ?id a schema:Place .
+    }
+    values ?keep_prop {
+        schema:name schema:longitude schema:latitude schema:address
+    }
+    graph ?g {
+        ?sameAs ?keep_prop ?sameAs_o .
+    }
+    minus {
+        graph <http://kg.artsdata.ca/minted/K5> {
+            ?id ?keep_prop ?sameAs_o .
+        }
+    }
+    minus { #don't include address with URI 
+        ?sameAs schema:address ?sameAs_o .
+        filter(isBLANK(?sameAs_o))
+    }
+    ?g schema:url ?dataset
+}

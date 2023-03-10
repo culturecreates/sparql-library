@@ -1,6 +1,3 @@
-# This SPARQL add organization data from Wikidata for Orgs that are not already in the graph <http://wikidata.org/organization>
-# It can be repeated until no more triples are added
-
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX schema: <http://schema.org/>
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
@@ -11,12 +8,11 @@ insert {
         ?wikidata_uri ?p2 ?o_str .
     }
 }
-# select *
 where {
     {
         select distinct ?wikidata_uri where {
             ?org a schema:Organization .
-           #      schema:sameAs ?wikidata .
+            #      schema:sameAs ?wikidata .
             filter(contains(str(?org),"wikidata.org"))
             bind(URI(?org) as ?wikidata_uri)
             minus {
@@ -38,3 +34,5 @@ where {
         } 
     }
 }
+# This SPARQL add organization data from Wikidata for Orgs that are not already in the graph <http://wikidata.org/organization>
+# It can be repeated until no more triples are added
