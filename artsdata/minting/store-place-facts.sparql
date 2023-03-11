@@ -3,6 +3,7 @@ PREFIX schema: <http://schema.org/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 insert {
     graph <http://kg.artsdata.ca/minted/K5> {
+          ?id ?keep_prop ?sameAs_o .
         << ?id ?keep_prop ?sameAs_o >> prov:wasDerivedFrom ?dataset 
     }
 }
