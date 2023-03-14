@@ -1,12 +1,8 @@
 PREFIX schema: <http://schema.org/>
-delete {
-    graph ?graph {
-      <http://www.wikidata.org/entity/Q105547738> schema:image ?image  .
-    }
-}
+
 insert {
     graph ?graph {
-      <http://www.wikidata.org/entity/Q105547738> schema:image <http://thumbnail_uri>
+      <http://www.wikidata.org/entity/Q105547738> schema:thumbnail <http://thumbnail_uri>
     }
 }
 where {
