@@ -14,6 +14,7 @@ insert {
                       schema:additionalType ?itemOperatedTypeLabelConcat ;
                       schema:name ?itemOperatedLabel ;
                       schema:image ?image_sample ;
+                      schema:creditedTo   ?creditedTo_sample ;
                       schema:containsPlace ?parts .
     }
 }
@@ -22,6 +23,7 @@ where {
         SELECT ?org ?orgLabel ?itemOperatedLabel ?geo  
         (sample(?street_address) as ?street_address_sample) 
         (sample(?image) as ?image_sample) 
+         (sample(?creditedTo) as ?creditedTo_sample)
         ?itemOperated ?parts   
         (GROUP_CONCAT(DISTINCT ?itemOperatedTypeLab;
                 SEPARATOR = ", ") AS ?itemOperatedTypeLabelConcat) 
@@ -39,6 +41,7 @@ where {
             FILTER(LANG(?itemOperatedTypeLab) = "en" )
             OPTIONAL {
                 ?itemOperated wdt:P18 ?image.
+                bind(URI(replace(str(?image),"Special:FilePath/","File:"))  as ?creditedTo)
             }
             OPTIONAL {
                 ?itemOperated wdt:P6375 ?street_address .
