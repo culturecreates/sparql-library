@@ -7,9 +7,10 @@ PREFIX capacoa: <https://capacoa.ca/vocabulary#>
 
 insert data { 
   graph <graph_name_placeholder> {
-    <uri_placeholder> a schema:Organization ;
+    <uri_placeholder> a schema:schema_type_placeholder ;
       schema:name "operating_name1_placeholder"@oa ;
       schema:name "operating_name2_placeholder"@ob ;
+      schema:name "name_placeholder" ;
       schema:legalName "legal_name_placeholder"@la ;
       schema:alternateName "also_known_as_placeholder" ;
       wdt:P8860 "business_number_placeholder" ;
@@ -17,6 +18,7 @@ insert data {
       schema:additionalType capacoa:CharitableStatus_charitable_status_uri ; 
       schema:additionalType capacoa:PrimaryActivity_primary_activity_uri ;
       schema:additionalType capacoa:PresentingFormat_presenting_format_uri ;
+      schema:additionalType capacoa:MemberType_member_type_uri ;
       schema:url "website_official_placeholder" ;
       schema:url [ a schema:Role ; 
                   schema:roleName "Events Webpage" ;
@@ -60,6 +62,13 @@ insert data {
     capacoa:PrimaryActivity a skos:Collection  ;
       skos:member capacoa:PrimaryActivity_primary_activity_uri ;
       skos:prefLabel  "Primary Activity of Organization"@en .
+
+    capacoa:MemberType_member_type_uri a skos:Concept ; 
+      skos:inScheme capacoa:QuestionnaireChoices; 
+      skos:hiddenLabel "member_type_placeholder" .
+    capacoa:MemberType a skos:Collection  ;
+      skos:member capacoa:MemberType_member_type_uri ;
+      skos:prefLabel  "Member type: organization, individual, individual lifetime"@en .
 
     capacoa:PresentingFormat_presenting_format_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 

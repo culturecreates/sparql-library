@@ -1,0 +1,48 @@
+PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+# select * 
+insert {
+    graph <http://wikidata.org/person> {
+        ?wd schema:sameAs ?ad_uri  ;
+            rdfs:label ?label ;
+            wdt:P31 ?type ;
+            a ?type .
+        ?type rdfs:label ?type_label .
+    }
+}
+where {
+    {
+        select distinct ?ad_id ?ad_uri  where {
+            # graph <http://kg.artsdata.ca/culture-creates/huginn/capacoa-members> {
+            {
+                ?id a schema:Person .
+            }
+            UNION
+            {
+                ?s a schema:Person ;
+                   schema:sameAs ?id .
+            }
+            filter(contains(str(?id),"artsdata.ca"))
+            bind(uri(?id) as ?ad_uri)
+            bind(strafter(str(?id),"kg.artsdata.ca/resource/") as ?ad_id)
+            #   }
+        }
+    }
+    SERVICE <https://query.wikidata.org/sparql> {
+        ?wd wdt:P7627 ?ad_id ;
+            rdfs:label ?label ;
+            wdt:P31 ?type .
+        ?type rdfs:label ?type_label .
+        filter(lang(?label) = "en" || lang(?label) = "fr")
+        filter(lang(?type_label) = "en")
+    }
+}
+# This SPARQL gets all ADIDs from Artsdata or an Artsdata graph, and then does a federated SPARQL 
+# to get the Wikidata entities that are linked to the ADID.
+# It then inserts WDID with labels, types (P31 and rdf:type), type labels, and sameAs ADID.
+#  Typically run 3 times:
+#       schema:Person > http://wikidata.org/person
+#       schema:Place > http://wikidata.org/place
+#       schema:Organization > http://wikidata.org/organization
