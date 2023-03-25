@@ -10,7 +10,7 @@ insert data {
     <uri_placeholder> a schema:schema_type_placeholder ;
       schema:name "operating_name1_placeholder"@oa ;
       schema:name "operating_name2_placeholder"@ob ;
-      schema:name "name_placeholder" ;
+      schema:name "user_name_placeholder" ;
       schema:legalName "legal_name_placeholder"@la ;
       schema:alternateName "also_known_as_placeholder" ;
       wdt:P8860 "business_number_placeholder" ;
