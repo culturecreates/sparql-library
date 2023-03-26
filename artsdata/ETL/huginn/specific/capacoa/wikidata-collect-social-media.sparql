@@ -11,7 +11,8 @@ insert {
 }
 where {
     graph <http://kg.artsdata.ca/culture-creates/huginn/capacoa-members> {
-        ?org a schema:Organization ;
+        values ?type {schema:Organization schema:Person }
+        ?org a  ?type ;
              schema:name ?name ;
              schema:identifier ?id .
         bind(URI(concat("http://www.wikidata.org/entity/",?id)) as ?wdid)
