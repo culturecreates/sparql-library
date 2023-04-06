@@ -1,0 +1,121 @@
+# Use this SPARQL to import People from Wikidata in a raw graph for Databus
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX schema: <http://schema.org/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX pq: <http://www.wikidata.org/prop/qualifier/>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX pr: <http://www.wikidata.org/prop/reference/>
+# SELECT  distinct ?item    ?label_en  ?birthPlace 
+#construct {
+insert {
+    graph <http://wikidata.org/person> {
+        ?item wdt:P31 wd:Q5 .
+        ?item a schema:Person .
+        ?item prov:wasDerivedFrom ?dataset .
+        ?item schema:name ?label_en .
+        ?item schema:name ?label_fr .
+        ?item skos:altLabel ?alternateName_en .
+        ?item skos:altLabel ?alternateName_fr .
+        ?item wdt:P19 ?birthPlace .
+        ?item schema:givenName ?givenName_en .
+        ?item schema:givenName ?givenName_fr.
+        ?item schema:familyName ?familyName_en .
+        ?item schema:familyName ?familyName_fr .
+        ?item wdt:P856 ?officalWebsite .
+        ?item wdt:P463 ?memberOf .
+        ?item wdt:P106 ?occupations .
+        ?item wdt:P21 ?gender .
+        ?item wdt:P570 ?dateOfDeath .
+        ?item wdt:P569 ?dateOfBirth .
+        ?item wdt:P213 ?ISNI .
+        ?item wdt:P18 ?image .
+        ?item wdt:P101 ?fieldOfWork .
+    }
+}
+WHERE {
+    {
+        select distinct ?item ?dataset where  {
+            SERVICE  <https://query.wikidata.org/sparql> {
+                wd:Q114171774 wdt:P527 ?dataset .
+                ?item wdt:P31 wd:Q5 .
+                ?item  ?someProperty [ prov:wasDerivedFrom [ pr:P248 ?dataset ] ] .
+                optional {
+                    ?item wdt:P7627 ?adid .
+                }
+                filter(!bound(?adid ))
+            } 
+        } order by ?item
+        limit 1000 offset 6000 
+    }
+    SERVICE  <https://query.wikidata.org/sparql> {
+        optional {
+            ?item rdfs:label ?label_en .
+            filter(lang(?label_en) = "en")
+        }
+        optional {
+            ?item rdfs:label ?label_fr .
+            filter(lang(?label_fr) = "fr")
+        }
+        optional {
+            ?item wdt:P19 ?birthPlace .
+        }
+        optional {
+            ?item wdt:P735/rdfs:label ?givenName_en .
+            filter(lang(?givenName_en) = "en")
+        }
+        optional {
+            ?item wdt:P735/rdfs:label ?givenName_fr.
+            filter(lang(?givenName_fr) = "fr")
+        }
+        optional {
+            ?item wdt:P734/rdfs:label ?familyName_en .
+            filter(lang(?familyName_en) = "en")
+        }
+        optional {
+            ?item wdt:P734/rdfs:label ?familyName_fr .
+            filter(lang(?familyName_fr) = "fr")
+        }
+        optional {
+            ?item wdt:P856 ?officalWebsite .
+        }
+        ?item schema:description ?description_en .
+        filter(lang(?description_en) = "en")
+        optional {
+            ?item skos:altLabel ?alternateName_en .
+            filter(lang(?alternateName_en) = "en")
+        }
+        optional {
+            ?item skos:altLabel ?alternateName_fr .
+            filter(lang(?alternateName_fr) = "fr")
+        }
+        optional {
+            ?item wdt:P463 ?memberOf 
+        }
+        optional {
+            ?item wdt:P21 ?gender .
+        }
+        optional {
+            ?item wdt:P570 ?dateOfDeath .
+        }
+        optional {
+            ?item wdt:P569 ?dateOfBirth .
+        }
+        optional {
+            ?item wdt:P213 ?ISNI .
+        }
+        optional {
+            ?item wdt:P18 ?image .
+        }
+        optional {
+            ?item wdt:P101 ?fieldOfWork .
+        }
+        ?item wdt:P106 ?occupations .
+    }
+}

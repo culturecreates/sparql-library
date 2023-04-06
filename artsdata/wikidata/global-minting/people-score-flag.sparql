@@ -1,0 +1,52 @@
+
+# SPARQL to compare names and flag similar names based on lucene score
+
+PREFIX schema: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+PREFIX luc: <http://www.ontotext.com/owlim/lucene#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX ado: <http://kg.artsdata.ca/ontology/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+# select * 
+insert {
+   graph <http://kg.artsdata.ca/needs-human-reconcile>  {
+       ?s ado:flagNeedsHumanReconcile adr:K1-3 .
+   }
+}
+where {
+    {
+        select ?s where {
+            graph <http://kg.artsdata.ca/culture-creates/wikidata/person> {
+                ?s a schema:Person .
+            } 
+             filter not exists {
+       			 ?s ado:flagNeedsHumanReconcile ?someone .
+    			}
+        } limit 500
+    }
+    
+    ?s rdfs:label ?name_wikidata .
+    #?s skos:altLabel ?name_wikidata .
+    #bind(str(?name_wikidata) as ?name_wikidata_str)
+    ?otherID luc:Name  ?name_wikidata  ;
+             rdfs:label ?name ;
+             luc:score ?score ;
+             a schema:Person .
+    bind (strdt(?score,xsd:float) as ?score_int)
+    filter(?score_int > 4)
+    # ?otherID schema:alternate ?name .
+   
+   
+    filter(?s != ?otherID)
+    filter(contains(str(?otherID),"artsdata.ca"))
+    filter not exists {
+        ?otherID schema:sameAs  ?s .
+    }
+    filter not exists {
+        bind(str(?s) as ?s_str)
+        ?otherID schema:sameAs  ?s_str .
+    }
+   
+}

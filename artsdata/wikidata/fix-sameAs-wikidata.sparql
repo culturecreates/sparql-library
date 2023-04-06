@@ -4,14 +4,20 @@
 
 PREFIX schema: <http://schema.org/>
 delete { 
+     graph ?g {
     ?s schema:sameAs ?o . 
+     }
 }
 insert {
+     graph ?g {
      ?s schema:sameAs ?o_fixed . 
+     }
 }
 where { 
-  
-        ?s schema:sameAs ?o .
+   graph ?g {
+   ?s schema:sameAs ?o .
+   }
+     
     filter (contains(str(?o),"wikidata.org"))
     filter (!contains(str(?o),"http://www.wikidata.org/entity/"))
     bind(CONCAT("http://www.wikidata.org/entity",replace(str(?o), "^.*\\/Q", "/Q")) as ?o_fixed)
