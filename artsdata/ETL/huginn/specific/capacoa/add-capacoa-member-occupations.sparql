@@ -5,8 +5,6 @@ PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
 PREFIX capacoa: <https://capacoa.ca/vocabulary#>
 
-
-# TODO fix
 insert  { 
   graph <graph_name_placeholder> {
     <uri_placeholder>  schema:occupation ?occupation_uri  . 
