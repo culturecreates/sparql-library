@@ -10,6 +10,7 @@ where {
     {
         select distinct ?occupation where {
             ?s schema:hasOccupation ?occupation .
+            filter(contains(str(?occupation),"www.wikidata.org/entity/Q"))
             MINUS {
                 ?occupation rdfs:label ?label 
             }
