@@ -1,0 +1,14 @@
+PREFIX schema: <http://schema.org/> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX capacoa: <https://capacoa.ca/vocabulary#>
+
+
+# TODO fix
+insert data { 
+  graph <graph_name_placeholder> {
+    <uri_placeholder>  schema:occupation  "http://www.wikidata.org/entity/occupation_placeholder"  . 
+  }
+}
