@@ -1,0 +1,26 @@
+PREFIX schema: <http://schema.org/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+insert {
+   graph <graph_name_placeholder> {
+         ?occupation a schema:Occupation ; 
+           rdfs:label ?label_en , ?label_fr .
+   }
+}
+where {
+    {
+        select distinct ?occupation where {
+            ?s schema:hasOccupation ?occupation .
+            MINUS {
+                ?occupation rdfs:label ?label 
+            }
+        }
+    }
+    SERVICE <https://query.wikidata.org/sparql> {
+        ?occupation rdfs:label ?label_en .
+        filter(lang(?label_en) = "en")
+        OPTIONAL {
+            ?occupation rdfs:label ?label_fr .
+            filter(lang(?label_fr) = "fr")
+        }
+    } 
+}

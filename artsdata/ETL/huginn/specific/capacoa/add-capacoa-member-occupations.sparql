@@ -7,7 +7,7 @@ PREFIX capacoa: <https://capacoa.ca/vocabulary#>
 
 insert  { 
   graph <graph_name_placeholder> {
-    <uri_placeholder>  schema:occupation ?occupation_uri  . 
+    <uri_placeholder>  schema:hasOccupation ?occupation_uri  . 
   }
 }
 where   {
