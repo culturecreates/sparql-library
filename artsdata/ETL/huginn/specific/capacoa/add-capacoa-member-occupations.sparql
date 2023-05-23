@@ -7,8 +7,11 @@ PREFIX capacoa: <https://capacoa.ca/vocabulary#>
 
 
 # TODO fix
-insert data { 
+insert  { 
   graph <graph_name_placeholder> {
-    <uri_placeholder>  schema:occupation  "http://www.wikidata.org/entity/occupation_placeholder"  . 
+    <uri_placeholder>  schema:occupation ?occupation_uri  . 
   }
+}
+where   {
+  BIND(URI("http://www.wikidata.org/entity/occupation_placeholder") as ?occupation_uri)
 }
