@@ -1,0 +1,22 @@
+PREFIX schema: <http://schema.org/>
+insert {
+    graph <graph_name_placeholder> {
+        ?eventSeries a schema:EventSeries ;
+                     schema:subEvent ?event .
+    }
+}
+where {
+    ?page schema:mentions ?event .
+    ?event a schema:Event  .
+    {
+        select ?page (count(?event) as ?count) ?eventSeries
+        where {
+            graph <graph_name_placeholder> {
+                ?page a schema:WebPage .
+                ?page schema:mentions ?event .
+                ?event a schema:Event .
+            }
+            bind(URI(concat(str(?page),"#EventSeries")) as ?eventSeries)
+        } group by ?page ?eventSeries  HAVING(?count > 1)
+    }
+}

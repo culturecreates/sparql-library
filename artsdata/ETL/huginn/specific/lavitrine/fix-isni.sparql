@@ -1,0 +1,13 @@
+PREFIX schema: <http://schema.org/>
+insert {
+    graph <graph_name_placeholder> {
+        ?p schema:sameAs ?isni .
+    }
+}
+where {
+    graph <graph_name_placeholder> {
+        ?p schema:identifier ?id .
+        filter(strbegins(?id,"0000"))
+        bind(URI(concat("https://isni.org/isni/",replace(?id," ",""))) as ?isni)
+    }
+}
