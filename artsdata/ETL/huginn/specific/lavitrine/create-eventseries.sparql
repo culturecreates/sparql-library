@@ -6,15 +6,13 @@ insert {
     }
 }
 where {
-    ?page schema:mentions ?event .
-    ?event a schema:Event  .
+  
+    ?event a schema:Event  ; schema:url ?page .
     {
         select ?page (count(?event) as ?count) ?eventSeries
         where {
             graph <graph_name_placeholder> {
-                ?page a schema:WebPage .
-                ?page schema:mentions ?event .
-                ?event a schema:Event .
+                ?event a schema:Event  ; schema:url ?page .
             }
             bind(URI(concat(str(?page),"#EventSeries")) as ?eventSeries)
         } group by ?page ?eventSeries  HAVING(?count > 1)

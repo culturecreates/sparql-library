@@ -38,7 +38,7 @@ where {
         {
             select ?s  (min(?startDate) as ?firstStartDate) (max(?endDate) as ?lastEndDate) (sample(?subEvent) as ?sampleSubEvent)
             where {
-                graph <http://kg.artsdata.ca/culture-creates/huginn/grandtheatre-qc-ca> {
+                graph <graph_name_placeholder> {
                     ?s a schema:EventSeries .
                     ?s schema:subEvent ?subEvent .
                     ?subEvent  schema:startDate ?startDate .
