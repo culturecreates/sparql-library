@@ -4,6 +4,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX wikibase: <http://wikiba.se/ontology#>
 PREFIX bd: <http://www.bigdata.com/rdf#>
 PREFIX schema: <http://schema.org/>
+
 insert {
     graph <http://wikidata.org/capacoa-members> {
         ?org schema:location ?role .
@@ -29,9 +30,6 @@ where {
         ?itemOperatedType 
         ?itemOperatedTypeLab 
         WHERE {
-#            values ?org {
-#                <http://www.wikidata.org/entity/Q100965296>
-#            }
             ?org wdt:P463 wd:Q85541788.
             ?org wdt:P121/wdt:P527* ?itemOperated .
             ?itemOperated wdt:P31 ?itemOperatedType.
@@ -59,6 +57,8 @@ where {
     }
     BIND (URI(CONCAT(str(?org),"-ITEM_OPERATED_P121-",str(?itemOperated))) as ?role)
 }
+
+
 # This SPARQL finds all capacoa members in Wikidata and loads the venues that are operated by the organizations, including halls that are part of a building.
 # You MUST drop the graph <http://wikidata.org/capacoa-members> before running this SPARQL otherwise concatenated nodes may accumulate if the concatenation order changes by chance.
 # TODO: also get venues that organization "uses P2283".
