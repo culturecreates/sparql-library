@@ -1,0 +1,18 @@
+PREFIX schema: <http://schema.org/>
+insert {
+    graph <graph_name_placeholder> {
+        ?s schema:sameAs ?adid .
+    }
+}
+where {
+    graph <graph_name_placeholder> {
+        ?s schema:sameAs ?wdid .
+        filter(contains(str(?wdid),"www.wikidata.org/entity/Q"))
+    }
+    service <http://db.artsdata.ca/repositories/artsdata> 
+    {
+        ?adid schema:sameAs ?wdid .
+        filter(strstarts(str(?adid),"http://kg.artsdata.ca"))
+    }
+    
+}

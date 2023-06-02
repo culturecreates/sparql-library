@@ -1,0 +1,18 @@
+PREFIX schema: <http://schema.org/>
+delete {
+     graph <graph_name_placeholder> {
+     ?e schema:sameAs ?sameAs .
+    }
+}
+insert {
+     graph <graph_name_placeholder> {
+     ?e schema:sameAs ?fixedWikidataURI .
+    }
+} 
+where {
+    graph <graph_name_placeholder> {
+        ?e schema:sameAs ?sameAs .
+        filter(contains(str(?sameAs),"www.wikidata.org/wiki/Q"))
+        bind(URI(concat("http://www.wikidata.org/entity/Q", strafter(str(?sameAs),"www.wikidata.org/wiki/Q"))) as ?fixedWikidataURI )
+    }
+}

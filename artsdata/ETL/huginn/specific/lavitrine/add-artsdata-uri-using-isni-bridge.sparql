@@ -9,7 +9,9 @@ where {
         ?s schema:sameAs ?isni .
         filter(strstarts(str(?isni),"https://isni"))
     }
-    bind(str(?isni) as ?isni_str)
-    ?adid schema:sameAs ?isni_str .
-    filter(strstarts(str(?adid),"http://kg.artsdata.ca"))
+    service <http://db.artsdata.ca/repositories/artsdata> 
+    {
+        ?adid schema:sameAs ?isni .
+        filter(strstarts(str(?adid),"http://kg.artsdata.ca"))
+    }
 }
