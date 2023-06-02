@@ -1,0 +1,20 @@
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+delete {
+    graph <graph_name_placeholder> {
+        ?s ?p ?o .
+    }
+}
+insert {
+    graph <graph_name_placeholder> {
+        ?s ?p ?fixedDateTime
+    }
+}
+where {
+    graph <graph_name_placeholder> {
+        ?s ?p ?o .
+        filter(dataType(?o) = schema:Date)
+        bind(strdt(str(?o),xsd:dateTime)  as ?fixedDateTime )
+    }
+}
