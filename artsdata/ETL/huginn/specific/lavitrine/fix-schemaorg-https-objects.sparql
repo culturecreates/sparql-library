@@ -1,0 +1,18 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    graph <graph_name_placeholder> {
+        ?a ?b ?c .
+    }
+}
+insert {
+    graph <graph_name_placeholder> {
+        ?a ?b ?c2 .
+    }
+}
+where {
+    graph <graph_name_placeholder> {
+        ?a ?b ?c .
+        filter(strstarts(?c,"https://schema.org/"))
+        bind(URI(concat("http://",strafter(?c,"https://"))) as ?c2)
+    }
+}
