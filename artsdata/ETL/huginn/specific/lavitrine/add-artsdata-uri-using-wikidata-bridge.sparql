@@ -6,13 +6,14 @@ insert {
 }
 where {
     graph <graph_name_placeholder> {
-        ?s schema:sameAs ?wdid .
+        ?s schema:sameAs ?wdid ; a ?type .
         filter(contains(str(?wdid),"www.wikidata.org/entity/Q"))
     }
     service <http://db.artsdata.ca/repositories/artsdata> 
     {
-        ?adid schema:sameAs ?wdid .
+        ?adid schema:sameAs ?wdid ; a ?type  .
         filter(strstarts(str(?adid),"http://kg.artsdata.ca"))
     }
+    
     
 }

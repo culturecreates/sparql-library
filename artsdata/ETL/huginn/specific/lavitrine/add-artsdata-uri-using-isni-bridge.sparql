@@ -6,12 +6,12 @@ insert {
 }
 where {
     graph <graph_name_placeholder> {
-        ?s schema:sameAs ?isni .
+        ?s schema:sameAs ?isni ; a ?type .
         filter(strstarts(str(?isni),"https://isni"))
     }
     service <http://db.artsdata.ca/repositories/artsdata> 
     {
-        ?adid schema:sameAs ?isni .
+        ?adid schema:sameAs ?isni ; a ?type .
         filter(strstarts(str(?adid),"http://kg.artsdata.ca"))
     }
 }
