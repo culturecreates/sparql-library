@@ -5,13 +5,20 @@ insert {
     }
 }
 where {
-    graph <graph_name_placeholder> {
-        ?s schema:sameAs ?isni ; a ?type .
-        filter(strstarts(str(?isni),"https://isni"))
+    {
+        graph <graph_name_placeholder> {
+            ?s schema:sameAs ?isni ; 
+                a ?type .
+            filter(strstarts(str(?isni),"https://isni"))
+        }
     }
     service <http://db.artsdata.ca/repositories/artsdata> 
     {
-        ?adid schema:sameAs ?isni ; a ?type .
+        ?adid schema:sameAs ?isni .
+        graph ?g {
+            ?adid a ?adtype .
+        }
         filter(strstarts(str(?adid),"http://kg.artsdata.ca"))
     }
+    filter(?adtype = ?type)
 }

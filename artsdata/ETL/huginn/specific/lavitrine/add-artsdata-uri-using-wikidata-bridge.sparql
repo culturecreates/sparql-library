@@ -5,15 +5,20 @@ insert {
     }
 }
 where {
-    graph <graph_name_placeholder> {
-        ?s schema:sameAs ?wdid ; a ?type .
-        filter(contains(str(?wdid),"www.wikidata.org/entity/Q"))
+    {
+        graph <graph_name_placeholder> {
+            ?s schema:sameAs ?wdid ;
+                a ?type .
+            filter(contains(str(?wdid),"www.wikidata.org/entity/Q"))
+        }
     }
     service <http://db.artsdata.ca/repositories/artsdata> 
     {
-        ?adid schema:sameAs ?wdid ; a ?type  .
+        ?adid schema:sameAs ?wdid .
+        graph ?g {
+            ?adid a ?adtype .
+        }
         filter(strstarts(str(?adid),"http://kg.artsdata.ca"))
     }
-    
-    
+    filter(?adtype = ?type)
 }
