@@ -22,16 +22,19 @@ insert {
 }
 where {
     SERVICE <https://query.wikidata.org/sparql> {
-        SELECT ?org ?orgLabel ?itemOperatedLabel ?geo  
+        SELECT ?org ?orgLabel  ?geo  
         (sample(?street_address) as ?street_address_sample) 
         (sample(?image) as ?image_sample) 
         (sample(?creditedTo) as ?creditedTo_sample)
         ?itemOperated ?parts   
         ?itemOperatedType 
         ?itemOperatedTypeLab 
+        ?itemOperatedLab
         WHERE {
             ?org wdt:P463 wd:Q85541788.
             ?org wdt:P121/wdt:P527* ?itemOperated .
+            ?itemOperated rdfs:label ?itemOperatedLab .
+            FILTER(LANG(?itemOperatedLab) = "en" || LANG(?itemOperatedLab) = "fr" )
             ?itemOperated wdt:P31 ?itemOperatedType.
             ?itemOperatedType rdfs:label ?itemOperatedTypeLab .
             OPTIONAL {
@@ -53,7 +56,7 @@ where {
                 bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en,fr".
             }
         }
-        GROUP BY ?org ?orgLabel ?itemOperatedLabel ?geo ?itemOperated ?parts ?partsLabel  ?itemOperatedType ?itemOperatedTypeLab
+        GROUP BY ?org ?orgLabel ?itemOperatedLab  ?geo ?itemOperated ?parts ?partsLabel  ?itemOperatedType ?itemOperatedTypeLab
     }
     BIND (URI(CONCAT(str(?org),"-ITEM_OPERATED_P121-",str(?itemOperated))) as ?role)
 }
