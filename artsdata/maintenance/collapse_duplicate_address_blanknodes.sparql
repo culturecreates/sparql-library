@@ -5,30 +5,30 @@
 PREFIX schema: <http://schema.org/>
 delete {
    graph ?g {
-       ?place schema:address ?bnode .
+       ?entity schema:address ?bnode .
    }
 }
 insert {
    graph ?g {
-       ?place schema:address ?prime_node .
+       ?entity schema:address ?prime_node .
    }
 }
 
-#select * 
 where {
     graph ?g {
-        ?place   schema:address ?bnode .
+        ?entity   schema:address ?bnode .
         filter (isBLANK(?bnode)) 
     }
    
     { # select a random blank node to use as prime
-        select ?place ?g (sample(?node) as ?prime_node) where {
+        select ?entity ?g (sample(?node) as ?prime_node) where {
             graph ?g {
                 # values ?g {<GRAPH_PLACEHOLDER>}
-                ?place a schema:Place ; # move out of graph to use inference.
+                values ?entity_type {schema:Organization schema:Place}
+                ?entity a schema:Organization ; # move out of graph to use inference.
                        schema:address ?node .
                 filter (isBLANK(?node)) 
             }
-        } group by ?place ?g
+        } group by ?entity ?g
     }
 }
