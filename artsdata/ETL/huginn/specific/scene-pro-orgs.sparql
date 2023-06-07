@@ -15,6 +15,7 @@ insert data {
       schema:logo "logo_placeholder" ;
       schema:foundingDate "dateFoundation_placeholder"^^xsd:dateTime ;
       wdt:P10503 "neq_placeholder" ;
+      schema:sameAs "artsdataUri_placeholder" , "wikidataUri_placeholder" ;
       schema:address [ a schema:PostalAddress ;
         schema:streetAddress "address_placeholder" ;
         schema:addressLocality "city_placeholder" ;
