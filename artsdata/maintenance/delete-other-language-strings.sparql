@@ -1,0 +1,20 @@
+PREFIX schema: <http://schema.org/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX : <http://raw.artsdata.ca>
+#select * 
+delete {
+    graph <http://kg.artsdata.ca/wikidata/person> {
+        ?s ?p ?o
+    }
+}
+where {
+    graph <http://kg.artsdata.ca/wikidata/person> {
+        ?s ?p ?o
+        filter(datatype(?o) = rdf:langString)
+        bind(lang(?o) as ?lang)
+        filter(?lang != "en" && ?lang != "fr")
+        ?s ?p ?enfr
+        filter(lang(?enfr) = "en" || lang(?enfr) = "fr")
+    }
+} 
