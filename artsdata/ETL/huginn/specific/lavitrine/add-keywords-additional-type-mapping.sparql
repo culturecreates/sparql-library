@@ -1,0 +1,27 @@
+PREFIX schema: <http://schema.org/>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+insert {
+    graph  <http://kg.artsdata.ca/culture-creates/huginn/derived-grandtheatre-qc-ca> {
+        ?event schema:additionalType  ?gtqConcept .
+        ?event schema:keywords ?keyword_fr .
+    }
+}
+where {
+    graph  <http://kg.artsdata.ca/culture-creates/huginn/derived-grandtheatre-qc-ca> {
+        values ?type {
+            schema:EventSeries schema:Event 
+        }  
+        ?event a ?type .
+        ?event schema:url ?url .
+        bind(uri(concat("https://grandtheatre.qc.ca",strafter(str(?url),"grandtheatre.qc.ca"),"#Keyword")) as ?keyword_uri)
+        ?keyword_uri schema:keywords ?keywords .
+        bind(strlang(?keywords,"fr") as ?keyword_fr)
+    }
+    service  <http://db.artsdata.ca/repositories/artsdata> {
+      graph <http://db.artsdata.ca/repositories/artsdata/rdf-graphs/grandtheatre-qc-ca-event-type-mapping> {
+              ?gtqConcept skos:prefLabel ?keyword_fr ;
+                          a skos:Concept  .
+      }
+    }
+   
+}
