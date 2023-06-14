@@ -4,6 +4,8 @@ PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
 PREFIX capacoa: <https://capacoa.ca/vocabulary#>
+PREFIX ebucore: <http://www.ebu.ch/metadata/ontologies/ebucore/ebucore#> 
+
 
 insert data { 
   graph <graph_name_placeholder> {
@@ -11,7 +13,7 @@ insert data {
       schema:name "operating_name1_placeholder"@oa ;
       schema:name "operating_name2_placeholder"@ob ;
       schema:name "user_name_placeholder" ;
-      schema:description "bio_placeholder" ;
+      ebucore:hasAgentBiography "bio_placeholder" ;
       schema:legalName "legal_name_placeholder"@la ;
       schema:alternateName "also_known_as_placeholder" ;
       wdt:P8860 "business_number_placeholder" ;
