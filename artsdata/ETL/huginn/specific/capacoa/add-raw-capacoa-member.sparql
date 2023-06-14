@@ -24,7 +24,7 @@ insert data {
       schema:url [ a schema:Role ; 
                   schema:roleName "Events Webpage" ;
                   schema:url "events_page_placeholder" ] ;
-      schema:additionalType capacoa:TermsConditions_terms_conditions_v1_0_uri ;
+      schema:additionalType capacoa:TermsConditions_terms_conditions_uri ;
       schema:address [
         a schema:PostalAddress ;
         schema:addressCountry "pmpro_bcountry_placeholder" ;
@@ -78,17 +78,17 @@ insert data {
        skos:member capacoa:PresentingFormat_presenting_format_uri ;
         skos:prefLabel "If a presenting organization, how are your arts presenting activities organized?"@en .
 
-    capacoa:TermsConditions_terms_conditions_v1_0_uri a skos:Concept ; 
+    capacoa:TermsConditions_terms_conditions_uri a skos:Concept ; 
       skos:inScheme capacoa:QuestionnaireChoices; 
-      skos:hiddenLabel "terms_conditions_v1_0_placeholder" .
-    capacoa:TermsConditionsV1_0 a skos:Collection  ;
-      skos:member capacoa:TermsConditions_terms_conditions_v1_0_uri ;
+      skos:hiddenLabel "terms_conditions_placeholder" .
+    capacoa:TermsConditions a skos:Collection  ;
+      skos:member capacoa:TermsConditions_terms_conditions_uri ;
       skos:prefLabel "Open Data Strategy Consent Options"@en ;
-      skos:definition capacoa:TermsConditionsV1_0_document .
+      skos:definition capacoa:TermsConditions_document .
 
-    capacoa:TermsConditionsV1_0_document a schema:CreativeWork ;
-      schema:name "CAPACOA Membership Open Data Strategy (version 1.0)"@en ;
-      schema:url "https://capacoa.ca/en/membership/open-data-strategy-version-1-0/" . 
+    capacoa:TermsConditions_document a schema:CreativeWork ;
+      schema:name "CAPACOA Membership Open Data Strategy"@en ;
+      schema:url "https://capacoa.ca/en/member/open-data-strategy/" . 
 
     capacoa:MembershipQuestionnaire a skos:ConceptScheme .
 
