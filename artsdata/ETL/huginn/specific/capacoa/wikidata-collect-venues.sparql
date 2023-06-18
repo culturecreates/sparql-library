@@ -26,9 +26,13 @@ where {
         (sample(?street_address) as ?street_address_sample) 
         (sample(?image) as ?image_sample) 
         (sample(?creditedTo) as ?creditedTo_sample)
-        ?itemOperated ?parts   
+        ?itemOperated 
+        ?partsLabel 
         ?itemOperatedType 
         ?itemOperatedTypeLab 
+        ?parts  
+        ?partType
+        ?partTypeLab
         ?itemOperatedLab
         WHERE {
             ?org wdt:P463 wd:Q85541788.
@@ -50,13 +54,16 @@ where {
             }
             OPTIONAL {
                 ?org wdt:P121 ?itemOperated.
-                ?itemOperated wdt:P527 ?parts.
+                ?itemOperated wdt:P527 ?parts .
+               ?parts wdt:P31 ?partType.
+                ?partType rdfs:label ?partTypeLab .
+                FILTER(LANG(?partTypeLab) = "en" || LANG(?partTypeLab) = "fr")
             }
             SERVICE wikibase:label {
                 bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en,fr".
             }
         }
-        GROUP BY ?org ?orgLabel ?itemOperatedLab  ?geo ?itemOperated ?parts ?partsLabel  ?itemOperatedType ?itemOperatedTypeLab
+        GROUP BY ?org ?orgLabel ?itemOperatedLab  ?geo ?itemOperated ?parts  ?itemOperatedType ?itemOperatedTypeLab ?partType ?partTypeLab  ?partsLabel 
     }
     BIND (URI(CONCAT(str(?org),"-ITEM_OPERATED_P121-",str(?itemOperated))) as ?role)
 }

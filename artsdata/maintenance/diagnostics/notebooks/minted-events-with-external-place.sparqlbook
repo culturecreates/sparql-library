@@ -1,0 +1,12 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Minted Events should only have Artsdata minted locations"
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "# [endpoint=http://kg.artsdata.ca/query]\nPREFIX schema: <http://schema.org/>\n\nselect * \n\nfrom <http://kg.artsdata.ca/minted/K3>\nfrom <http://kg.artsdata.ca/minted/K16>\nfrom <http://kg.artsdata.ca/minted/K13>\nfrom <http://kg.artsdata.ca/minted/K2>\nfrom <http://kg.artsdata.ca/minted/K5>\nfrom <http://kg.artsdata.ca/minted/K23>\n\nwhere {\n  ?event a schema:Event ; schema:location ?location .\n \n} limit 100"
+  }
+]

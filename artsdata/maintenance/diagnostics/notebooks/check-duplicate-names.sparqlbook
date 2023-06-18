@@ -1,0 +1,27 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "## Find duplicate name strings in Artsdata Minted Graphs\n\nThis SPARQL checks Places, People and Organizations for duplicate names in any language. It looks only in the special mint graphs that contain entities minted by Artsdata. To get the list of mint graphs, check the [K-graph notebook](./list-K-graphs.sparqlbook).\n\nIn the results, sorted by descending id_count, there should be nothing larger than 1. If there are, then these should be investigated and fixed."
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "### Places, People and Organizations"
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "# [endpoint=http://kg.artsdata.ca/query]\nPREFIX schema: <http://schema.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT \n  (count(distinct ?id) as ?id_count)\n  ?name_str \n  ?type\n  (GROUP_CONCAT( distinct(?id);SEPARATOR=\", \") AS ?ids)   \n\nfrom <http://kg.artsdata.ca/minted/K3>\nfrom <http://kg.artsdata.ca/minted/K16>\nfrom <http://kg.artsdata.ca/minted/K13>\nfrom <http://kg.artsdata.ca/minted/K2>\nfrom <http://kg.artsdata.ca/minted/K5>\nfrom <http://kg.artsdata.ca/minted/K23>\n\nWHERE { \n  values ?type { schema:Place schema:Person schema:Organization }\n    ?id a ?type .\n    ?id schema:name ?name  .\n    filter(lang(?name) = \"\" || lang(?name) = \"en\" || lang(?name) = \"fr\" )\n    bind(str(?name) as ?name_str) .\n}\ngroup by ?name_str ?type\n# having(count(distinct ?id) > 1)\norder by DESC(?id_count) DESC(?name_count)\nlimit 10"
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "### Events\nThis SPARQL checks events by looking for identical name string and start date. Some events in the results may have different locations, so they may not be duplilcates. Check the location."
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "# [endpoint=http://kg.artsdata.ca/query]\nPREFIX schema: <http://schema.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nselect \n  (count(distinct ?id) as ?id_count) \n  ?name_str \n  ?type \n  ?startDate\n  (GROUP_CONCAT( distinct(?id);SEPARATOR=\", \") AS ?ids)   \n\nfrom <http://kg.artsdata.ca/minted/K3>\nfrom <http://kg.artsdata.ca/minted/K16>\nfrom <http://kg.artsdata.ca/minted/K13>\nfrom <http://kg.artsdata.ca/minted/K2>\nfrom <http://kg.artsdata.ca/minted/K5>\nfrom <http://kg.artsdata.ca/minted/K23>\n\nwhere { \n  values ?type { schema:Event }\n    ?id a ?type .\n    ?id schema:name ?name  ; schema:startDate ?startDate .\n    filter(lang(?name) = \"\" || lang(?name) = \"en\" || lang(?name) = \"fr\" )\n    bind(str(?name) as ?name_str) .\n}\ngroup by ?name_str ?type ?startDate\nhaving(count(distinct ?id) > 1)\norder by DESC(?id_count) DESC(?name_count)"
+  }
+]

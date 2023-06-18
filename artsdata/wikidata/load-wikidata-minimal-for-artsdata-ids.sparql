@@ -4,7 +4,7 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
 # select * 
 insert {
-    graph <http://wikidata.org/person> {
+    graph <http://wikidata.org/place> {
         ?wd schema:sameAs ?ad_uri  ;
             rdfs:label ?label ;
             wdt:P31 ?type ;
@@ -17,11 +17,11 @@ where {
         select distinct ?ad_id ?ad_uri  where {
             # graph <http://kg.artsdata.ca/culture-creates/huginn/capacoa-members> {
             {
-                ?id a schema:Person .
+                ?id a schema:Place .
             }
             UNION
             {
-                ?s a schema:Person ;
+                ?s a schema:Place ;
                    schema:sameAs ?id .
             }
             filter(contains(str(?id),"artsdata.ca"))
