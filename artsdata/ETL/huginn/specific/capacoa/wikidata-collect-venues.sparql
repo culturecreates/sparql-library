@@ -13,7 +13,7 @@ insert {
         ?itemOperated schema:geoCoordinates ?geo ;
                       schema:address ?street_address_sample ;
                       schema:additionalType ?itemOperatedType ;
-                      schema:name ?itemOperatedLabel ;
+                      schema:name ?itemOperatedLab ;
                       schema:image ?image_sample ;
                       schema:creditedTo   ?creditedTo_sample ;
                       schema:containsPlace ?parts .
