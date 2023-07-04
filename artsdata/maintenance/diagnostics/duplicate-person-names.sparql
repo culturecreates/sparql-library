@@ -9,5 +9,8 @@ select  (count(?name) as ?name_count) (count(distinct ?person_id) as ?person_id_
     filter(lang(?name) = "" || lang(?name) = "en" || lang(?name) = "fr" )
     bind(str(?name) as ?name_str) .
 }
+
 group by ?name_str 
 order by DESC(?person_id_count)
+
+limit 155
