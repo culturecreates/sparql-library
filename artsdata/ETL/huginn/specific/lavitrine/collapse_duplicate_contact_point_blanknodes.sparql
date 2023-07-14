@@ -1,0 +1,38 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    graph ?g {
+        ?entity  schema:contactPoint ?contactPoint .
+    }
+}
+insert {
+    graph ?g {
+        ?entity  schema:contactPoint ?prime_contactPoint .
+    }
+}
+where {
+    graph ?g {
+        ?entity a schema:Organization ;
+                schema:contactPoint ?contactPoint .
+        filter (isBLANK(?contactPoint)) 
+        filter(!isBLANK(?entity))
+    }
+    {
+        # select a random blank node to use as prime
+        select ?entity ?g  (sample(?contactPoint) as ?prime_contactPoint) 
+        where {
+            values ?g {
+                <GRAPH_PLACEHOLDER>
+            }
+            graph ?g {
+                ?entity a schema:Organization ;
+                        schema:contactPoint ?contactPoint .
+                filter (isBLANK(?contactPoint)) 
+                filter(!isBLANK(?entity))
+            }
+        } group by ?entity ?g 
+    }
+}
+
+# This SPARQL collapses repeating blanknode contactPoints in Organizations
+# Each place per graph will have only a single address blanknode
+# In the rare case a property is different it will accumulate (2 values for the same property)

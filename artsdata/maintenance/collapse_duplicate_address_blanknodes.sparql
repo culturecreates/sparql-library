@@ -1,34 +1,36 @@
-# This SPARQL collapses repeating blanknode addresses
+# This SPARQL collapses repeating blanknode addresses and contactPoints
 # Each place per graph will have only a single address blanknode
 # In the rare case a property is different it will accumulate (2 values for the same property)
 
 PREFIX schema: <http://schema.org/>
 delete {
    graph ?g {
-       ?entity schema:address ?bnode .
+       ?entity ?prop ?bnode .
    }
 }
 insert {
    graph ?g {
-       ?entity schema:address ?prime_node .
+       ?entity ?prop ?prime_node .
    }
 }
 
 where {
+   
     graph ?g {
-        ?entity   schema:address ?bnode .
+        ?entity  ?prop ?bnode .
         filter (isBLANK(?bnode)) 
     }
    
     { # select a random blank node to use as prime
-        select ?entity ?g (sample(?node) as ?prime_node) where {
+        select ?entity ?g ?prop (sample(?node) as ?prime_node) where {
             graph ?g {
-                # values ?g {<GRAPH_PLACEHOLDER>}
+                values ?g {<GRAPH_PLACEHOLDER>}
                 values ?entity_type {schema:Organization schema:Place}
-                ?entity a schema:Organization ; # move out of graph to use inference.
-                       schema:address ?node .
+                 values ?prop {schema:address schema:contactPoint }
+                ?entity a ?entity_type ; # move out of graph to use inference.
+                       ?prop ?node .
                 filter (isBLANK(?node)) 
             }
-        } group by ?entity ?g
+        } group by ?entity ?g ?prop
     }
 }

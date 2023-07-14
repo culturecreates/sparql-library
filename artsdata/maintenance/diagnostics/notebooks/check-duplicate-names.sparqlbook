@@ -14,7 +14,7 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "# [endpoint=http://kg.artsdata.ca/query]\nPREFIX schema: <http://schema.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT \n  (count(distinct ?id) as ?id_count)\n  ?name_str \n  ?type\n  (GROUP_CONCAT( distinct(?id);SEPARATOR=\", \") AS ?ids)   \n\nfrom <http://kg.artsdata.ca/minted/K3>\nfrom <http://kg.artsdata.ca/minted/K16>\nfrom <http://kg.artsdata.ca/minted/K13>\nfrom <http://kg.artsdata.ca/minted/K2>\nfrom <http://kg.artsdata.ca/minted/K5>\nfrom <http://kg.artsdata.ca/minted/K23>\n\nWHERE { \n  values ?type { schema:Place schema:Person schema:Organization }\n    ?id a ?type .\n    ?id schema:name ?name  .\n    filter(lang(?name) = \"\" || lang(?name) = \"en\" || lang(?name) = \"fr\" )\n    bind(str(?name) as ?name_str) .\n}\ngroup by ?name_str ?type\n# having(count(distinct ?id) > 1)\norder by DESC(?id_count) DESC(?name_count)\nlimit 10",
+    "value": "# [endpoint=http://kg.artsdata.ca/query]\nPREFIX schema: <http://schema.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nSELECT \n  (count(distinct ?id) as ?id_count)\n  ?name_str \n  ?type\n  (GROUP_CONCAT( distinct(?id);SEPARATOR=\", \") AS ?ids)   \n\nfrom <http://kg.artsdata.ca/minted/K3>\nfrom <http://kg.artsdata.ca/minted/K16>\nfrom <http://kg.artsdata.ca/minted/K13>\nfrom <http://kg.artsdata.ca/minted/K2>\nfrom <http://kg.artsdata.ca/minted/K5>\nfrom <http://kg.artsdata.ca/minted/K23>\n\nWHERE { \n  values ?type { schema:Place schema:Person schema:Organization }\n    ?id a ?type .\n    ?id schema:name ?name  .\n    filter(lang(?name) = \"\" || lang(?name) = \"en\" || lang(?name) = \"fr\" )\n    bind(str(?name) as ?name_str) .\n}\ngroup by ?name_str ?type\nhaving(count(distinct ?id) > 1)\norder by DESC(?id_count) DESC(?name_count)\nlimit 10",
     "metadata": {}
   },
   {
@@ -32,7 +32,7 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "# from file artsdata/maintenance/diagnostics/duplicate-person-names.sparql\n# Find all the unique names of People that match, and count the number of different Person IDs\n\nPREFIX schema: <http://schema.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nselect  (count(?name) as ?name_count) (count(distinct ?person_id) as ?person_id_count) (GROUP_CONCAT( distinct(?person_id);SEPARATOR=\", \") AS ?ids) ?name_str  where { \n    ?person_id a schema:Person .\n    ?person_id rdfs:label ?name  .\n    filter(lang(?name) = \"\" || lang(?name) = \"en\" || lang(?name) = \"fr\" )\n    bind(str(?name) as ?name_str) .\n}\n\ngroup by ?name_str \norder by DESC(?person_id_count)\n\nlimit 155\n",
+    "value": "# from file artsdata/maintenance/diagnostics/duplicate-person-names.sparql\n# Find all the unique names of People that match, and count the number of different Person IDs\n\nPREFIX schema: <http://schema.org/>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\n\nselect  (count(?name) as ?name_count) (count(distinct ?person_id) as ?person_id_count) (GROUP_CONCAT( distinct(?person_id);SEPARATOR=\", \") AS ?ids) ?name_str  where { \n    ?person_id a schema:Person .\n    ?person_id rdfs:label ?name  .\n    filter(lang(?name) = \"\" || lang(?name) = \"en\" || lang(?name) = \"fr\" )\n    bind(str(?name) as ?name_str) .\n}\n\ngroup by ?name_str \norder by DESC(?person_id_count)\n\nlimit 120\n",
     "metadata": {
       "file": "/Users/saumier/Sites/culturecreates/sparql-library/artsdata/maintenance/diagnostics/duplicate-person-names.sparql"
     }
