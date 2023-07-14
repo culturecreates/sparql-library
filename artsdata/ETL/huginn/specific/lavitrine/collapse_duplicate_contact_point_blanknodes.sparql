@@ -21,7 +21,7 @@ where {
         select ?entity ?g  (sample(?contactPoint) as ?prime_contactPoint) 
         where {
             values ?g {
-                <GRAPH_PLACEHOLDER>
+                <graph_name_placeholder>
             }
             graph ?g {
                 ?entity a schema:Organization ;
