@@ -1,13 +1,13 @@
 PREFIX schema: <http://schema.org/>
 PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
 insert {
-    graph  <http://kg.artsdata.ca/culture-creates/huginn/derived-grandtheatre-qc-ca> {
+    graph  <graph_name_placeholder> {
         ?event schema:additionalType  ?gtqConcept .
         ?event schema:keywords ?keyword_fr .
     }
 }
 where {
-    graph  <http://kg.artsdata.ca/culture-creates/huginn/derived-grandtheatre-qc-ca> {
+    graph  <graph_name_placeholder> {
         values ?type {
             schema:EventSeries schema:Event 
         }  
