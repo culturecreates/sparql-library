@@ -1,7 +1,8 @@
 insert data {
     graph <http://wikidata.org/capacoa-members> {
-        <http://wikidata.org/capacoa-members> schema:contentRating  <http://wikidata.org/capacoa-members#rating>  .
+        <http://wikidata.org/capacoa-members> schema:contentRating  <http://wikidata.org/capacoa-members#rating>  ;
+            schema:maintainer "wikidata.org" ;
+            schema:description "Dropped and loaded by Huginn CAPACOA scenario using wikidata-collect-venues.sparql followed by wikidata-set-graph-rating.sparql both in sparql-library"@en .
         <http://wikidata.org/capacoa-members#rating>  schema:ratingValue 1 .
-        <http://wikidata.org/capacoa-members> schema:maintainer "wikidata.org" .
     }
 }
