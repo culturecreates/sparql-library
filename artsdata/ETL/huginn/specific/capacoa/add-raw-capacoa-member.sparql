@@ -13,7 +13,7 @@ insert data {
       schema:name "operating_name1_placeholder"@oa ;
       schema:name "operating_name2_placeholder"@ob ;
       schema:name "user_name_placeholder" ;
-      ebucore:hasAgentBiography "bio_placeholder_en"@en , "bio_placeholder_en"@fr ;
+      ebucore:hasAgentBiography "bio_en_placeholder"@en , "bio_fr_placeholder"@fr ;
       schema:legalName "legal_name_placeholder"@la ;
       schema:alternateName "also_known_as_placeholder" ;
       wdt:P8860 "business_number_placeholder" ;
