@@ -4,4 +4,5 @@
 # https://graphdb.ontotext.com/documentation/9.6/free/full-text-search.html
 
 PREFIX luc: <http://www.ontotext.com/owlim/lucene#>
+
 INSERT DATA { luc:Name luc:updateIndex _:b1 . }

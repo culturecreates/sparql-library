@@ -1,0 +1,50 @@
+[
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Steps to build Lucene Index\n========\n\nArtsdata currently uses a single index of rdf:labels for all entities.\n\nThe index is called luc:Name. It is used by all reconciliation SPARQLs when reconiling names of things.",
+    "metadata": {}
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Step 1: Define molecule\n----------------------\n\nThe molecule is defined only once and is used to create the initial index in step 2. This molecule includes all string literals for rdf:labels and also schema:urls that are literals. \n\nNote: The inclusion of schema:urls was initially included to be able to find websites of artists.  This is a candidate to drop as it was only used in the early algorithms of Footlight Condenser to scrape sites like co-motion.  It can be removed with no impact.\n\nhttps://graphdb.ontotext.com/documentation/9.6/free/full-text-search.html?highlight=lucene",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "# from file artsdata/maintenance/lucene/fts-molecule.sparql\nPREFIX luc: <http://www.ontotext.com/owlim/lucene#>\n\nINSERT DATA {\n  luc:index luc:setParam \"uris\" .\n  luc:include luc:setParam \"literals\" .\n  luc:moleculeSize luc:setParam \"1\" .\n  luc:includePredicates luc:setParam \"http://www.w3.org/2000/01/rdf-schema#label http://schema.org/url\"  .\n}",
+    "metadata": {
+      "file": "/Users/saumier/Sites/culturecreates/sparql-library/artsdata/maintenance/lucene/fts-molecule.sparql"
+    }
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Step 2: Create index\n------------\nThis step creates the index URI called luc:Name based on the molecule settings in step 1.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "\n# from file artsdata/maintenance/lucene/fts-build-index.sparql\nPREFIX luc: <http://www.ontotext.com/owlim/lucene#>\n\nINSERT DATA {\n  luc:Name luc:createIndex \"true\" .\n}",
+    "metadata": {
+      "file": "/Users/saumier/Sites/culturecreates/sparql-library/artsdata/maintenance/lucene/fts-build-index.sparql"
+    }
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Step 3: Update Index\n---------------\n\nThis SPARQL can be run to update the index whenever entites are added after the index was created in step 2.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "# from file artsdata/maintenance/lucene/fts-update.sparql\n\n# causes all resources not currently indexed by <index-name> to get indexed. \n# It is a shorthand way of batching together index updates for several (new) resources.\n# https://graphdb.ontotext.com/documentation/9.6/free/full-text-search.html\n\nPREFIX luc: <http://www.ontotext.com/owlim/lucene#>\n\nINSERT DATA { luc:Name luc:updateIndex _:b1 . }",
+    "metadata": {
+      "file": "/Users/saumier/Sites/culturecreates/sparql-library/artsdata/maintenance/lucene/fts-update.sparql"
+    }
+  }
+]

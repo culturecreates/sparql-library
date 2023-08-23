@@ -1,4 +1,7 @@
+
+# from file artsdata/maintenance/lucene/fts-build-index.sparql
 PREFIX luc: <http://www.ontotext.com/owlim/lucene#>
+
 INSERT DATA {
   luc:Name luc:createIndex "true" .
 }
