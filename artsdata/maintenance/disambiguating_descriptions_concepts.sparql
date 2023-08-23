@@ -14,11 +14,11 @@ delete {
 }
 insert {
     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
-        ?s schema:disambiguatingDescription ?description
+        ?s schema:disambiguatingDescription ?disambiguatingDescription
     }
 }
 where {
-    select ?s  ?description ?previous
+    select ?s  ?disambiguatingDescription ?previous
     where {
         ?s a skos:Concept .
         filter(isURI(?s))
