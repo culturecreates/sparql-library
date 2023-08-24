@@ -28,10 +28,22 @@
   {
     "kind": 2,
     "language": "sparql",
-    "value": "\n# from file artsdata/maintenance/lucene/fts-build-index.sparql\nPREFIX luc: <http://www.ontotext.com/owlim/lucene#>\n\nINSERT DATA {\n  luc:Name luc:createIndex \"true\" .\n}",
+    "value": "# from file artsdata/maintenance/lucene/fts-build-index.sparql\n\n# from file artsdata/maintenance/lucene/fts-build-index.sparql\nPREFIX luc: <http://www.ontotext.com/owlim/lucene#>\n\nINSERT DATA {\n  luc:Name luc:createIndex \"true\" .\n}",
     "metadata": {
       "file": "/Users/saumier/Sites/culturecreates/sparql-library/artsdata/maintenance/lucene/fts-build-index.sparql"
     }
+  },
+  {
+    "kind": 1,
+    "language": "markdown",
+    "value": "Step 3: Search using index\n--------------------\n\nExample search for entities with the word \"Maison\" sorted by lucene score.",
+    "metadata": {}
+  },
+  {
+    "kind": 2,
+    "language": "sparql",
+    "value": "PREFIX luc: <http://www.ontotext.com/owlim/lucene#>\nPREFIX schema: <http://schema.org/>\n\nSELECT * where {\n  ?id luc:Name \"Maison\" ; luc:score ?score ; a schema:Place ; rdfs:label ?label .\n}  order by desc(?score) limit 10",
+    "metadata": {}
   },
   {
     "kind": 1,
