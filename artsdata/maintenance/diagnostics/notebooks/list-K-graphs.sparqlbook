@@ -2,11 +2,13 @@
   {
     "kind": 1,
     "language": "markdown",
-    "value": "## List of Mint K-Graphs\n\nArtsdata URIs are minted in graphs with K number prefix. Each prefix is assigned to an named entity authority. A named entity authority can have more than one K-prefix to help organize and manage their different activities. "
+    "value": "## List of Mint K-Graphs\n\nArtsdata URIs are minted in graphs with K number prefix. Each prefix is assigned to an named entity authority. A named entity authority can have more than one K-prefix to help organize and manage their different activities. ",
+    "metadata": {}
   },
   {
     "kind": 2,
     "language": "sparql",
-    "value": "# [endpoint=http://kg.artsdata.ca/query]\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX schema: <http://schema.org/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\n\nselect distinct * where { \n\t?dataset a prov:Entity  ; rdfs:label ?label .\n     filter  (regex(str(?dataset),\".*K\\\\d+\"))\n    # filter (isURI(?s))\n    # bind(strbefore(str(?s),\"-\") as ?rootID)\n} limit 100"
+    "value": "# [endpoint=http://kg.artsdata.ca/query]\n\nPREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nPREFIX schema: <http://schema.org/>\nPREFIX prov: <http://www.w3.org/ns/prov#>\n\nselect distinct * where { \n\t?dataset a prov:Entity  ; rdfs:label ?label .\n     filter  (regex(str(?dataset),\".*K\\\\d+\"))\n    # filter (isURI(?s))\n    # bind(strbefore(str(?s),\"-\") as ?rootID)\n} order by ?dataset limit 100",
+    "metadata": {}
   }
 ]
