@@ -12,6 +12,7 @@ insert data {
       schema:telephone "phone_placeholderphonePostNumber_placeholder" ;
       schema:email "email_placeholder" ;
       schema:url "website_placeholder" ;
+      schema:sameAs <artsdataUri_placeholder> ,  <wikidataUri_placeholder> ;
       schema:address [ a schema:PostalAddress ;
         schema:streetAddress "address1_placeholder" ;
         schema:streetAddress "address2_placeholder" ;
