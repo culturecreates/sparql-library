@@ -1,0 +1,42 @@
+# This SPARQL can find the events for auto-minting because each event:
+# 1. First I check date and general location are unique across Artsdata. If there are more than 1 other matching events then I stop.
+# 	- Start Date without Time: I remove the time of the event. Sometimes an event can have a slightly different time or door time but is really the same event.
+# 	- Postal Code of location: This ensure that the event is not in the same general location incase different place identifiers are used.
+
+# 2. Second I check that the event has valid required properties and syntax.
+# 	- (1..*) type of schema:Event (including sub-classes or equivalent classes in any ontology).
+# 	- (1) start date: with or without time of day, in ISO 8601, and time zone if time of day is present.
+# 	- (0..1) end date: optional but if present must be in ISO 8601 with time zone if time of day is present, and be on or after the start date.
+# 	- (1..*) names of event (can be with or without language type)
+# 	- (1) location with a valid PostalAddress. The place can use data linked with sameAs in either direction to get the PostalAddress which must have a street address, city, province, country, postal code.
+# 	- (1..*) description (can be with or without language type). Not strictly required but very useful to understand the data and the human context.
+#  	- (0..*) sameAs: optional but must be valid URI if present
+
+# 3. Third I check that there does not exist any sameAs links to an Artsdata URI in any direction and link depth. 
+
+# 4. Fourth I check the provenance metadata on the datafeed exists and is valid for the required properties (start date, location, name). The provenance metadata must have a timeDate stamp for the datafeed creation, the download URL, the author URI and the data sharing license URI.
+	
+
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX dct: <http://purl.org/dc/terms/>
+
+select reduced ?date ?code (count(?s) as ?count) (sample(?s) as ?s_sample) (sample(?g) as ?g_sample) where {
+    graph ?g {
+        ?s a ?type .
+    }
+    ?g  schema:url/dct:issued ?issuedDate . # must have an issued date 
+    ?s a schema:Event ;
+      schema:startDate ?startDate ;
+      schema:name ?name  ;
+      schema:description ?desc ;
+      schema:location/schema:address/schema:postalCode ?code .
+    bind(strdt(substr(str(?startDate),1,10),xsd:date) as ?date )
+    filter (?startDate  > now())
+    filter not exists {?SuperEvent schema:subEvent ?s }
+   
+    
+} 
+group by ?code ?date 
+having(count(?s) < 2)
+ 
