@@ -1,0 +1,19 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    graph <GRAPH_PLACEHOLDER> {
+     ?s schema:sameAs ?o .
+    }
+}
+insert {
+    graph <GRAPH_PLACEHOLDER> {
+     ?s schema:sameAs ?o_uri .
+    }
+}
+where {
+    graph <GRAPH_PLACEHOLDER> {
+        ?s schema:sameAs ?o .
+        filter(isLiteral(?o))
+        bind(URI(replace(?o," ","")) as ?o_uri)
+    }
+    filter(Bound(?o_uri))
+} 
