@@ -1,6 +1,8 @@
 PREFIX schema: <http://schema.org/>
 delete {
-    ?s  schema:hasOccupation ?occ .
+    graph   <graph_name_placeholder> {
+        ?s  schema:hasOccupation ?occ .
+    }
 }
 
 where { 
@@ -10,6 +12,4 @@ where {
     schema:hasOccupation ?occ .
     filter(str(?occ) = "http://www.wikidata.org/entity/")
    }
-	
-  
 } 

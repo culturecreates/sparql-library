@@ -1,0 +1,28 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    graph <graph_name_placeholder> {
+        ?s schema:url ?url_blank .
+         ?url_blank ?url_p ?url_o .
+    }
+}
+where {
+    {
+        select distinct ?s ?url_blank where {
+            graph <graph_name_placeholder> {
+                ?s a schema:Organization .
+                ?s schema:url ?url_blank .
+                filter not exists {
+                    ?url_blank schema:url ?url_o  
+                }
+                filter(isBLANK(?url_blank))
+                filter exists {
+                    ?url_blank a schema:Role 
+                }
+            }
+        }
+    }
+    graph <graph_name_placeholder> {
+        ?url_blank ?url_p ?url_o .
+        
+    }
+}

@@ -1,0 +1,33 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    graph <graph_name_placeholder> {
+        ?s schema:location ?loc .
+        ?loc ?loc_p ?loc_o .
+        ?loc_o ?a  ?b .
+    }
+}
+where {
+    {
+        select distinct ?s ?loc where {
+            graph <graph_name_placeholder> {
+                ?s a schema:Organization .
+                ?s schema:location ?loc .
+                filter not exists {
+                    ?loc schema:roleName ?loc_o  
+                }
+                filter not exists {
+                    ?loc schema:roleName/schema:name ?b 
+                }
+                filter not exists {
+                    ?loc schema:roleName/schema:identifier ?b 
+                }
+            }
+        }
+    }
+    graph <graph_name_placeholder> {
+        ?loc ?loc_p ?loc_o .
+        OPTIONAL {
+            ?loc_o ?a  ?b .
+        }
+    }
+}
