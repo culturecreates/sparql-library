@@ -4,12 +4,17 @@
 PREFIX schema: <http://schema.org/>
 delete {
     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
-        ?candidate_adid schema:disambiguatingDescription ?previous
+        ?candidate_adid schema:disambiguatingDescription ?previous .
     }
 }
 insert {
     graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
-         ?candidate_adid schema:disambiguatingDescription ?description
+         ?candidate_adid schema:disambiguatingDescription ?description .
+         << ?candidate_adid schema:disambiguatingDescription ?description >> prov:wasGeneratedBy [
+        
+            prov:startedAtTime ?startTime;
+            prov:used adr:K1-13
+         ] .
     }
 }
 
@@ -34,6 +39,7 @@ where {
             ?s schema:sameAs ?adid .
             filter(contains(str(?adid), "kg.artsdata.ca/resource/"))
         }
+        bind(now() as ?startTime)
        
         bind (concat(?locality," (",?region,") ",?country) as ?disambiguatingDescription )
         bind(coalesce(?adid,?s) as ?candidate_adid)
