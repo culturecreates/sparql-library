@@ -1,18 +1,19 @@
 PREFIX schema: <http://schema.org/>
 PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 insert {
-   graph <graph_name_placeholder> {
+    graph <graph_name_placeholder> {
          ?occupation a schema:Occupation ; 
            rdfs:label ?label_en , ?label_fr .
-   }
+    }
 }
 where {
-    {
-        select distinct ?occupation where {
-            ?s schema:hasOccupation ?occupation .
-            filter(contains(str(?occupation),"www.wikidata.org/entity/Q"))
-            MINUS {
-                ?occupation rdfs:label ?label 
+    {   graph <graph_name_placeholder> {
+            select distinct ?occupation where {
+                ?s schema:hasOccupation ?occupation .
+                filter(contains(str(?occupation),"www.wikidata.org/entity/Q"))
+                MINUS {
+                    ?occupation rdfs:label ?label 
+                }
             }
         }
     }
