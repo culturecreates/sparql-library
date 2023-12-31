@@ -1,0 +1,29 @@
+PREFIX schema: <http://schema.org/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+delete  {
+    graph <https://nac-cna.ca> {
+        ?event schema:startDate ?startDate .
+    }
+}
+insert  {
+    graph <https://nac-cna.ca> {
+        ?event schema:startDate ?startDate_fix .
+    }
+}
+where {
+    graph <https://nac-cna.ca> {
+        ?event a schema:Event ;
+               schema:startDate ?startDate .
+    }
+
+    filter(datatype(?startDate) != xsd:dateTime )
+    BIND(strbefore(str(?startDate),"T") as ?date_str)
+    BIND(strafter(str(?startDate),"T") as ?time_str)
+    BIND(strafter(str(?time_str),"-") as ?zone_str)
+    BIND(concat(substr(?zone_str, 1, 2),":",substr(?zone_str, 3, 2)) as ?zone_fix)
+    BIND(strdt(concat(?date_str,"T",strbefore(?time_str,"-"),":00-",?zone_fix), xsd:dateTime) as ?startDate_fix)
+}
+
+# This SPARQL converts raw dates missing seconds and time zone colon
+# From 2023-01-01T11:99-0400 to 2023-01-01T11:99:55-04:00
