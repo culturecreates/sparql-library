@@ -9,7 +9,8 @@ where {
     {
         select distinct ?s ?url_blank where {
             graph <graph_name_placeholder> {
-                ?s a schema:Organization .
+                values ?agent { schema:Organization  schema:Person }
+                ?s a ?agent .
                 ?s schema:url ?url_blank .
                 filter not exists {
                     ?url_blank schema:url ?url_o  
