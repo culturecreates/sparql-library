@@ -18,10 +18,10 @@ where {
         bind(strlang(?keywords,"fr") as ?keyword_fr)
     }
     service  <http://db.artsdata.ca/repositories/artsdata> {
-      graph <http://db.artsdata.ca/repositories/artsdata/rdf-graphs/grandtheatre-qc-ca-event-type-mapping> {
+        graph <http://kg.artsdata.ca/culture-creates/artsdata-planet-gtq/grandtheatre-qc-ca-event-type-mapping> {
               ?gtqConcept skos:prefLabel ?keyword_fr ;
                           a skos:Concept  .
-      }
+        }
     }
    
 }
