@@ -1,0 +1,19 @@
+PREFIX schema: <http://schema.org/>
+delete {
+    graph <graph_name_placeholder> {
+     ?offer schema:availability ?availability .
+    }
+} 
+insert {
+    graph <graph_name_placeholder> {
+     ?offer schema:availability ?new_availability .
+    }
+}
+where {
+  graph <graph_name_placeholder> {
+    ?event schema:offers ?offer .
+    ?offer schema:availability ?availability .
+    bind(concat("http://schema.org/", ?availability) as ?new_availability)
+  }
+  ?event a schema:Event .
+}
