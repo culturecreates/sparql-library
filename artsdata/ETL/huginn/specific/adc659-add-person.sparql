@@ -1,6 +1,6 @@
 PREFIX schema: <http://schema.org/> 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
-PREFIX adc: <http://www.adc659/vocabulary/>
+PREFIX adc: <http://www.adc659.ca/vocabulary#>
 
 insert { 
   graph <graph_name_placeholder> {
@@ -19,7 +19,7 @@ insert {
     schema:sameAs "facebook_placeholder" , "instagram_placeholder", "soundcloud_placeholder";
     schema:description  "fullBio_placeholder"  ; 
     adc:availableForWork "availableForWork_placeholder";
-    adc:availableForAssistantassociate "availableForAssistantassociate_placeholder";
+    adc:availableForAssistantAssociate "availableForAssistantassociate_placeholder";
     schema:image "image_placeholder";
     schema:mainEntityOfPage <memberUrl_placeholder#WebPage> .
 
