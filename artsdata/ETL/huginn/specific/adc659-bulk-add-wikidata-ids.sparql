@@ -1,0 +1,28 @@
+PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+insert {
+    graph <http://kg.artsdata.ca/culture-creates/huginn/adc659> {
+        ?adc schema:sameAs ?aduri ; schema:sameAs  ?wdid ; a schema:Person .
+    }
+}
+where {
+
+    service <https://query.wikidata.org/sparql> 
+  {
+  	?wdid wdt:P31 wd:Q5 ;
+     rdfs:label ?name ;
+     wdt:P463 wd:Q116780744 ;
+     wdt:P7627 ?adid .
+        filter(lang(?name) = "en")
+  }
+    bind(URI(concat("http://kg.artsdata.ca/resource/",str(?adid))) as ?aduri)
+    ?aduri  a schema:Person ; schema:name ?name_ad .
+    graph <http://kg.artsdata.ca/culture-creates/huginn/adc659> {
+        ?adc a schema:Person ; schema:name ?name_adc .
+    }
+    filter(str(?name_adc) = str(?name_ad))
+}
+# This SPARQL gets all the names of people in Wikidata that are part of catalog ADC with KIDs 
+# and then matches names in Artsdata's ADC graph to add KID and QID to the ADC People in the ADC graph.
