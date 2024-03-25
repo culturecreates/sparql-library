@@ -1,0 +1,42 @@
+# SPARQL's URI adr:K1-14
+# Used in Artsdata core maintenance
+# Adds Wikdata entities' ArtsdataID to adm:K2 graph
+
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX p: <http://www.wikidata.org/prop/>
+PREFIX ps: <http://www.wikidata.org/prop/statement/>
+PREFIX wikibase: <http://wikiba.se/ontology#>
+PREFIX bd: <http://www.bigdata.com/rdf#>
+PREFIX schema: <http://schema.org/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX adm: <http://kg.artsdata.ca/minted/>
+delete {
+    graph adm:K2 {
+        << ?wikidata schema:sameAs ?aduri >> ?a ?b .
+        ?b ?d ?e .
+    }
+}
+insert {
+    graph adm:K2 {
+        ?wikidata schema:sameAs ?aduri .
+        << ?wikidata schema:sameAs ?aduri >> prov:wasGeneratedBy 
+                [
+            prov:used  adr:K1-14  ;
+            prov:generatedAtTime ?timeStamp
+        ] .
+    }
+}
+where {
+    bind(now() as ?timeStamp)        
+    SERVICE <https://query.wikidata.org/sparql> {
+        SELECT ?wikidata ?wikidataLabel   ?aduri  WHERE {
+            ?wikidata wdt:P7627 ?adid .
+            bind(iri(concat("http://kg.artsdata.ca/resource/", ?adid)) as ?aduri)
+            SERVICE wikibase:label {
+                bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
+            }
+        }
+    }
+}
