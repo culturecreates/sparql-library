@@ -39,4 +39,8 @@ where {
             }
         }
     }
+    graph adm:K2 {
+   << ?wikidata schema:sameAs ?aduri >> ?a ?b .
+        ?b ?d ?e .
+    }
 }
