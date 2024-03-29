@@ -1,0 +1,31 @@
+# This SPARQL adds a disambiguating description to Artsdata minted events that don't already have one.
+PREFIX schema: <http://schema.org/>
+PREFIX adm: <http://kg.artsdata.ca/minted/>
+
+insert {
+    graph <http://kg.artsdata.ca/disambiguatingDescriptions> {
+        ?event schema:disambiguatingDescription ?new_desc
+    }
+}
+where {
+    {
+        select  ?event ?startDate (sample(?type) as ?one_type) (sample(?location) as ?one_location) where {
+            values ?g {
+                adm:K23 adm:K42 
+            }
+            values ?type {
+                schema:Event schema:EventSeries
+            }
+            graph ?g {
+                ?event a  ?type  ;
+                       schema:startDate ?startDate .
+            }
+            ?event schema:location/schema:name ?location .
+            OPTIONAL {
+                ?event schema:disambiguatingDescription ?desc .
+            }
+            filter(!bound(?desc))
+        } group by  ?event ?startDate
+    }
+    bind(concat(str(?one_location)," - ",str(?startDate))  as ?new_desc)
+}
