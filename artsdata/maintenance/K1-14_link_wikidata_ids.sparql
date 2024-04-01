@@ -12,20 +12,13 @@ PREFIX schema: <http://schema.org/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
 PREFIX adm: <http://kg.artsdata.ca/minted/>
-delete {
-    graph adm:K2 {
-        << ?wikidata schema:sameAs ?aduri >> ?a ?b .
-        ?b ?d ?e .
-    }
-}
+
 insert {
     graph adm:K2 {
         ?wikidata schema:sameAs ?aduri .
-        << ?wikidata schema:sameAs ?aduri >> prov:wasGeneratedBy 
-                [
-            prov:used  adr:K1-14  ;
-            prov:generatedAtTime ?timeStamp
-        ] .
+        << ?wikidata schema:sameAs ?aduri >> prov:wasGeneratedBy ?annotate .
+         ?annotate prov:used  adr:K1-14  ;
+            prov:generatedAtTime ?timeStamp .
     }
 }
 where {
@@ -39,8 +32,6 @@ where {
             }
         }
     }
-    graph adm:K2 {
-   << ?wikidata schema:sameAs ?aduri >> ?a ?b .
-        ?b ?d ?e .
-    }
+    bind(URI(CONCAT(str(?wikidata),"#link_",?adid)) as ?annotate)
+   
 }
