@@ -1,0 +1,15 @@
+PREFIX schema: <http://schema.org/>
+insert data  {
+    graph <http://kg.artsdata.ca/databus> {
+        <http://kg.artsdata.ca/databus/culture-creates/artsdata-planet-scenepro/scenepro-orgs> schema:potentialAction <http://kg.artsdata.ca/databus/culture-creates/artsdata-planet-scenepro/scenepro-orgs#CreateAction> .
+        <http://kg.artsdata.ca/databus/culture-creates/artsdata-planet-scenepro/scenepro-orgs#CreateAction>     a schema:CreateAction ;
+                                                                                                                schema:name "Import ScenePro organizations and places" ;
+         schema:target [
+            a schema:EntryPoint ;
+            schema:urlTemplate "https://api.github.com/repos/culturecreates/artsdata-planet-scenepro/actions/workflows/scenepro-entities/dispatches" ;                                                             schema:contentType "application/vnd.github.v3+json" ;
+            schema:httpMethod "POST" ;
+            schema:encodingType "application/json" ;
+            schema:httpBody "{'ref':'main'}" 
+        ]
+    }
+}
