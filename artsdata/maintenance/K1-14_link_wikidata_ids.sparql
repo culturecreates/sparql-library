@@ -1,6 +1,11 @@
 # SPARQL's URI adr:K1-14
 # Used in Artsdata core maintenance
-# Adds Wikdata entities' ArtsdataID to adm:K2 graph
+# This script is used to add the Wikidata entities' ArtsdataID to the adm:K2 graph
+# to fill in missing links between Wikidata and Artsdata
+# for entities not minted using Wikidata as the authority (e.g. minted using some other authority)
+# The direction of the link is Wikidata --> Artsdata 
+# because the link was not created by the Artsdata authority and may be an error in Wikidata
+# Artsdata should only trust links Artsdata --> Wikidata
 
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>

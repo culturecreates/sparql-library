@@ -1,4 +1,4 @@
-# This SPARQL loads from Wikidata all the entities with an Artsdata ID
+# This SPARQL queries Wikidata for entities with an Artsdata ID
 # Use to check if there is a mismatch with bidirectional linking
 # Note: Some wikidata entities have an owl:sameAs
 
@@ -10,15 +10,17 @@ PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 select * 
 WHERE { 
    
-    bind(URI(concat("http://kg.artsdata.ca/resource/",?adid)) as ?ad_uri)
-    OPTIONAL{ ?ad_uri schema:sameAs ?sameAs }
-    filter(contains(str(?sameAs),"wikidata.org"))
-    filter(?sameAs != str(?wdid))
+   
+    ?ad_uri schema:sameAs ?wdid .
+    filter(contains(str(?ad_uri),"artsdata.ca/resource/K"))
+    filter(contains(str(?wdid),"wikidata.org"))
+   # filter(?sameAs != str(?wdid))
    SERVICE <https://query.wikidata.org/sparql>
     { 
      
       ?wdid   wdt:P7627   ?adid 
     }
-
+    bind(URI(concat("http://kg.artsdata.ca/resource/",?adid)) as ?wd_ad_uri)
+filter (?ad_uri != ?wd_ad_uri)
     } 
 

@@ -1,0 +1,38 @@
+# This SPARQL collapses Places or Organizations blank nodes by creating an MD5 on the name. 
+# This has a side effect of accumulating blank nodes in nested entities like address and photo etc. which
+#   should be collapsed using a seperate collapse blanknodes sparql.
+# Each place per graph will have only a single address blanknode
+# In the rare case a property is different it will accumulate (2 values for the same property)
+PREFIX schema: <http://schema.org/>
+delete {
+   graph ?g {
+        # get all triples with entity as subject
+		?entity_to_replace ?p ?o .
+        # get all triples with entity as object
+        ?e ?ep ?entity_to_replace .
+   }
+}
+insert {
+   graph ?g {
+       # get all triples with place as subject
+		?entity_to_replace_uri ?p ?o .
+        # get all triples with place as object
+        ?e ?ep ?entity_to_replace_uri .
+   }
+}
+# select * 
+where {
+    values ?g {
+        <GRAPH_PLACEHOLDER> 
+    }
+    graph ?g {
+        VALUES ?types {schema:Place schema:Organization}
+        ?entity_to_replace a ?types ; schema:name ?name .
+        # get all triples with place as subject
+		?entity_to_replace ?p ?o .
+        # get all triples with place as object
+        ?e ?ep ?entity_to_replace .
+        filter(isBlank(?entity_to_replace))
+    }
+    bind(uri(concat(str(?g),"#",MD5(?name))) as ?entity_to_replace_uri)
+}

@@ -1,12 +1,13 @@
 
 # SPARQL to add a rank and a maintainer for using Artsdata Rank API.
-
 PREFIX schema: <http://schema.org/>
 insert data {
-    graph  <http://wikidata.org/capacoa-member-venues> {
-        
-    <http://wikidata.org/capacoa-member-venues> schema:contentRating  <http://wikidata.org/capacoa-member-venues#rating>  .
-    <http://wikidata.org/capacoa-member-venues#rating>  schema:ratingValue 1 .
-    <http://wikidata.org/capacoa-member-venues> schema:maintainer "wikidata.org" .
-  }
+    graph  <http://kg.artsdata.ca/culture-creates/artsdata-planet-ipaa/ipaa-entities> {
+          <http://kg.artsdata.ca/culture-creates/artsdata-planet-ipaa/ipaa-entities> schema:contentRating [
+            a schema:EndorsementRating ;
+            schema:ratingValue 1  ;
+            schema:ratingExplanation "Crawled from JSON-LD on ipaa.ca website"
+          ] .
+           <http://kg.artsdata.ca/culture-creates/artsdata-planet-ipaa/ipaa-entities> schema:maintainer "ipaa.ca"
+    }
 }

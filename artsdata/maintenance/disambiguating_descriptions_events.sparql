@@ -11,7 +11,7 @@ where {
     {
         select  ?event ?startDate (sample(?type) as ?one_type) (sample(?location) as ?one_location) where {
             values ?g {
-                adm:K23 adm:K42 
+                adm:K23 adm:K43 
             }
             values ?type {
                 schema:Event schema:EventSeries

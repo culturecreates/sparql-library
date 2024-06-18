@@ -1,0 +1,46 @@
+# This SPARQL updates the disambiguating description for all Artsdata minted entities minted in K2 (wikidata authoirty) 
+# indempotent, can be run multiple times
+# It queries the wikidata endpoint for the description of the entity and updates the disambiguating description
+# It also adds a provenance link to the wikidata description
+# It is limited to 1000 entities per run, and can be run multiple times to update all entities
+# It is recommended to run this query in batches of 1000 entities at a time
+# The query is run in the context of the K2 graph
+
+PREFIX schema: <http://schema.org/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX adm: <http://kg.artsdata.ca/minted/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+delete {
+        ?s  schema:disambiguatingDescription  ?oldDesc .
+        << ?s  schema:disambiguatingDescription  ?oldDesc >>  ?olda ?oldb .
+}
+insert {
+    graph adm:K2
+    {
+        ?s  schema:disambiguatingDescription ?label  .
+        << ?s  schema:disambiguatingDescription ?label >> prov:wasDerivedFrom ?wd .
+    }  
+}
+where {
+    {
+        select distinct ?s ?wd where {
+            graph adm:K2 {
+                ?s  schema:sameAs ?wduri .
+                filter(contains(str(?wduri), "wikidata.org"))
+                bind(URI(?wduri ) as ?wd)
+            }
+        } limit 1000 offset 6000
+    }
+    SERVICE <https://query.wikidata.org/sparql>
+    {
+        ?wd  schema:description ?label  .
+        filter(lang(?label) = "en" || lang(?label) = "fr")
+    }
+    OPTIONAL {
+        ?s  schema:disambiguatingDescription ?oldDesc .
+        OPTIONAL {
+            << ?s  schema:disambiguatingDescription ?oldDesc >> ?olda ?oldb .
+        }
+    }
+}

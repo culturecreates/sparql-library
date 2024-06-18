@@ -1,5 +1,5 @@
-# This SPARQL collapses repeating blanknode addresses and contactPoints
-# Each place per graph will have only a single address blanknode
+# This SPARQL collapses repeating Place and Organization blanknode addresses, contactPoints, geo an logos into a single blanknode
+# Each entity per graph will have only a single nested blanknode
 # In the rare case a property is different it will accumulate (2 values for the same property)
 
 PREFIX schema: <http://schema.org/>
@@ -25,8 +25,8 @@ where {
         select ?entity ?g ?prop (sample(?node) as ?prime_node) where {
             graph ?g {
                 values ?g {<GRAPH_PLACEHOLDER>}
-                values ?entity_type {schema:Organization schema:Place}
-                 values ?prop {schema:address schema:contactPoint }
+                values ?entity_type {schema:Organization schema:Place }
+                 values ?prop {schema:address schema:contactPoint schema:geo schema:logo}
                 ?entity a ?entity_type ; # move out of graph to use inference.
                        ?prop ?node .
                 filter (isBLANK(?node)) 
