@@ -4,7 +4,6 @@
 # Introduced in Artsdata core maintenance 
 # when Tout Culture CMS events were imported with embedded images
 
-
 PREFIX schema: <http://schema.org/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
@@ -23,7 +22,8 @@ insert {
 }
 # select ?g ?event (STRLEN(?d) AS ?dLength) 
 where { 
-    graph <GRAPH_PLACEHOLDER>  {
+    values ?g { <GRAPH_PLACEHOLDER> }
+    graph ?g {
        ?event a schema:Event ; schema:description ?desc .
         filter (STRLEN(?desc) > 50000)
         bind(CONCAT((SUBSTR(?desc,1,100)),"...") as ?desc_short)
