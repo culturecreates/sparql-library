@@ -1,0 +1,34 @@
+# SPARQL check description length
+# SPARQL's URI adr:K1-15
+# Cut-off when too long (> 50,000 characters)
+# Introduced in Artsdata core maintenance 
+# when Tout Culture CMS events were imported with embedded images
+
+
+PREFIX schema: <http://schema.org/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+
+delete {
+     graph ?g {
+       ?event schema:description ?desc .
+    } 
+}
+insert {
+     graph ?g {
+       ?event schema:description ?desc_trimmed .
+         << ?event schema:description ?desc_trimmed  >> prov:wasGeneratedBy adr:K1-15 .
+        
+    } 
+}
+# select ?g ?event (STRLEN(?d) AS ?dLength) 
+where { 
+    graph <GRAPH_PLACEHOLDER>  {
+       ?event a schema:Event ; schema:description ?desc .
+        filter (STRLEN(?desc) > 50000)
+        bind(CONCAT((SUBSTR(?desc,1,100)),"...") as ?desc_short)
+        bind(REPLACE(?desc_short, "^\\s+", "") as ?desc_trimmed)
+    } 
+    
+}
+
