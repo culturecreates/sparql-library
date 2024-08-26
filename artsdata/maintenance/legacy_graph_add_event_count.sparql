@@ -1,0 +1,15 @@
+PREFIX schema: <http://schema.org/>
+insert {
+    graph <http://kg.artsdata.ca/databus> {
+        
+    ?dataset <http://rdfs.org/ns/void#classPortion> [<http://rdfs.org/ns/void#class> schema:Event ; <http://rdfs.org/ns/void#entities> 34 ;]
+    }
+}
+
+
+#select * 
+where { 
+	<http://kg.artsdata.ca/culture-creates/footlight/horizonstage-com> <http://www.w3.org/ns/prov#wasDerivedFrom> ?b .
+    ?b <http://xmlns.com/foaf/0.1/primaryTopic> ?dataset .
+ 
+} 
