@@ -22,7 +22,7 @@ insert data {
       schema:additionalType capacoa:PrimaryActivity_primary_activity_uri ;
       schema:additionalType capacoa:PresentingFormat_presenting_format_uri ;
       schema:additionalType capacoa:MemberType_member_type_placeholder ;
-      capacoa:memberTerminationDate capacoa:member_termination_date_placeholder ;
+      capacoa:memberTerminationDate "member_termination_date_placeholder" ;
       schema:url "website_official_placeholder" ;
       schema:url [ a schema:Role ; 
                   schema:roleName "Events Webpage" ;
