@@ -1,0 +1,22 @@
+PREFIX schema: <http://schema.org/>
+insert  {
+    graph ?g {    
+    ?id schema:address ?address_uri .
+    ?address_uri a schema:PostalAddress ;
+   schema:streetAddress "1 Rue Wellington"@fr ;
+   schema:addressLocality  "Gatineau" ;
+   schema:addressRegion "QC" ;
+   schema:postalCode "J8X 2H3" ;
+   schema:addressCountry "CA" .
+        }
+}
+where {
+    values ?id {
+        <http://kg.artsdata.ca/resource/K13-234> 
+    }
+    ?id a schema:Place .
+    graph ?g {
+        ?id a ?type .
+    }
+    bind (URI(CONCAT(STR(?id),"#PostalAddress")) as ?address_uri )
+}
