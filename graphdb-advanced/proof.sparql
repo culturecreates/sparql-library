@@ -1,0 +1,16 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX proof: <http://www.ontotext.com/proof/>
+PREFIX schema: <http://schema.org/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX dbo: <http://dbpedia.org/ontology/>
+SELECT ?rule ?s ?p ?o ?context WHERE {
+    VALUES (?subject ?predicate ?object) {(adr:K2-319 rdf:type dbo:Agent)}
+    ?ctx proof:explain (?subject ?predicate ?object) .
+    ?ctx proof:rule ?rule .
+    ?ctx proof:subject ?s .
+    ?ctx proof:predicate ?p .
+    ?ctx proof:object ?o .
+    ?ctx proof:context ?context .
+}

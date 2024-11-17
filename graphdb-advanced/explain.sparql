@@ -1,0 +1,9 @@
+PREFIX onto: <http://www.ontotext.com/>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+select *
+from onto:explain 
+where {     
+	adr:K2-319 rdf:type ?type
+} 
+limit 100 
