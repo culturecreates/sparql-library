@@ -21,9 +21,8 @@ PREFIX adm: <http://kg.artsdata.ca/minted/>
 insert {
     graph adm:K2 {
         ?wikidata schema:sameAs ?aduri .
-        << ?wikidata schema:sameAs ?aduri >> prov:wasGeneratedBy ?annotate .
-         ?annotate prov:used  adr:K1-14  ;
-            prov:generatedAtTime ?timeStamp .
+        << ?wikidata schema:sameAs ?aduri >> prov:wasGeneratedBy [ prov:used  adr:K1-14  ;
+            prov:generatedAtTime ?timeStamp . ]
     }
 }
 where {
@@ -37,6 +36,5 @@ where {
             }
         }
     }
-    bind(URI(CONCAT(str(?wikidata),"#link_",?adid)) as ?annotate)
    
 }
