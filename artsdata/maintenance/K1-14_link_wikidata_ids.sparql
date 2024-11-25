@@ -1,12 +1,6 @@
-# SPARQL's URI adr:K1-14
+# SPARQL adr:K1-14
 # Used in Artsdata core maintenance
-# This script is used to add the Wikidata entities' ArtsdataID to the adm:K2 graph
-# to fill in missing links between Wikidata and Artsdata
-# for entities not minted using Wikidata as the authority (e.g. minted using some other authority)
-# The direction of the link is Wikidata --> Artsdata 
-# because the link was not created by the Artsdata authority and may be an error in Wikidata
-# Artsdata should only trust links Artsdata --> Wikidata
-
+PREFIX adm: <http://kg.artsdata.ca/minted/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
 PREFIX p: <http://www.wikidata.org/prop/>
@@ -16,25 +10,40 @@ PREFIX bd: <http://www.bigdata.com/rdf#>
 PREFIX schema: <http://schema.org/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
-PREFIX adm: <http://kg.artsdata.ca/minted/>
 
+# Description:
+# to fill in missing links between Wikidata and Artsdata
+# for entities not minted using Wikidata as the authority (e.g. minted using some other authority)
+# The direction of the link is Wikidata --> Artsdata 
+# because the link was not created by the Artsdata authority and may be an error in Wikidata
+# Artsdata should only trust links Artsdata --> Wikidata
 insert {
     graph adm:K2 {
         ?wikidata schema:sameAs ?aduri .
         << ?wikidata schema:sameAs ?aduri >> prov:wasGeneratedBy [ prov:used  adr:K1-14  ;
-            prov:generatedAtTime ?timeStamp . ]
+                                                                   prov:generatedAtTime ?timeStamp  ].
     }
 }
 where {
     bind(now() as ?timeStamp)        
     SERVICE <https://query.wikidata.org/sparql> {
-        SELECT ?wikidata ?wikidataLabel   ?aduri  WHERE {
+        SELECT ?wikidata ?wikidataLabel   ?aduri  
+        WHERE {
             ?wikidata wdt:P7627 ?adid .
+            filter(substr(str(?adid),1,1) = "K")
             bind(iri(concat("http://kg.artsdata.ca/resource/", ?adid)) as ?aduri)
             SERVICE wikibase:label {
                 bd:serviceParam wikibase:language "[AUTO_LANGUAGE],en".
             }
         }
     }
-   
+    OPTIONAL {
+        ?wikidata  schema:sameAs ?o  .
+    }
+    filter ( not exists {
+            ?wikidata  schema:sameAs ?aduri  .
+        } )
+    filter ( not exists {
+            ?aduri   schema:sameAs ?wikidata  .
+        } )
 }
