@@ -1,0 +1,72 @@
+PREFIX schema: <http://schema.org/>
+PREFIX wd: <http://www.wikidata.org/entity/>
+PREFIX wdt: <http://www.wikidata.org/prop/direct/>
+PREFIX sh: <http://www.w3.org/ns/shacl#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+
+CONSTRUCT {
+    ?event a schema:Event ;
+           schema:name ?name ;
+           schema:startDate ?startDate ;
+           schema:url ?url ;
+           schema:description ?desc ;
+           schema:location ?loc ;
+           schema:image ?image ;
+           schema:endDate ?endDate ;
+           schema:performer ?performer ;
+           schema:organizer ?organizer .
+    ?loc a schema:Place ;
+         schema:name ?locName ;
+         schema:sameAs ?locSameAs ;
+         schema:address ?address .
+    ?address a schema:PostalAddress ;
+             schema:streetAddress ?streetAddress ;
+             schema:addressRegion ?addressRegion ;
+             schema:addressCountry ?addressCountry ;
+             schema:postalCode ?postalCode ;
+             schema:addressLocality ?addressLocality .
+    ?performer a ?performerType ;
+                     schema:name ?performerName ; 
+                     schema:sameAs ?performerSameAs .
+    ?organizer a ?organizeType ;
+               schema:name ?organizerName ; 
+               schema:sameAs ?organizerSameAs .
+}
+WHERE {
+    GRAPH <http://kg.artsdata.ca/culture-creates/artsdata-planet-footlight/nac-cnav2> {
+        ?event a ?eventType ;
+        schema:name ?name ;
+        schema:startDate ?startDate ;
+        schema:description ?desc ;
+        schema:location ?loc ;
+        schema:endDate ?endDate ;
+        schema:image ?image ;
+        schema:performer ?performer ;
+        schema:organizer ?organizer .
+        OPTIONAL { ?event schema:url ?url . }
+        FILTER(?eventType IN (schema:Event, schema:EventSeries))
+        OPTIONAL {
+            ?loc a schema:Place ;
+                 schema:name ?locName ;
+                 schema:address ?address .
+
+			OPTIONAL {
+                ?address a schema:PostalAddress ;
+                schema:streetAddress ?streetAddress ;
+                schema:postalCode ?postalCode .
+            }
+        }
+        OPTIONAL {
+            ?performer a ?performerType ;
+            schema:name ?performerName ;
+            schema:sameAs ?performerSameAs .
+        }
+
+        OPTIONAL {
+            ?organizer a ?organizeType ;
+            schema:name ?organizerName ;
+            schema:sameAs ?organizerSameAs .
+        }
+        
+    }
+}
