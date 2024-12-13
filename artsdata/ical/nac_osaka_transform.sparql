@@ -8,16 +8,13 @@ CONSTRUCT {
     ?event a schema:Event ;
            schema:name ?name ;
            schema:startDate ?startDate ;
-           schema:url ?url ;
-           schema:description ?desc ;
+           schema:description ?finalDesc ;
            schema:location ?loc ;
-           schema:image ?image ;
-           schema:endDate ?endDate ;
+           schema:image ?image;
            schema:performer ?performer ;
-           schema:organizer ?organizer .
+           schema:endDate ?endDate .
     ?loc a schema:Place ;
          schema:name ?locName ;
-         schema:sameAs ?locSameAs ;
          schema:address ?address .
     ?address a schema:PostalAddress ;
              schema:streetAddress ?streetAddress ;
@@ -26,25 +23,48 @@ CONSTRUCT {
              schema:postalCode ?postalCode ;
              schema:addressLocality ?addressLocality .
     ?performer a ?performerType ;
-                     schema:name ?performerName ; 
-                     schema:sameAs ?performerSameAs .
-    ?organizer a ?organizeType ;
-               schema:name ?organizerName ; 
-               schema:sameAs ?organizerSameAs .
+               schema:name ?performerName ; 
+               schema:logo ?performerLogo ;
+               schema:image ?performerImage .
 }
 WHERE {
     GRAPH <http://kg.artsdata.ca/culture-creates/artsdata-planet-footlight/nac-cnav2> {
-        ?event a ?eventType ;
+        ?event a schema:Event ;
         schema:name ?name ;
         schema:startDate ?startDate ;
-        schema:description ?desc ;
         schema:location ?loc ;
         schema:endDate ?endDate ;
-        schema:image ?image ;
-        schema:performer ?performer ;
-        schema:organizer ?organizer .
-        OPTIONAL { ?event schema:url ?url . }
-        FILTER(?eventType IN (schema:Event, schema:EventSeries))
+    
+        OPTIONAL { 
+            ?event schema:description ?eventDesc ;
+                   schema:image ?eventImage ;
+                   schema:performer ?eventPerformer ;
+            
+        }
+
+        OPTIONAL { 
+            ?eventSeries a schema:EventSeries ;
+            schema:subEvent ?event;
+            schema:description ?seriesDesc ;
+            schema:image ?seriesImage ;
+            schema:performer ?seriesPerformer;
+        }
+
+        BIND(COALESCE(?eventDesc, ?seriesDesc) AS ?desc)
+        BIND(COALESCE(?eventImage, ?seriesImage) AS ?image)
+        BIND(COALESCE(?eventPerformer, ?seriesPerformer) AS ?performer)
+        OPTIONAL {
+            ?performer a ?performerType ;
+            schema:name ?performerName ;
+            schema:image ?performerImage .
+        }
+        
+        BIND(CONCAT(
+            STR(?desc), 
+            " <div><a href=\"", STR(?image), "\" target=\"_blank\" rel=\"noopener noreferrer\">See image</a></div>",
+            " <div><a href=\"", STR(?performerImage), "\" target=\"_blank\" rel=\"noopener noreferrer\">", "Performer: ",STR(?performerName), "</a></div>"
+        ) AS ?finalDesc)
+
         OPTIONAL {
             ?loc a schema:Place ;
                  schema:name ?locName ;
@@ -56,17 +76,5 @@ WHERE {
                 schema:postalCode ?postalCode .
             }
         }
-        OPTIONAL {
-            ?performer a ?performerType ;
-            schema:name ?performerName ;
-            schema:sameAs ?performerSameAs .
-        }
-
-        OPTIONAL {
-            ?organizer a ?organizeType ;
-            schema:name ?organizerName ;
-            schema:sameAs ?organizerSameAs .
-        }
-        
     }
 }
