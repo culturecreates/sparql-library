@@ -1,0 +1,23 @@
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+PREFIX schema: <http://schema.org/>
+PREFIX : <http://dbpedia.org/ontology/>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+delete {
+     ?adevent schema:sameAs ?external .
+}
+insert {
+    <<  ?adevent schema:sameAs ?external >> prov:wasGeneratedBy [ schema:name "Unlinking past event" ; prov:generatedAtTime "2024-11-22"^^xsd:date ] 
+}
+where {
+    ?adevent schema:sameAs ?external ;
+             a schema:Event ;
+             schema:startDate ?startDate .
+    OPTIONAL {
+        ?external schema:endDate ?extEndDate .
+    }
+    bind(coalesce(?extEndDate, ?startDate) as ?notEarlierThan)
+    filter(contains(str(?adevent),"kg.artsdata.ca/resource/K"))
+    filter(!contains(str(?external),"kg.artsdata.ca/resource/K"))
+    filter(strdt(str(?notEarlierThan),xsd:dateTime) < now())
+}
