@@ -1,0 +1,24 @@
+# Use this sparql query to delete an entity and all its triples
+# CAUTION: This should rarely be used, and only if the entity is newly created and has no dependencies
+
+delete {
+    graph ?g {
+        ?id ?p ?o .
+        <<  ?id ?p ?o >> ?a ?b .
+    }
+}
+where {
+    values ?id {
+        <http://kg.artsdata.ca/resource/K23-354> 
+    }
+    graph ?g {
+        {
+            ?id ?p ?o .
+            OPTIONAL {
+                <<  ?id ?p ?o >> ?a ?b .
+            }
+        } UNION {
+            <<  ?id ?p ?o >> ?a ?b .
+        }
+    }
+}
