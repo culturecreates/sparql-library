@@ -1,5 +1,3 @@
-# SPARQL adr:K1-14
-# Used in Artsdata core maintenance
 PREFIX adm: <http://kg.artsdata.ca/minted/>
 PREFIX wdt: <http://www.wikidata.org/prop/direct/>
 PREFIX wd: <http://www.wikidata.org/entity/>
@@ -10,20 +8,21 @@ PREFIX bd: <http://www.bigdata.com/rdf#>
 PREFIX schema: <http://schema.org/>
 PREFIX prov: <http://www.w3.org/ns/prov#>
 PREFIX adr: <http://kg.artsdata.ca/resource/>
-
-# Description:
-# to fill in missing links between Wikidata and Artsdata
+# SPARQL adr:K1-14
+# Used in Artsdata core maintenance
+# Description: fill in missing links between Wikidata and Artsdata
 # for entities not minted using Wikidata as the authority (e.g. minted using some other authority)
 # The direction of the link is Wikidata --> Artsdata 
 # because the link was not created by the Artsdata authority and may be an error in Wikidata
 # Artsdata should only trust links Artsdata --> Wikidata
 insert {
-    graph adm:K2 {
+    graph <http://kg.artsdata.ca/core> {
         ?wikidata schema:sameAs ?aduri .
         << ?wikidata schema:sameAs ?aduri >> prov:wasGeneratedBy [ prov:used  adr:K1-14  ;
                                                                    prov:generatedAtTime ?timeStamp  ].
     }
 }
+# select ?wikidata ?aduri 
 where {
     bind(now() as ?timeStamp)        
     SERVICE <https://query.wikidata.org/sparql> {
@@ -37,13 +36,13 @@ where {
             }
         }
     }
-    OPTIONAL {
-        ?wikidata  schema:sameAs ?o  .
+    OPTIONAL { 
+        ?wikidata  schema:sameAs ?aduri   .
     }
-    filter ( not exists {
+    filter ( not exists { # do not add link if  Wikidata --> Artsdata link already exists
             ?wikidata  schema:sameAs ?aduri  .
         } )
-    filter ( not exists {
+    filter ( not exists { # do not add link if  Artsdata --> Wikidata link already exists
             ?aduri   schema:sameAs ?wikidata  .
         } )
 }
