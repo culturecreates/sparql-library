@@ -1,0 +1,14 @@
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+# Checks for invalid language tags based on IANA language subtag registry
+# https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry
+select * where {
+   # graph <http://kg.artsdata.ca/core> {
+        ?s ?p ?o .
+      filter(datatype(?o) = rdf:langString)
+        filter(isLiteral(?o))
+    bind(lang(?o) as ?lang )
+
+    filter(!regex(?lang,"^[a-z]{2,3}$" ))
+  #  }
+    
+} limit 100
