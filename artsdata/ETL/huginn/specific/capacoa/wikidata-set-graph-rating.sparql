@@ -2,7 +2,9 @@ insert data {
     graph <http://wikidata.org/capacoa-members> {
         <http://wikidata.org/capacoa-members> schema:contentRating  <http://wikidata.org/capacoa-members#rating>  ;
             schema:maintainer "wikidata.org" ;
-            schema:description "Dropped and loaded by Huginn CAPACOA scenario using wikidata-collect-venues.sparql followed by wikidata-set-graph-rating.sparql both in sparql-library"@en .
-        <http://wikidata.org/capacoa-members#rating>  schema:ratingValue 1 .
+            a schema:Dataset ;
+            schema:name "CAPACOA member data from Wikidata"@en ;
+            schema:description "Dropped and loaded by Huginn CAPACOA scenario using wikidata-collect-venues.sparql followed by wikidata-set-graph-rating.sparql both in sparql-library. Rating should be above the CAPACOA database http://kg.artsdata.ca/culture-creates/huginn/capacoa-members to allow members to override social media and other properties in Wikidata."@en .
+        <http://wikidata.org/capacoa-members#rating>  schema:ratingValue 6 .
     }
 }
