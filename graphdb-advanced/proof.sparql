@@ -14,3 +14,5 @@ SELECT ?rule ?s ?p ?o ?context WHERE {
     ?ctx proof:object ?o .
     ?ctx proof:context ?context .
 }
+
+# Explains how a triple is derived

@@ -7,3 +7,5 @@ where {
 	adr:K2-319 rdf:type ?type
 } 
 limit 100 
+
+# Explains the algorithm that the SPARQL query planner uses to optimize queries
