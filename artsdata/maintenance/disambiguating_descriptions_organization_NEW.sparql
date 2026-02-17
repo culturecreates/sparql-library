@@ -1,0 +1,42 @@
+PREFIX schema: <http://schema.org/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX adr: <http://kg.artsdata.ca/resource/>
+# This SPARQL (K1-13) adds a disambiguation description for Artsdata minted Organizations 
+# Each import from Artsdata bus should run this SPARQL
+# TODO: Create prov:Activity and use in prov:wasGeneratedBy and update existing records to replace adr:K1-13
+# TODO: Run with each import
+
+# IN PROGRESS
+# Need to update the core graph with the disambiguating descriptions
+# First need to add schema:address to Core Graph and then move this to Artsdata API repo.
+
+delete {
+    graph <http://kg.artsdata.ca/core> {
+        ?adid schema:disambiguatingDescription ?previous .
+        << ?adid schema:disambiguatingDescription ?previous >> prov:wasGeneratedBy adr:K1-XX.
+    }
+}
+insert {
+    graph <http://kg.artsdata.ca/core> {
+        ?adid schema:disambiguatingDescription ?description .
+        << ?adid schema:disambiguatingDescription ?description >> prov:wasGeneratedBy adr:K1-XX .
+    }     
+}
+where {
+    select  ?adid (sample(?disambiguatingDescription) as ?description)
+    where {
+        ?adid a schema:Organization .
+        filter(isURI(?adid))
+        filter(!isBlank(?adid))
+        ?adid schema:address ?address .
+        ?address a schema:PostalAddress ;
+        schema:addressLocality ?locality ;
+        schema:addressRegion ?region ;
+        schema:addressCountry ?country .
+        OPTIONAL {
+            ?adid schema:disambiguatingDescription ?previous .
+        }
+        filter(contains(str(?adid), "kg.artsdata.ca/resource/"))
+        bind (concat(?locality," (",?region,") ",?country) as ?disambiguatingDescription )
+    } group by  ?adid
+}
